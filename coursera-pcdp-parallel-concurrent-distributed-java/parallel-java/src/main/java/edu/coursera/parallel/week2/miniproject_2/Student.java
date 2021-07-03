@@ -1,4 +1,4 @@
-package edu.coursera.parallel;
+package edu.coursera.parallel.week2.miniproject_2;
 
 /**
  * A class representing a single student in a single class.

@@ -1,4 +1,4 @@
-package edu.coursera.parallel;
+package edu.coursera.parallel.week2.miniproject_2;
 
 import java.util.Arrays;
 import java.util.HashMap;

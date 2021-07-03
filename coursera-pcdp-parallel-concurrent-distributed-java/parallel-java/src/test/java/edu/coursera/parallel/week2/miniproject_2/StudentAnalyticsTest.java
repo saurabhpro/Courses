@@ -1,7 +1,5 @@
-package edu.coursera.parallel.week2;
+package edu.coursera.parallel.week2.miniproject_2;
 
-import edu.coursera.parallel.Student;
-import edu.coursera.parallel.StudentAnalytics;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;

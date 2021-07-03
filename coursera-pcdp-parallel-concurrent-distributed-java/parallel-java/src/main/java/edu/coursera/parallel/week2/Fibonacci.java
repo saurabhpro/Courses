@@ -42,7 +42,7 @@ class Fibonacci extends RecursiveTask<Integer> {
     }
 
     public static void main(String[] args) {
-        Fibonacci fibonacci = new Fibonacci(118);
+        var fibonacci = new Fibonacci(118);
         LOG.info(String.valueOf(fibonacci.compute()));
     }
 }
