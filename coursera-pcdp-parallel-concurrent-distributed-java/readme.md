@@ -11,28 +11,32 @@ Preparation week. The purpose is to test your environment. No actual task to do.
 
 ### Week 1 ForkJoin
 
-- ForkJoin Framework in JDK 
- - `t1.fork()` - spawn new thread and run `t1` in it
- - `t2.join()` - wait for the callee thread `t2` to end
- - `RecursiveAction` - a class with a `compute()` method which is used if we can parallelize something
+- ForkJoin Framework in JDK
+- `t1.fork()` - spawn new thread and run `t1` in it
+- `t2.join()` - wait for the callee thread `t2` to end
+- `RecursiveAction` - a class with a `compute()` method which is used if we can parallelize something
 
 In this week we need to calculate reciprocal array sum. We're using Java's ForkJoin framework to parallelize our
 calculations. There are different ways to interact with the ForkJoin framework, and in this week we're extending
-`RecursiveAction` and overriding `compute()` method. 
+`RecursiveAction` and overriding `compute()` method.
 
-In `compute()` method we determine current size of the current range of the that we need to process. 
-If it's small enough, we are processing it immediately. Otherwise, we divide it
-into two parts (left and right) and process them recursively.
+In `compute()` method we determine current size of the current range of the that we need to process. If it's small
+enough, we are processing it immediately. Otherwise, we divide it into two parts (left and right) and process them
+recursively.
 
-The minimal threshold value determines how many ForkJoin tasks we will totally create. Since the test criteria 
-involves a very big number - my MacBook pro 16GB model sometimes managed to pass and sometimes failed. But the code 
+The minimal threshold value determines how many ForkJoin tasks we will totally create. Since the test criteria involves
+a very big number - my MacBook pro 16 GB/16 core model sometimes managed to pass and sometimes failed. But the code
 passed in coursera scanner.
 
 ### Week 2 Streams
 
-This week we're using Java Streams API to build a pipeline that computes some student analytics. Nothing difficult here,
-you just need to understand which data type you have at each pipeline stage and convert data types accordingly if
-needed.
+This week we're using Java 8 Streams API to build a pipeline that computes some student analytics. Nothing difficult
+here, you just need to understand which data type you have at each pipeline stage and convert data types accordingly if
+needed. I tried using Java 11+ features, and it failed in coursera scanner
+
+- But then do remember Future is using `RecursiveTask<T>`
+    - and has a `compute()` which returns the `T`
+    - and `get()` is basically a `join()` call - so blocked till result `isDone`
 
 ### Week 3 PCDP
 

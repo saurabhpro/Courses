@@ -8,7 +8,10 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class RecursionPascalTriangle {
+/**
+ * a and b here is n C k, so every pascal triangle is essentially row C col
+ */
+public class PascalTriangleRecursionSeqMemoized {
     public static final Logger LOG = LoggerFactory.getLogger(RecursivePascalTriangle.class);
 
     record RecursivePascalTriangle(int a, int b) {
@@ -41,7 +44,7 @@ public class RecursionPascalTriangle {
 
             final Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
-            LOG.info("Seq Time: {}ms", timeElapsed);
+            LOG.info("Seq Time: {} ms", timeElapsed);
         }
     }
 
@@ -50,6 +53,5 @@ public class RecursionPascalTriangle {
         IntStream.range(0, 5).forEach(i -> {
             RecursivePascalTriangle.display(row);
         });
-
     }
 }

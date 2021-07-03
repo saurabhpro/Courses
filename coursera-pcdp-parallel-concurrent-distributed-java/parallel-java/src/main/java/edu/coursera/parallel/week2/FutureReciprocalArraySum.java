@@ -1,11 +1,16 @@
 package edu.coursera.parallel.week2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 import java.util.stream.IntStream;
 
 public class FutureReciprocalArraySum {
+    public static final Logger LOG = LoggerFactory.getLogger(FutureReciprocalArraySum.class);
+
     /**
      * @param x an array of double
      *
@@ -40,7 +45,7 @@ public class FutureReciprocalArraySum {
     }
 
     private static void printResults(String name, long timeInNanos, double sum) {
-        System.out.printf("  %s is completed is %8.3f milliseconds, with sum = 8.5%f %n", name, timeInNanos / 1e6, sum);
+        LOG.info(String.format("%s is completed is %8.3f milliseconds, with sum = 8.5%f", name, timeInNanos / 1e6, sum));
     }
 
     public static void main(String[] args) {
@@ -54,7 +59,7 @@ public class FutureReciprocalArraySum {
         System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "8");
 
         IntStream.range(0, 5).forEach(i -> {
-            System.out.printf("Run %d%n", i);
+            LOG.info("Run {}", i);
 
             final long startTime = System.nanoTime();
             final var sum = seqArraySum(arr, 0, arr.length);

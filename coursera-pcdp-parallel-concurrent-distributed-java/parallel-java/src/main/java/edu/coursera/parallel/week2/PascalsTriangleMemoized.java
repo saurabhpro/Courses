@@ -67,12 +67,10 @@ public class PascalsTriangleMemoized {
     }
 
     private static int computeSum(final int left, final int right) {
-
         return left + right;
     }
 
     private static int computeBaseCaseResult() {
-
         return 1;
     }
 
@@ -126,7 +124,7 @@ public class PascalsTriangleMemoized {
         return result;
     }
 
-    private static int chooseMemoizedPar(final int N, final int K) throws ExecutionException, InterruptedException {
+    static int chooseMemoizedPar(final int N, final int K) throws ExecutionException, InterruptedException {
         final Map.Entry<Integer, Integer> key = Map.entry(N, K);
         if (chooseMemoizedParCache.containsKey(key)) {
             final Future<Integer> result = chooseMemoizedParCache.get(key);
