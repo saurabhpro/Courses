@@ -1,5 +1,8 @@
 package edu.coursera.parallel.week1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
@@ -10,7 +13,7 @@ import java.util.stream.IntStream;
 class SequentialComputer {
 
     /**
-     * Dummy class to do a long duration work
+     * Mock class to do a long duration work
      */
     private static class Intensive {
         private static final int LIMIT = 1000000;
@@ -43,11 +46,11 @@ class ParallelComputer extends RecursiveAction {
     private final int end;
     private int value;
 
-    private static final int SEQUENTIAL_THRESHOLD = 10;
+    private static final int SEQUENTIAL_THRESHOLD = 1000;
 
     ParallelComputer(List<Integer> range, int start, int end) {
-        if (start < end) {
-            throw new IllegalArgumentException(start + "<" + end);
+        if (start > end) {
+            throw new IllegalArgumentException(start + ">" + end);
         }
         this.range = range;
         this.start = start;
@@ -68,9 +71,9 @@ class ParallelComputer extends RecursiveAction {
             var left = new ParallelComputer(range, start, middle);
             var right = new ParallelComputer(range, middle, end);
 
-            left.fork();
-            right.compute();
-            left.join();
+            left.fork();    // create a new task
+            right.compute();    // recursively call on right on the same thread
+            left.join();    // waits util the current thread joins left
 
             value = left.getValue() + right.getValue();
         }
@@ -80,33 +83,34 @@ class ParallelComputer extends RecursiveAction {
 
 public class ParallelFibonacci {
 
-    public static void main(String[] args) {
-        System.out.println("START");
-        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "4");
+    public static final Logger LOG = LoggerFactory.getLogger(ParallelFibonacci.class);
 
-        double programStart = System.currentTimeMillis();
+    public static void main(String[] args) {
+        LOG.info("START");
+        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "8");
+
+        final double programStart = System.currentTimeMillis();
         double start;
 
-        List<Integer> range = IntStream.range(1, 100).boxed().collect(Collectors.toList());
-        System.out.println("The range: " + range);
+        List<Integer> range = IntStream.range(1, 10000).boxed().collect(Collectors.toList());
+        LOG.info("The range: {}", range);
 
         start = System.currentTimeMillis();
-        System.out.println("sequential: " + SequentialComputer.doCompute(range, 0, range.size()));
+        LOG.info("sequential: {}", SequentialComputer.doCompute(range, 0, range.size()));
         double sequentialTime = (System.currentTimeMillis() - start) / 1000.;
-        System.out.println("sequential time: " + sequentialTime);
+        LOG.info("sequential time: {}", sequentialTime);
 
         start = System.currentTimeMillis();
-        ParallelComputer parComputer = new ParallelComputer(range, 0, range.size());
+
+        var parComputer = new ParallelComputer(range, 0, range.size());
         ForkJoinPool.commonPool().invoke(parComputer);
+
         double parallelTime = (System.currentTimeMillis() - start) / 1000.;
-        System.out.println("parallel time: " + parallelTime);
-
-        System.out.println("parallel: " + parComputer.getValue());
-
-        System.out.println("parallel/sequential ratio: " + (sequentialTime / parallelTime));
+        LOG.info("parallel time: {}", parallelTime);
+        LOG.info("parallel: {}", parComputer.getValue());
+        LOG.info("parallel/sequential ratio: {}", (sequentialTime / parallelTime));
 
         double diff = (System.currentTimeMillis() - programStart) / 1000.;
-        System.out.printf("DONE in %.2f ms", diff);
+        LOG.info(String.format("DONE in %.2f ms", diff));
     }
-
 }

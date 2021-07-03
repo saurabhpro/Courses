@@ -1,5 +1,6 @@
 package edu.coursera.parallel.week1.miniproject_1;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -98,7 +99,7 @@ class ReciprocalArraySumTest {
             if (useManyTaskVersion) {
                 ReciprocalArraySumOriginal.parManyTaskArraySum(input, ntasks);
             } else {
-                assert ntasks == 2;
+                Assertions.assertEquals(2, ntasks);
                 ReciprocalArraySumOriginal.parArraySum(input);
             }
         }

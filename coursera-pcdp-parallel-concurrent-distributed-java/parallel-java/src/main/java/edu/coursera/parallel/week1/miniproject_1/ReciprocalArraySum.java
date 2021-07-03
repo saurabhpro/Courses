@@ -23,11 +23,11 @@ public final class ReciprocalArraySum {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double seqArraySum(final double[] input) {
+    protected static double seqArraySum(final double[] input, final int start, final int end) {
         double sum = 0;
 
         // Compute sum of reciprocals of array elements
-        for (int i = 0; i < input.length; i++) {
+        for (int i = start; i < end; i++) {
             sum += 1 / input[i];
         }
 
@@ -137,11 +137,9 @@ public final class ReciprocalArraySum {
         protected void compute() {
             final int range = this.endIndexExclusive - this.startIndexInclusive;
             if (range <= SEQUENTIAL_THRESHOLD) {
-                for (int i = this.startIndexInclusive; i < this.endIndexExclusive; i++) {
-                    this.value += 1 / this.input[i];
-                }
+                this.value = ReciprocalArraySum.seqArraySum(input, startIndexInclusive, endIndexExclusive);
             } else {
-                final int middle = (this.startIndexInclusive + this.endIndexExclusive) / 2;
+                final int middle = (this.startIndexInclusive + this.endIndexExclusive) >>> 1;
                 ReciprocalArraySumTask leftSum = new ReciprocalArraySumTask(this.startIndexInclusive, middle, this.input);
                 ReciprocalArraySumTask rightSum = new ReciprocalArraySumTask(middle, this.endIndexExclusive, this.input);
 
@@ -165,7 +163,9 @@ public final class ReciprocalArraySum {
      * @return The sum of the reciprocals of the array input
      */
     protected static double parArraySum(final double[] input) {
-        assert input.length % 2 == 0;
+        if (input.length % 2 != 0) {
+            throw new IllegalArgumentException("expected even inputs");
+        }
         return parManyTaskArraySum(input, 2);
     }
 
@@ -181,9 +181,12 @@ public final class ReciprocalArraySum {
      * @return The sum of the reciprocals of the array input
      */
     protected static double parManyTaskArraySum(final double[] input, final int numTasks) {
-        assert input.length % 2 == 0;
+        if (input.length % 2 != 0) {
+            throw new IllegalArgumentException("expected even inputs");
+        }
+
         double sum = 0.0;
-        List<ReciprocalArraySumTask> taskList = new ArrayList<>();
+        final List<ReciprocalArraySumTask> taskList = new ArrayList<>();
 
         // Compute sum of reciprocals of array elements
         for (int i = 0; i < numTasks; i++) {
@@ -194,6 +197,7 @@ public final class ReciprocalArraySum {
             ));
         }
 
+        // forks all tasks in the specified collection
         ForkJoinTask.invokeAll(taskList);
 
         for (ReciprocalArraySumTask reciprocalArraySumTask : taskList) {
