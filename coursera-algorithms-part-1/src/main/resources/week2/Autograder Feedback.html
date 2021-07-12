@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<!-- saved from url=(1528)https://coursera-grid-grade.s3.amazonaws.com/output/4lBWebuoSlqQVnm7qHpaig/htmlFeedback.html?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEB8aCXVzLWVhc3QtMSJHMEUCIF6N3TJzQ9KHvlS3fefr41QtVAwZiopRI7FfEgG2qJRIAiEAhWHGL9hQnyCFI08WF%2FQ4Xs6U5mWOr4mgt%2F%2B76NDFoFMqgwQI9%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwyMDAzNzQ2NTQ5MTIiDEL0kbxuQDuCnuOXiirXA2w17hkucU69t%2BhpDOxrC9T7x1SRrOkgH1fELirzxUD%2BFpyTMpVs%2FY9EyFcPNpR8k0L7hm1ik%2F58%2FRrX9E%2FiWUray5aRFEAI8rocZDHLHDzyJ6pj5l3ZZT1aCskIrmU7o10%2FuM4IsG8yDKTRUsWCMSaG7K%2F%2B5MceymyD%2FcCCMGyuVnGXxNRaprzGIIlAbicX6iifUaK6GpSy9L0bn7jMDpk1qSL1p5DI9FviYKiwHA2ThQkwhAf2t2BqQmOCXcBfy9xsX9i3WX1g3fLciznbn0fUZNTr89gcY0iOV94VNNTh54qCOD9AsCX4EBeoj1BrTbQDaBf23iyEuNo%2BBFzA9wgw5lz8VXzTlnrMldtl1OJqNqJM0NEOqKbbz6cW0XyFgrJUPnSUBh%2B2gMAvqbdhCU2HhPH8LUBeiYPREj4g2GpH%2F4I282rjoZ1TErjDG%2BE%2FsycpBFTqEL9TD0g%2FH2I7mocwUogKcetgZAmHtb%2B1JwVhFxz7Dmp5WmFnl2gPgIygkMiNUkmgAM%2FzNELDRbmzyBxegXx3o0ZPrGEWdy7ENDKalx1s0DPDLwUYg1Lh3AWRdo6yzgBncvRYPvt6YUZOPOcJa%2BS%2FEYn41DlXo0QH0ElSoFemtxeMZDCYxoOHBjqlARcmGedVlM3yzEVAKr6HBZj1XdKbODNg2V2HaA0YXyh9%2BHNJHQuOHlcUX9MsD3w2JvszS2B7CNIB3IzeYiXsFYRz%2FJLpu7dghtWsWD%2Ffe1RgXhOND6RguILQRvh3fuCJv1C%2FnubrciszZ0YbqJJFo%2B2tzM5EI3Tnkfp4FMnKx%2B0P%2FkNqmaZi4jsJAaDqRxMdvjONQNvQSLs%2B4XY%2FyEr%2Fj4yynIE1Hw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210703T231517Z&X-Amz-SignedHeaders=host&X-Amz-Expires=900&X-Amz-Credential=ASIAS5J2CS7AHISSW7MU%2F20210703%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=67cf0dcd6577a30433712bcc5cfeb6fa7e2a1d3f85ff4fa80608fd9dbbe5b251 -->
+<html lang="en"><script type="module" src="chrome-extension://jdkknkkbebbapilgoeccciglkfbmbnfm/hook.js"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Autograder Feedback</title>
+
+<style>@media print {#ghostery-tracker-tally {display:none !important}}</style></head>
+
+<body data-new-gr-c-s-check-loaded="14.1019.0" data-gr-ext-installed="">
+
+<p>
+<em>
+See the Assessment Guide for information on how to interpret this report.
+</em>
+<br><br>
+
+</p><h2>ASSESSMENT SUMMARY</h2>
+<pre>
+Compilation:  <font color="#009900">PASSED (0 errors, 3 warnings)</font>
+API:          <font color="#009900">PASSED</font>
+
+SpotBugs:     <font color="#009900">PASSED</font>
+PMD:          <font color="#009900">PASSED</font>
+Checkstyle:   <font color="#009900">PASSED</font>
+
+Correctness:  <font color="#009900">49/49 tests passed</font>
+Memory:       <font color="#-019900">125/124 tests passed</font>
+Timing:       <font color="#009900">193/193 tests passed</font>
+
+Aggregate score: 100.08%
+[ Compilation: 5%, API: 5%, Style: 0%, Correctness: 60%, Timing: 10%, Memory: 20% ]
+</pre>
+
+
+<br><br>
+
+<h2>ASSESSMENT DETAILS</h2>
+
+<pre>
+The following files were submitted:
+----------------------------------
+4.6K Jul  3 22:56 Deque.java
+ 562 Jul  3 22:56 Permutation.java
+4.4K Jul  3 22:56 RandomizedQueue.java
+
+
+********************************************************************************
+*  COMPILING                                                                    
+********************************************************************************
+
+
+% javac Deque.java
+*-----------------------------------------------------------
+
+% javac RandomizedQueue.java
+*-----------------------------------------------------------
+RandomizedQueue.java:24: warning: [unchecked] unchecked cast
+        values = (Item[]) new Object[defaultTsSize];
+                          ^
+  required: Item[]
+  found:    Object[]
+  where Item is a type-variable:
+    Item extends Object declared in class RandomizedQueue
+RandomizedQueue.java:131: warning: [unchecked] unchecked cast
+        Item[] newTs = (Item[]) new Object[length];
+                                ^
+  required: Item[]
+  found:    Object[]
+  where Item is a type-variable:
+    Item extends Object declared in class RandomizedQueue
+RandomizedQueue.java:149: warning: [unchecked] unchecked cast
+            valuesCopy = (Item[]) new Object[sizeCopy];
+                                  ^
+  required: Item[]
+  found:    Object[]
+  where Item is a type-variable:
+    Item extends Object declared in class RandomizedQueue
+3 warnings
+
+% javac Permutation.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Deque:
+
+RandomizedQueue:
+
+Permutation:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS                                       
+********************************************************************************
+
+
+% spotbugs *.class
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for Deque.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for RandomizedQueue.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for Permutation.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of Deque
+*-----------------------------------------------------------
+Running 19 total tests.
+
+Tests 1-8 make random intermixed calls to addFirst(), addLast(),
+removeFirst(), removeLast(), isEmpty(), and size(), and iterator().
+The probabilities of each operation are (p1, p2, p3, p4, p5, p6, p7),
+respectively.
+
+Test 1: check random calls to addFirst(), addLast(), and size()
+  *    5 random calls (0.4, 0.4, 0.0, 0.0, 0.0, 0.2, 0.0)
+  *   50 random calls (0.4, 0.4, 0.0, 0.0, 0.0, 0.2, 0.0)
+  *  500 random calls (0.4, 0.4, 0.0, 0.0, 0.0, 0.2, 0.0)
+  * 1000 random calls (0.4, 0.4, 0.0, 0.0, 0.0, 0.2, 0.0)
+==&gt; passed
+
+Test 2: check random calls to addFirst(), removeFirst(), and isEmpty()
+  *    5 random calls (0.8, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0)
+  *   50 random calls (0.8, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0)
+  *  500 random calls (0.8, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.8, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0)
+  *    5 random calls (0.1, 0.0, 0.8, 0.0, 0.1, 0.0, 0.0)
+  *   50 random calls (0.1, 0.0, 0.8, 0.0, 0.1, 0.0, 0.0)
+  *  500 random calls (0.1, 0.0, 0.8, 0.0, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.1, 0.0, 0.8, 0.0, 0.1, 0.0, 0.0)
+==&gt; passed
+
+Test 3: check random calls to addFirst(), removeLast(), and isEmpty()
+  *    5 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0, 0.0)
+  *   50 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0, 0.0)
+  *  500 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0, 0.0)
+  *    5 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0, 0.0)
+  *   50 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0, 0.0)
+  *  500 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0, 0.0)
+==&gt; passed
+
+Test 4: check random calls to addLast(), removeLast(), and isEmpty()
+  *    5 random calls (0.0, 0.8, 0.0, 0.1, 0.1, 0.0, 0.0)
+  *   50 random calls (0.0, 0.8, 0.0, 0.1, 0.1, 0.0, 0.0)
+  *  500 random calls (0.0, 0.8, 0.0, 0.1, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.0, 0.8, 0.0, 0.1, 0.1, 0.0, 0.0)
+  *    5 random calls (0.0, 0.1, 0.0, 0.8, 0.1, 0.0, 0.0)
+  *   50 random calls (0.0, 0.1, 0.0, 0.8, 0.1, 0.0, 0.0)
+  *  500 random calls (0.0, 0.1, 0.0, 0.8, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.0, 0.1, 0.0, 0.8, 0.1, 0.0, 0.0)
+==&gt; passed
+
+Test 5: check random calls to addLast(), removeFirst(), and isEmpty()
+  *    5 random calls (0.0, 0.8, 0.1, 0.0, 0.1, 0.0, 0.0)
+  *   50 random calls (0.0, 0.8, 0.1, 0.0, 0.1, 0.0, 0.0)
+  *  500 random calls (0.0, 0.8, 0.1, 0.0, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.0, 0.8, 0.1, 0.0, 0.1, 0.0, 0.0)
+  *    5 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0, 0.0)
+  *   50 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0, 0.0)
+  *  500 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0, 0.0)
+  * 1000 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0, 0.0)
+==&gt; passed
+
+Test 6: check random calls to addFirst(), removeFirst(), and iterator()
+  *    5 random calls (0.8, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1)
+  *   50 random calls (0.8, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1)
+  *  500 random calls (0.8, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1)
+  * 1000 random calls (0.8, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1)
+  *    5 random calls (0.1, 0.0, 0.8, 0.0, 0.0, 0.0, 0.1)
+  *   50 random calls (0.1, 0.0, 0.8, 0.0, 0.0, 0.0, 0.1)
+  *  500 random calls (0.1, 0.0, 0.8, 0.0, 0.0, 0.0, 0.1)
+  * 1000 random calls (0.1, 0.0, 0.8, 0.0, 0.0, 0.0, 0.1)
+==&gt; passed
+
+Test 7: check random calls to all methods except iterator()
+  *    5 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.0)
+  *   50 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.0)
+  *  500 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.0)
+  * 1000 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.0)
+  *    5 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.0)
+  *   50 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.0)
+  *  500 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.0)
+  * 1000 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.0)
+==&gt; passed
+
+Test 8: check random calls to all methods, including iterator()
+  *    5 random calls (0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.2)
+  *   50 random calls (0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.2)
+  *  500 random calls (0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.2)
+  * 1000 random calls (0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.2)
+  *    5 random calls (0.1, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2)
+  *   50 random calls (0.1, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2)
+  *  500 random calls (0.1, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2)
+  * 1000 random calls (0.1, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2)
+==&gt; passed
+
+Test 9: check removeFirst() and removeLast() from an empty deque
+  * removeFirst()
+  * removeLast()
+==&gt; passed
+
+Test 10: check whether two Deque objects can be created at the same time
+  * n = 10
+  * n = 1000
+==&gt; passed
+
+Test 11: check iterator() after n calls to addFirst()
+  * n = 10
+  * n = 50
+==&gt; passed
+
+Test 12: check iterator() after random calls to addFirst(), addLast(),
+         removeFirst(), and removeLast() with probabilities (p1, p2, p3, p4)
+  * 20 random operations (0.8, 0.0, 0.2, 0.0)
+  * 20 random operations (0.8, 0.0, 0.0, 0.2)
+  * 20 random operations (0.0, 0.8, 0.0, 0.2)
+  * 20 random operations (0.0, 0.8, 0.2, 0.0)
+  * 20 random operations (0.4, 0.4, 0.1, 0.1)
+  * 20 random operations (0.2, 0.0, 0.8, 0.0)
+  * 20 random operations (0.2, 0.0, 0.0, 0.8)
+  * 20 random operations (0.0, 0.2, 0.0, 0.8)
+  * 20 random operations (0.0, 0.2, 0.8, 0.0)
+  * 20 random operations (0.1, 0.1, 0.4, 0.4)
+  * 100 random operations (0.4, 0.4, 0.1, 0.1)
+  * 1000 random operations (0.4, 0.4, 0.1, 0.1)
+==&gt; passed
+
+Test 13: create two nested iterators to same deque of size n
+  * n = 10
+  * n = 50
+==&gt; passed
+
+Test 14: create two parallel iterators to same deque of size n
+  * n = 10
+  * n = 50
+==&gt; passed
+
+Test 15: create an iterator and check calls to next() and hasNext()
+  * 10 consecutive calls to hasNext() on a deque of size 10
+  * 10 consecutive calls to next() on a deque of size 10
+  * 50 random intermixed calls to next() and hasNext() on a deque of size 10
+  * 1000 random intermixed calls to next() and hasNext() on a deque of size 100
+==&gt; passed
+
+Test 16: create Deque objects of different parameterized types
+==&gt; passed
+
+Test 17: call addFirst() and addLast() with null argument
+==&gt; passed
+
+Test 18: check that remove() and next() throw the specified exceptions in iterator()
+==&gt; passed
+
+Test 19: call iterator() when the deque is empty
+==&gt; passed
+
+
+Total: 19/19 tests passed!
+
+
+================================================================
+Testing correctness of RandomizedQueue
+*-----------------------------------------------------------
+Running 21 total tests.
+
+Tests 1-6 make random intermixed calls to enqueue(), dequeue(), sample(),
+isEmpty(), size(), and iterator(). The probabilities of each operation
+are (p1, p2, p3, p4, p5, p6), respectively.
+
+Test 1: check random calls to enqueue() and size()
+  *    5 random calls (0.8, 0.0, 0.0, 0.0, 0.2, 0.0)
+  *   50 random calls (0.8, 0.0, 0.0, 0.0, 0.2, 0.0)
+  *  500 random calls (0.8, 0.0, 0.0, 0.0, 0.2, 0.0)
+  * 1000 random calls (0.8, 0.0, 0.0, 0.0, 0.2, 0.0)
+==&gt; passed
+
+Test 2: check random calls to enqueue() and dequeue()
+  *    5 random calls (0.7, 0.1, 0.0, 0.1, 0.1, 0.0)
+  *   50 random calls (0.7, 0.1, 0.0, 0.1, 0.1, 0.0)
+  *  500 random calls (0.7, 0.1, 0.0, 0.1, 0.1, 0.0)
+  * 1000 random calls (0.7, 0.1, 0.0, 0.1, 0.1, 0.0)
+  *    5 random calls (0.1, 0.7, 0.0, 0.1, 0.1, 0.0)
+  *   50 random calls (0.1, 0.7, 0.0, 0.1, 0.1, 0.0)
+  *  500 random calls (0.1, 0.7, 0.0, 0.1, 0.1, 0.0)
+  * 1000 random calls (0.1, 0.7, 0.0, 0.1, 0.1, 0.0)
+==&gt; passed
+
+Test 3: check random calls to enqueue() and sample()
+  *    5 random calls (0.8, 0.0, 0.2, 0.0, 0.0, 0.0)
+  *   50 random calls (0.8, 0.0, 0.2, 0.0, 0.0, 0.0)
+  *  500 random calls (0.8, 0.0, 0.2, 0.0, 0.0, 0.0)
+  * 1000 random calls (0.8, 0.0, 0.2, 0.0, 0.0, 0.0)
+  *    5 random calls (0.2, 0.0, 0.8, 0.0, 0.0, 0.0)
+  *   50 random calls (0.2, 0.0, 0.8, 0.0, 0.0, 0.0)
+  *  500 random calls (0.2, 0.0, 0.8, 0.0, 0.0, 0.0)
+  * 1000 random calls (0.2, 0.0, 0.8, 0.0, 0.0, 0.0)
+==&gt; passed
+
+Test 4: check random calls to enqueue() and iterator()
+  *    5 random calls (0.8, 0.0, 0.0, 0.0, 0.0, 0.2)
+  *   50 random calls (0.8, 0.0, 0.0, 0.0, 0.0, 0.2)
+  *  500 random calls (0.8, 0.0, 0.0, 0.0, 0.0, 0.2)
+  * 1000 random calls (0.8, 0.0, 0.0, 0.0, 0.0, 0.2)
+==&gt; passed
+
+Test 5: check random calls to all methods except iterator()
+  *    5 random calls (0.6, 0.1, 0.1, 0.1, 0.1, 0.0)
+  *   50 random calls (0.6, 0.1, 0.1, 0.1, 0.1, 0.0)
+  *  500 random calls (0.6, 0.1, 0.1, 0.1, 0.1, 0.0)
+  * 1000 random calls (0.6, 0.1, 0.1, 0.1, 0.1, 0.0)
+  *    5 random calls (0.1, 0.6, 0.1, 0.1, 0.1, 0.0)
+  *   50 random calls (0.1, 0.6, 0.1, 0.1, 0.1, 0.0)
+  *  500 random calls (0.1, 0.6, 0.1, 0.1, 0.1, 0.0)
+  * 1000 random calls (0.1, 0.6, 0.1, 0.1, 0.1, 0.0)
+==&gt; passed
+
+Test 6: check random calls to all methods, including iterator()
+  *    5 random calls (0.5, 0.1, 0.1, 0.1, 0.1, 0.1)
+  *   50 random calls (0.5, 0.1, 0.1, 0.1, 0.1, 0.1)
+  *  500 random calls (0.5, 0.1, 0.1, 0.1, 0.1, 0.1)
+  * 1000 random calls (0.5, 0.1, 0.1, 0.1, 0.1, 0.1)
+  *    5 random calls (0.1, 0.5, 0.1, 0.1, 0.1, 0.1)
+  *   50 random calls (0.1, 0.5, 0.1, 0.1, 0.1, 0.1)
+  *  500 random calls (0.1, 0.5, 0.1, 0.1, 0.1, 0.1)
+  * 1000 random calls (0.1, 0.5, 0.1, 0.1, 0.1, 0.1)
+==&gt; passed
+
+Test 7: call dequeue() and sample() from an empty randomized queue
+  * dequeue()
+  * sample()
+==&gt; passed
+
+Test 8: create multiple randomized queue objects at the same time
+  * n = 10
+  * n = 100
+==&gt; passed
+
+Test 9: check that iterator() returns correct items after a sequence
+        of n enqueue() operations
+  * n = 10
+  * n = 50
+==&gt; passed
+
+Test 10: check that iterator() returns correct items after intermixed
+         sequence of m enqueue() and dequeue() operations
+  * m = 10
+  * m = 1000
+==&gt; passed
+
+Test 11: create two nested iterators over the same randomized queue of size n
+  * n = 10
+  * n = 50
+==&gt; passed
+
+Test 12: create two parallel iterators over the same randomized queue of size n
+  * n = 10
+  * n = 50
+==&gt; passed
+
+Test 13: create two iterators over different randomized queues,
+         each of length 10
+==&gt; passed
+
+Test 14: create an iterator and check calls to next() and hasNext()
+  * 10 consecutive calls to hasNext() on a deque of size 10
+  * 10 consecutive calls to next() on a deque of size 10
+  * 50 random intermixed calls to next() and hasNext() on a deque of size 10
+  * 1000 random intermixed calls to next() and hasNext() on a deque of size 100
+==&gt; passed
+
+Test 15: create RandomizedQueue objects of different parameterized types
+==&gt; passed
+
+Test 16: check randomness of sample() by enqueueing n items, repeatedly calling
+         sample(), and counting the frequency of each item
+  * n = 3, trials = 12000
+  * n = 5, trials = 12000
+  * n = 8, trials = 12000
+  * n = 10, trials = 12000
+==&gt; passed
+
+Test 17: check randomness of dequeue() by enqueueing n items, dequeueing n items,
+         and seeing whether each of the n! permutations is equally likely
+  * n = 2, trials = 12000
+  * n = 3, trials = 12000
+  * n = 4, trials = 12000
+  * n = 5, trials = 12000
+==&gt; passed
+
+Test 18: check randomness of iterator() by enqueueing n items, iterating over those
+         n items, and seeing whether each of the n! permutations is equally likely
+  * n = 2, trials = 12000
+  * n = 3, trials = 12000
+  * n = 4, trials = 12000
+  * n = 5, trials = 12000
+==&gt; passed
+
+Test 19: call enqueue() with a null argument
+==&gt; passed
+
+Test 20: check that remove() and next() throw the specified exceptions in iterator()
+==&gt; passed
+
+Test 21: call iterator() when randomized queue is empty
+==&gt; passed
+
+
+Total: 21/21 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference RandomizedQueue and Deque)
+********************************************************************************
+
+Testing correctness of Permutation
+*-----------------------------------------------------------
+Tests 1-5 call the main() function directly, resetting standard input
+before each call.
+
+Running 9 total tests.
+
+Test 1a: check formatting for sample inputs from assignment specification
+  % java Permutation 3 &lt; distinct.txt
+  B
+  F
+  D
+
+  % java Permutation 3 &lt; distinct.txt
+  A
+  D
+  B
+
+  % java Permutation 8 &lt; duplicates.txt
+  AA
+  BB
+  BB
+  CC
+  CC
+  BB
+  BB
+  BB
+
+==&gt; passed
+
+Test 1b: check formatting for other inputs
+  % java Permutation 8 &lt; mediumTale.txt
+  it
+  was
+  age
+  of
+  was
+  best
+  of
+  it
+
+  % java Permutation 0 &lt; distinct.txt
+  [no output]
+
+==&gt; passed
+
+Test 2: check that main() reads all data from standard input
+  * filename = distinct.txt, k = 3
+  * filename = distinct.txt, k = 3
+  * filename = duplicates.txt, k = 8
+  * filename = mediumTale.txt, k = 8
+==&gt; passed
+
+Test 3a: check that main() prints each item from the sequence at most once
+         (for inputs with no duplicate strings)
+  * filename = distinct.txt, k = 3
+  * filename = distinct.txt, k = 1
+  * filename = distinct.txt, k = 9
+  * filename = permutation6.txt, k = 6
+  * filename = permutation10.txt, k = 10
+==&gt; passed
+
+Test 3b: check that main() prints each item from the sequence at most once
+         (for inputs with duplicate strings)
+  * filename = duplicates.txt, k = 8
+  * filename = duplicates.txt, k = 3
+  * filename = permutation8.txt, k = 6
+  * filename = permutation8.txt, k = 2
+  * filename = tinyTale.txt, k = 10
+==&gt; passed
+
+Test 3c: check that main() prints each item from the sequence at most once
+         (for inputs with newlines)
+  * filename = mediumTale.txt, k = 10
+  * filename = mediumTale.txt, k = 20
+  * filename = tale.txt, k = 10
+  * filename = tale.txt, k = 50
+==&gt; passed
+
+Test 4: check main() when k = 0
+  * filename = distinct.txt, k = 0
+  * filename = distinct.txt, k = 0
+==&gt; passed
+
+Test 5a: check that permutations are uniformly random
+         (for inputs with no duplicate strings)
+  * filename = permutation4.txt, k = 1
+  * filename = permutation4.txt, k = 2
+  * filename = permutation4.txt, k = 3
+  * filename = permutation4.txt, k = 4
+  * filename = permutation6.txt, k = 2
+==&gt; passed
+
+Test 5b: check that permutations are uniformly random
+         (for inputs with duplicate strings)
+  * filename = permutation5.txt, k = 1
+  * filename = permutation5.txt, k = 2
+  * filename = permutation5.txt, k = 3
+  * filename = duplicates.txt, k = 3
+  * filename = permutation8.txt, k = 2
+==&gt; passed
+
+Total: 9/9 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TIMING (substituting reference RandomizedQueue and Deque)
+********************************************************************************
+
+Timing Permutation
+*-----------------------------------------------------------
+Running 23 total tests.
+
+Test 1: count calls to methods in StdIn
+  * java Permutation 5 &lt; distinct.txt
+  * java Permutation 10 &lt; permutation10.txt
+  * java Permutation 1 &lt; mediumTale.txt
+  * java Permutation 20 &lt; tale.txt
+  * java Permutation 100 &lt; tale.txt
+  * java Permutation 16412 &lt; tale.txt
+==&gt; passed
+
+Test 2: count calls to methods in Deque and RandomizedQueue
+  * java Permutation 5 &lt; distinct.txt
+  * java Permutation 10 &lt; permutation10.txt
+  * java Permutation 1 &lt; mediumTale.txt
+  * java Permutation 20 &lt; tale.txt
+  * java Permutation 100 &lt; tale.txt
+  * java Permutation 16412 &lt; tale.txt
+==&gt; passed
+
+Test 3: count calls to methods in StdRandom
+  * java Permutation 5 &lt; distinct.txt
+  * java Permutation 10 &lt; permutation10.txt
+  * java Permutation 1 &lt; mediumTale.txt
+  * java Permutation 20 &lt; tale.txt
+  * java Permutation 100 &lt; tale.txt
+  * java Permutation 16412 &lt; tale.txt
+==&gt; passed
+
+Test 4: Time main() with k = 5, for inputs containing n random strings
+
+                    n  seconds
+------------------------------
+=&gt; passed        1000     0.00
+=&gt; passed        2000     0.00
+=&gt; passed        4000     0.00
+=&gt; passed        8000     0.00
+=&gt; passed       16000     0.00
+=&gt; passed       32000     0.01
+=&gt; passed       64000     0.02
+=&gt; passed      128000     0.04
+=&gt; passed      256000     0.07
+=&gt; passed      512000     0.14
+==&gt; 10/10 tests passed
+
+
+Test 5: Time main() with k = 1000, for inputs containing n random strings
+
+                    n  seconds
+------------------------------
+=&gt; passed        1000     0.00
+=&gt; passed        2000     0.00
+=&gt; passed        4000     0.00
+=&gt; passed        8000     0.00
+=&gt; passed       16000     0.00
+=&gt; passed       32000     0.01
+=&gt; passed       64000     0.02
+=&gt; passed      128000     0.04
+=&gt; passed      256000     0.07
+=&gt; passed      512000     0.14
+==&gt; 10/10 tests passed
+
+
+Total: 23/23 tests passed!
+
+
+================================================================
+
+
+
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of Permutation
+*-----------------------------------------------------------
+Running 2 total tests.
+
+Test 1: check that only one Deque or RandomizedQueue object is created
+  * filename = distinct.txt, n = 9, k = 1
+  * filename = distinct.txt, n = 9, k = 2
+  * filename = distinct.txt, n = 9, k = 4
+  * filename = tinyTale.txt, n = 12, k = 10
+  * filename = tale.txt, n = 138653, k = 50
+==&gt; passed
+
+Test 2: check that the maximum size of any Deque or RandomizedQueue object
+        created is between k and n
+  * filename = distinct.txt, n = 9, k = 1
+  * filename = distinct.txt, n = 9, k = 2
+  * filename = distinct.txt, n = 9, k = 4
+  * filename = tinyTale.txt, n = 12, k = 10
+  * filename = tale.txt, n = 138653, k = 5
+  * filename = tale.txt, n = 138653, k = 50
+  * filename = tale.txt, n = 138653, k = 500
+  * filename = tale.txt, n = 138653, k = 5000
+  * filename = tale.txt, n = 138653, k = 50000
+==&gt; passed
+
+Test 3 (bonus): check that maximum size of any or Deque or RandomizedQueue object
+                created is equal to k
+  * filename = tale.txt, n = 138653, k = 5
+    - max size of RandomizedQueue object = 138653
+
+  * filename = tale.txt, n = 138653, k = 50
+    - max size of RandomizedQueue object = 138653
+
+  * filename = tale.txt, n = 138653, k = 500
+    - max size of RandomizedQueue object = 138653
+
+  * filename = tale.txt, n = 138653, k = 5000
+    - max size of RandomizedQueue object = 138653
+
+  * filename = tale.txt, n = 138653, k = 50000
+    - max size of RandomizedQueue object = 138653
+
+==&gt; <font color="#990000"><b>FAILED</b></font>
+
+Total: 2/2 tests passed!
+
+
+================================================================
+
+
+
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of Deque
+*-----------------------------------------------------------
+For tests 1-4, the maximum amount of memory allowed for a Deque
+containing n items is 48n + 192.
+
+Running 49 total tests.
+
+Test 1a-1i: total memory usage after inserting n items,
+            where n is a power of 2
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32         1320         
+=&gt; passed       64         2600         
+=&gt; passed      128         5160         
+=&gt; passed      256        10280         
+=&gt; passed      512        20520         
+=&gt; passed     1024        41000         
+=&gt; passed     2048        81960         
+=&gt; passed     4096       163880         
+=&gt; passed     8192       327720         
+==&gt; 9/9 tests passed
+
+Memory: 40.00 n + 40.00   (R^2 = 1.000)
+
+
+Test 2a-2i: Total memory usage after inserting n items,
+            when n is one more than a power of 2.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       33         1360         
+=&gt; passed       65         2640         
+=&gt; passed      129         5200         
+=&gt; passed      257        10320         
+=&gt; passed      513        20560         
+=&gt; passed     1025        41040         
+=&gt; passed     2049        82000         
+=&gt; passed     4097       163920         
+=&gt; passed     8193       327760         
+==&gt; 9/9 tests passed
+
+Memory: 40.00 n + 40.00   (R^2 = 1.000)
+
+
+Test 3a-3i: Total memory usage after inserting 2n-1 items, and then
+            deleting n-1 items, when n is one more than a power of 2.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       33         1360         
+=&gt; passed       65         2640         
+=&gt; passed      129         5200         
+=&gt; passed      257        10320         
+=&gt; passed      513        20560         
+=&gt; passed     1025        41040         
+=&gt; passed     2049        82000         
+=&gt; passed     4097       163920         
+=&gt; passed     8193       327760         
+==&gt; 9/9 tests passed
+
+Memory: 40.00 n + 40.00   (R^2 = 1.000)
+
+
+Test 4a-4e: Total memory usage after inserting n items,
+            and then deleting all but one item
+            (should not grow with n or be too large of a constant).
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32           80         
+=&gt; passed       64           80         
+=&gt; passed      128           80         
+=&gt; passed      256           80         
+=&gt; passed      512           80         
+=&gt; passed     1024           80         
+=&gt; passed     2048           80         
+=&gt; passed     4096           80         
+=&gt; passed     8192           80         
+==&gt; 9/9 tests passed
+
+Memory: 80.00   (R^2 = 1.000)
+
+
+Test 5a-5e: Total memory usage of iterator after inserting n items
+            (should not grow with n or be too large of a constant).
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32           24         
+=&gt; passed       64           24         
+=&gt; passed      128           24         
+=&gt; passed      256           24         
+=&gt; passed      512           24         
+=&gt; passed     1024           24         
+=&gt; passed     2048           24         
+=&gt; passed     4096           24         
+=&gt; passed     8192           24         
+==&gt; 9/9 tests passed
+
+Memory: 24.00   (R^2 = 1.000)
+
+
+Test 6a: Insert n strings; delete them one at a time, checking for
+         loitering after each deletion. The probabilities of addFirst()
+         and addLast() are (p1, p2), respectively. The probabilities of
+         removeFirst() and removeLast() are (q1, q2), respectively.
+  * 100 random insertions (1.0, 0.0) and 100 random deletions (1.0, 0.0)
+  * 100 random insertions (1.0, 0.0) and 100 random deletions (0.0, 1.0)
+  * 100 random insertions (0.0, 1.0) and 100 random deletions (1.0, 0.0)
+  * 100 random insertions (0.0, 1.0) and 100 random deletions (0.0, 1.0)
+  * 100 random insertions (0.5, 0.5) and 100 random deletions (0.5, 0.5)
+==&gt; passed
+
+Test 6b: Perform random operations, checking for loitering after
+         each operation. The probabilities of addFirst(), addLast(),
+         removeFirst(), and removeLast() are (p1, p2, p3, p4),
+         respectively.
+  * 100 random operations (0.8, 0.0, 0.2, 0.0)
+  * 100 random operations (0.8, 0.0, 0.0, 0.2)
+  * 100 random operations (0.0, 0.8, 0.2, 0.0)
+  * 100 random operations (0.0, 0.8, 0.0, 0.2)
+  * 100 random operations (0.4, 0.4, 0.1, 0.1)
+  * 100 random operations (0.2, 0.2, 0.3, 0.3)
+==&gt; passed
+
+Test 7: Perform m random add/remove operations in the deque and check
+        that only constant memory is allocated/deallocated per operation
+  * m = 128
+  * m = 256
+  * m = 512
+==&gt; passed
+
+Test 8: Insert m items into deque; then iterate over deque and check
+        that only constant memory is allocated/deallocated per operation
+  * m = 64
+  * m = 128
+  * m = 256
+==&gt; passed
+
+Test 9 (bonus): Uses at most 40n + 40 bytes of memory
+==&gt; passed
+
+
+Min observed memory for Deque: 40.00 n + 40.00   (R^2 = 1.000)
+Max observed memory for Deque: 40.00 n + 40.00   (R^2 = 1.000)
+
+Total: 50/49 tests passed!
+
+
+================================================================
+
+
+
+Analyzing memory of RandomizedQueue
+*-----------------------------------------------------------
+For Tests 1-5, the maximum amount of memory allowed for
+a RandomizedQueue containing n items is 48n + 192.
+
+For Test 6, the maximum amount of memory allowed for
+a RandomizedQueue iterator over n items is 8n + 72.
+
+Test 1a-1i: Total memory usage after inserting n items
+            when n is a power of 2.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32          312         
+=&gt; passed       64          568         
+=&gt; passed      128         1080         
+=&gt; passed      256         2104         
+=&gt; passed      512         4152         
+=&gt; passed     1024         8248         
+=&gt; passed     2048        16440         
+=&gt; passed     4096        32824         
+=&gt; passed     8192        65592         
+==&gt; 9/9 tests passed
+
+Memory: 8.00 n + 56.00   (R^2 = 1.000)
+
+
+Test 2a-2i: Total memory usage after inserting n items,
+            when n is one more than a power of 2.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       33          568         
+=&gt; passed       65         1080         
+=&gt; passed      129         2104         
+=&gt; passed      257         4152         
+=&gt; passed      513         8248         
+=&gt; passed     1025        16440         
+=&gt; passed     2049        32824         
+=&gt; passed     4097        65592         
+=&gt; passed     8193       131128         
+==&gt; 9/9 tests passed
+
+Memory: 16.00 n + 40.00   (R^2 = 1.000)
+
+
+Test 3a-3i: Total memory usage after inserting 2n-1 items, and then
+            deleting n-1 items, when n is one more than a power of 2.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       33         1080         
+=&gt; passed       65         2104         
+=&gt; passed      129         4152         
+=&gt; passed      257         8248         
+=&gt; passed      513        16440         
+=&gt; passed     1025        32824         
+=&gt; passed     2049        65592         
+=&gt; passed     4097       131128         
+=&gt; passed     8193       262200         
+==&gt; 9/9 tests passed
+
+Memory: 32.00 n + 24.00   (R^2 = 1.000)
+
+
+Test 4a-4i: Total memory usage after inserting n items, deleting n items,
+            then inserting n times, when n is a power of 2.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32          312         
+=&gt; passed       64          568         
+=&gt; passed      128         1080         
+=&gt; passed      256         2104         
+=&gt; passed      512         4152         
+=&gt; passed     1024         8248         
+=&gt; passed     2048        16440         
+=&gt; passed     4096        32824         
+=&gt; passed     8192        65592         
+==&gt; 9/9 tests passed
+
+Memory: 8.00 n + 56.00   (R^2 = 1.000)
+
+
+Test 5a-5i: Total memory usage after inserting n items,
+            and then deleting all but one item.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32           72         
+=&gt; passed       64           72         
+=&gt; passed      128           72         
+=&gt; passed      256           72         
+=&gt; passed      512           72         
+=&gt; passed     1024           72         
+=&gt; passed     2048           72         
+=&gt; passed     4096           72         
+=&gt; passed     8192           72         
+==&gt; 9/9 tests passed
+
+Memory: 72.00   (R^2 = 1.000)
+
+
+Test 6a-6i: Total memory usage of iterator after inserting n items.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32          320         
+=&gt; passed       64          576         
+=&gt; passed      128         1088         
+=&gt; passed      256         2112         
+=&gt; passed      512         4160         
+=&gt; passed     1024         8256         
+=&gt; passed     2048        16448         
+=&gt; passed     4096        32832         
+=&gt; passed     8192        65600         
+==&gt; 9/9 tests passed
+
+Memory: 8.00 n + 64.00   (R^2 = 1.000)
+
+
+Test 7a: Insert 100 strings; delete them one at a time, checking
+         for loitering after each deletion.
+==&gt; passed
+
+Test 7b: Perform random operations, checking for loitering after
+         each operation. The probabilities of enqueue(), dequeue(),
+         and sample() are (p1, p2, p3), respectively.
+  * 200 random operations (0.8, 0.2, 0.0)
+  * 200 random operations (0.2, 0.8, 0.0)
+  * 200 random operations (0.6, 0.2, 0.2)
+  * 200 random operations (0.2, 0.4, 0.4)
+==&gt; passed
+
+Test 8: Insert m items into queue; then iterate over deque and check
+        that only constant memory is allocated/deallocated per operation
+  * m = 64
+  * m = 128
+  * m = 256
+==&gt; passed
+
+Test 9: Total memory usage after inserting n items, seeking to identify
+        values of n where memory usage is minimized as a function of n.
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed       32          312         
+=&gt; passed       64          568         
+=&gt; passed      128         1080         
+=&gt; passed      256         2104         
+=&gt; passed      512         4152         
+=&gt; passed     1024         8248         
+=&gt; passed     2048        16440         
+==&gt; 7/7 tests passed
+
+Memory: 8.00 n + 56.00   (R^2 = 1.000)
+
+
+Test 10: Total memory usage after inserting 4096 items, then successively
+         deleting items, seeking values of n where memory usage is maximized
+         as a function of n
+
+                 n        bytes
+----------------------------------------------------------
+=&gt; passed     2049        65592         
+=&gt; passed     1025        32824         
+=&gt; passed      513        16440         
+=&gt; passed      257         8248         
+=&gt; passed      129         4152         
+=&gt; passed       65         2104         
+=&gt; passed       33         1080         
+=&gt; passed       17          568         
+=&gt; passed        9          312         
+==&gt; 9/9 tests passed
+
+Memory: 32.00 n + 24.00   (R^2 = 1.000)
+
+
+Min observed memory for RandomizedQueue: 8.00 n + 56.00   (R^2 = 1.000)
+Max observed memory for RandomizedQueue: 32.00 n + 24.00   (R^2 = 1.000)
+
+Running 73 total tests.
+
+Total: 73/73 tests passed!
+
+
+================================================================
+
+
+
+********************************************************************************
+*  TIMING
+********************************************************************************
+
+Timing Deque
+*-----------------------------------------------------------
+Running 103 total tests.
+
+Test 1a-1k: make n calls to addFirst() followed by n calls to removeFirst()
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.00
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.02
+==&gt; 11/11 tests passed
+
+
+Test 2a-2k: make n calls to addLast() followed by n calls to removeLast()
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.00
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.01
+==&gt; 11/11 tests passed
+
+
+Test 3a-3k: make n calls to addFirst() followed by n calls to removeLast()
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.00
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.01
+==&gt; 11/11 tests passed
+
+
+Test 4a-4k: make n calls to addLast() followed by n calls to removeFirst()
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.00
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.01
+==&gt; 11/11 tests passed
+
+
+Test 5a-5g: make n random calls to addFirst(), removeFirst(), isEmpty(), and size()
+            with probabilities (0.7, 0.1, 0.1, 0.1)
+
+                    n  seconds
+------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.03
+=&gt; passed     2048000     0.06
+==&gt; 12/12 tests passed
+
+
+Test 6a-6g: make n random calls to addLast(), removeLast(), isEmpty(), and size(),
+            with probabilities (0.7, 0.1, 0.1, 0.1)
+
+                    n  seconds
+------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.02
+=&gt; passed     1024000     0.03
+=&gt; passed     2048000     0.06
+==&gt; 12/12 tests passed
+
+
+Test 7a-7g: make n random calls to addFirst(), addLast(), removeFirst(), removeLast(),
+            isEmpty(), and size() with probabilities (0.3, 0.3, 0.1, 0.1, 0.1, 0.1)
+
+                    n  seconds
+------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.02
+=&gt; passed     1024000     0.04
+=&gt; passed     2048000     0.07
+==&gt; 12/12 tests passed
+
+
+Test 8a-8g: make n calls to addFirst(); iterate over the n items by calling
+            next() and hasNext()
+
+                    n  seconds
+------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.00
+=&gt; passed      256000     0.00
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.02
+=&gt; passed     2048000     0.03
+==&gt; 12/12 tests passed
+
+
+Test 9a-9k: make n calls to addFirst()/addLast(); interleave n calls each to
+            removeFirst(), removeLast(), addFirst(), and addLast()
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1025     0.00
+=&gt; passed        2049     0.00
+=&gt; passed        4097     0.00
+=&gt; passed        8193     0.00
+=&gt; passed       16385     0.00
+=&gt; passed       32769     0.00
+=&gt; passed       65537     0.00
+=&gt; passed      128001     0.01
+=&gt; passed      256001     0.01
+=&gt; passed      512001     0.02
+=&gt; passed     1024001     0.04
+==&gt; 11/11 tests passed
+
+Total: 103/103 tests passed!
+
+
+================================================================
+
+
+
+Timing RandomizedQueue
+*-----------------------------------------------------------
+Running 67 total tests.
+
+Test 1: make n calls to enqueue() followed by n calls to dequeue();
+        count calls to StdRandom
+  * n = 10
+  * n = 100
+  * n = 1000
+==&gt; passed
+
+Test 2: make n calls to enqueue() follwed by n calls to sample();
+        count calls to StdRandom
+  * n = 10
+  * n = 100
+  * n = 1000
+==&gt; passed
+
+Test 3: make n calls to enqueue() and iterate over the n items;
+        count calls to StdRandom
+  * n = 10
+  * n = 100
+  * n = 1000
+==&gt; passed
+
+Test 4a-k: make n calls to enqueue() followed by n calls to dequeue()
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.01
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.01
+=&gt; passed     1024000     0.03
+==&gt; 11/11 tests passed
+
+
+Test 5a-k: make n calls to enqueue() followed by n random calls to
+           enqueue(), sample(), dequeue(), isEmpty(), and size()
+           with probabilities (0.2, 0.2, 0.2, 0.2, 0.2)
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.01
+=&gt; passed      128000     0.01
+=&gt; passed      256000     0.02
+=&gt; passed      512000     0.03
+=&gt; passed     1024000     0.08
+==&gt; 11/11 tests passed
+
+
+Test 6a-k: make n calls to enqueue() followed by n random calls to
+           enqueue(), sample(), dequeue(), isEmpty(), and size()
+           with probabilities (0.6, 0.1, 0.1, 0.1, 0.1)
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.01
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.03
+=&gt; passed     1024000     0.07
+==&gt; 11/11 tests passed
+
+
+Test 7a-k: make n calls to enqueue() followed by n random calls to
+           enqueue(), sample(), dequeue(), isEmpty(), and size()
+           with probabilities (0.1, 0.1, 0.6, 0.1, 0.1)
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.01
+=&gt; passed      256000     0.02
+=&gt; passed      512000     0.04
+=&gt; passed     1024000     0.10
+==&gt; 11/11 tests passed
+
+
+Test 8a-k: make n calls to enqueue() followed by n calls each to
+           next() and hasNext().
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.00
+=&gt; passed      128000     0.01
+=&gt; passed      256000     0.01
+=&gt; passed      512000     0.02
+=&gt; passed     1024000     0.06
+==&gt; 11/11 tests passed
+
+
+Test 9a-i: make 100 calls to enqueue; 99 calls to dequeue;
+           n calls to enqueue(); then call dequeue() three times,
+           followed by enqueue() three times, and repeat n times.
+
+                    n  seconds
+----------------------------------
+=&gt; passed        1024     0.00
+=&gt; passed        2048     0.00
+=&gt; passed        4096     0.00
+=&gt; passed        8192     0.00
+=&gt; passed       16384     0.00
+=&gt; passed       32768     0.00
+=&gt; passed       65536     0.01
+=&gt; passed      128000     0.02
+=&gt; passed      256000     0.04
+==&gt; 9/9 tests passed
+
+
+Total: 67/67 tests passed!
+
+
+================================================================
+
+
+
+
+</pre><div id="ghostery-tracker-tally" class="ghostery-bottom ghostery-right ghostery-none ghostery-collapsed"><div id="ghostery-box"><div id="ghostery-count" style="background: none; color: rgb(255, 255, 255);">0</div><div id="ghostery-pb-icons-container"><span id="ghostery-breaking-tracker" class="ghostery-pb-tracker" title="Broken Page Trackers" style="background: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxOHB4IiBoZWlnaHQ9IjE4cHgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4NCiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQwICgzMzc2MikgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+DQogICAgPHRpdGxlPmJyZWFraW5ncGFnZTwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJQdXJwbGUtQm94IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTQxNi4wMDAwMDAsIC00NTMuMDAwMDAwKSIgaWQ9ImJhbSEtYnJlYWtpbmctdGhlLXBhZ2UtY29weS0yIiBmaWxsPSIjRkNCQTMzIj4NCiAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQxNi4wMDAwMDAsIDQ1My4wMDAwMDApIj4NCiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNOSwwLjE5NTY1MjE3NCBDNC4xNDQzNjAyNSwwLjE5NTY1MjE3NCAwLjE5NTY1MjE3NCw0LjE0NDM2MDI1IDAuMTk1NjUyMTc0LDkgQzAuMTk1NjUyMTc0LDEzLjg1NTYzOTggNC4xNDQzNjAyNSwxNy44MDQzNDc4IDksMTcuODA0MzQ3OCBDMTMuODU1NjM5OCwxNy44MDQzNDc4IDE3LjgwNDM0NzgsMTMuODU1NjM5OCAxNy44MDQzNDc4LDkgQzE3LjgwNDM0NzgsNC4xNDQzNjAyNSAxMy44NTU2Mzk4LDAuMTk1NjUyMTc0IDksMC4xOTU2NTIxNzQgWiBNMTEuNDg1NTg5OSwxMy40MTA0NDQxIEwxMS4wNzcwNzk4LDEzLjAyMDY3NjggTDEyLjEwMDQ3MTEsMTIuMjE2OTU3OSBMMTEuMDQ2MjQ1MSwxMi4yMTY5NTc5IEwxMS4yMzQ0NzgxLDEwLjg3MDcwODcgTDkuODAzMTgxNDIsMTEuNzk1NzUxMiBMOS40MDMzMzczNCw5LjM0NTA5MzkyIEw4LjY5NDc0MjY5LDExLjA4NjU1MTkgTDcuMzI1NzIwMDksMTAuMTcwOTgxNSBMNy43NTI1Njk3NywxMS45Mjk1NyBMNi41NTQyNDY3MywxMi4zMTE0Nzc1IEw3Ljg4MjM1Nzg3LDEzLjQxMDQ0NDEgTDExLjQ4NTU4OTksMTMuNDEwNDQ0MSBaIE02LjcxNTY3NTcyLDEzLjQxMDQ0NDEgTDUuMDI4NjMxOTcsMTIuMDA2NzU3NiBMNi44Njg0Mzg3MywxMS40MzE5ODE4IEw2LjE2Mzg3NDc3LDguNDg4NTczMDkgTDguMzQ5MzEyODgsOS45NTk5NzUxMiBMOS43MDQwMjY1NCw2LjYxMjQ5MDE1IEwxMC4zNTAzNDcxLDEwLjU1NjcxODIgTDEyLjE5NDk5MDcsOS4zNzY1MzMyOCBMMTEuODk4OTM2OCwxMS40NzY5MjM5IEwxNC4yNjI5MzQzLDExLjQ3NjkyMzkgTDEyLjIxMjkyNzIsMTMuMDc4OTIwMiBMMTIuNTY3MjI0NSwxMy40MTA0NDQxIEwxNS4zMzEyNjc3LDEzLjQxMDQ0NDEgTDE0LjQ3Mzk0MDcsMTIuNTk4NjYzOSBMMTcuMjA3MzUwNiwxMC40NjY4MzM5IEwxMy4wNjA3ODIxLDEwLjQ2NjgzMzkgTDEzLjQ5NjI5NzcsNy4zNDg2OTUgTDExLjA5OTg1MzIsOC44Nzg5NDUwNSBMMTAuMTIxMjAyNiwyLjg5Mjc3MTMgTDcuODc3NzIyNTgsOC40MjU0OTI4NSBMNC41NzA1NDQ0Nyw2LjIwMzk4MDEgTDUuNjY1NDgwNDEsMTAuNzUwMzkyNyBMMi45NTEwMTQ3MiwxMS41OTgyNDc2IEw1LjEzNjQ1MjgzLDEzLjQxMDQ0NDEgTDYuNzE1Njc1NzIsMTMuNDEwNDQ0MSBaIiBpZD0iYnJlYWtpbmdwYWdlIj48L3BhdGg+DQogICAgICAgICAgICA8L2c+DQogICAgICAgIDwvZz4NCiAgICA8L2c+DQo8L3N2Zz4=&quot;); opacity: 0.5;"></span><span id="ghostery-slow-tracker" class="ghostery-pb-tracker" title="Slow Trackers" style="background: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxN3B4IiBoZWlnaHQ9IjE3cHgiIHZpZXdCb3g9IjAgMCAxNyAxNyIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4NCiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQwICgzMzc2MikgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+DQogICAgPHRpdGxlPnNsb3d0cmFja2VyczwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJQdXJwbGUtQm94IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTM5NS4wMDAwMDAsIC00NTQuMDAwMDAwKSIgaWQ9InNsb3d0cmFja2VycyIgZmlsbD0iI0ZDQkEzMyI+DQogICAgICAgICAgICA8cGF0aCBkPSJNNDAzLjUsNDU0IEMzOTguODEyMjEsNDU0IDM5NSw0NTcuODEyMjEgMzk1LDQ2Mi41IEMzOTUsNDY3LjE4Nzc5IDM5OC44MTIyMSw0NzEgNDAzLjUsNDcxIEM0MDguMTg3NzksNDcxIDQxMiw0NjcuMTg3NzkgNDEyLDQ2Mi41IEM0MTIsNDU3LjgxMjIxIDQwOC4xODc3OSw0NTQgNDAzLjUsNDU0IFogTTQwOS42MDk1ODQsNDY1LjE3ODY1NCBDNDA5LjUzMDI1OSw0NjUuMTU0MDkgNDA4LjY3NzI4Myw0NjQuNzQ2NDIgNDA3LjU2MTA5MSw0NjQuMzYyNjM3IEM0MDguNDg0Mzc4LDQ2My43NDU2MSA0MDkuMDk0NDE4LDQ2Mi42OTM2NDUgNDA5LjA5NDQxOCw0NjEuNTAxNzMzIEM0MDkuMDk0NDE4LDQ1OS42MDU1ODEgNDA3LjU1MTQwMSw0NTguMDYyMzM4IDQwNS42NTUyNDksNDU4LjA2MjMzOCBDNDAzLjc1OTA5Nyw0NTguMDYyMzM4IDQwMi4yMTU4NTQsNDU5LjYwNTU4MSA0MDIuMjE1ODU0LDQ2MS41MDE3MzMgQzQwMi4yMTU4NTQsNDYyLjA0OTM1IDQwMi4zNDUyMDgsNDYyLjU2Njc2OSA0MDIuNTczMjY5LDQ2My4wMjY0OTcgQzQwMi43ODgwMzQsNDYzLjA2ODYzOCA0MDMuMzQ0NDQsNDYzLjE3NTIzMiA0MDQuMjIzNzgyLDQ2My4zMjM5NjggQzQwNS4yMDQ1MzUsNDYzLjQ5MDI4MSA0MDUuODUyNDM2LDQ2My4zNTY0MTkgNDA2LjM5MTAzOSw0NjIuODc2NjM0IEM0MDYuNzI4MTcyLDQ2Mi41NzY0NTkgNDA2LjkyODA2NCw0NjIuMTYzNjA2IDQwNi45NTM1MjksNDYxLjcxMzc5NCBDNDA2Ljk4MDEyMSw0NjEuMjYzOTgxIDQwNi44Mjk1ODMsNDYwLjgyOTk0NCA0MDYuNTI5NDA4LDQ2MC40OTM3MTIgQzQwNi4wNDY5MTksNDU5Ljk1MjQwNSA0MDUuMjE1MTI3LDQ1OS45MDM5NTMgNDA0LjY3MjY5Myw0NjAuMzg1NTQxIEM0MDQuMjM5NTU3LDQ2MC43NzExMjYgNDA0LjE4NTAyMSw0NjEuNDQ0NDkyIDQwNC41NTIxMjcsNDYxLjg1NzM0NiBDNDA0Ljg0MDEzMyw0NjIuMTgwNTA3IDQwNS4zNjk5NDcsNDYyLjIxNzQ2NiA0MDUuNjg2Nzk5LDQ2MS45MzU3NyBDNDA1LjgwMzk4NCw0NjEuODMxODggNDA1Ljg3MzM5NCw0NjEuNjkyODM1IDQwNS44ODA2MDYsNDYxLjU0NDc3NiBDNDA1Ljg4NjY5LDQ2MS40MjQyMSA0MDUuODUwNjMzLDQ2MS4zMTA2MyA0MDUuNzgwOTk4LDQ2MS4yMzQwMDkgQzQwNS43MTg1NzQsNDYxLjE2NTUgNDA1LjYxOTE5Miw0NjEuMTI3NjQxIDQwNS41MTY4OCw0NjEuMTI4NTQyIEM0MDUuNDI5ODkyLDQ2MS4xMzEwMjEgNDA1LjMxNzIxNCw0NjEuMTY1NSA0MDUuMjQ0MTk4LDQ2MS4yMzc2MTUgQzQwNS4yMjYzOTUsNDYxLjI1NDI5MSA0MDUuMjA0NTM1LDQ2MS4yNjQ4ODMgNDA1LjE3OTc0Niw0NjEuMjY0ODgzIEM0MDUuMTI2MTExLDQ2MS4yNjQ4ODMgNDA1LjA4MzA2OCw0NjEuMjE2NDMxIDQwNS4wODMwNjgsNDYxLjE1NzYxMyBDNDA1LjA4MzA2OCw0NjEuMTIxMzMxIDQwNS4wOTc5NDEsNDYxLjA5NDk2NCA0MDUuMTE2NDIxLDQ2MS4wNjk0OTggQzQwNS4yMjYzOTUsNDYwLjkxODk2IDQwNS4zODE0NCw0NjAuODMxNzQ3IDQwNS41MzUzNTksNDYwLjgxODY3NiBDNDA1Ljc0NDAzOSw0NjAuODAxMDk5IDQwNS45MTMwNTcsNDYwLjg2MDgxOCA0MDYuMDQ2OTE5LDQ2MS4wMDc3NTEgQzQwNi4xNzk4NzksNDYxLjE1NDAwNyA0MDYuMjQ5Mjg5LDQ2MS4zNDg0OSA0MDYuMjM3MTIsNDYxLjU2MzI1NSBDNDA2LjIyMzgyNCw0NjEuODA2MTkgNDA2LjExMjk0OCw0NjIuMDMyNDQ4IDQwNS45MjM2NDksNDYyLjIwMDU2NCBDNDA1LjQ1NzE2LDQ2Mi42MTYxMjIgNDA0LjcwNzE3Myw0NjIuNTY2MDkzIDQwNC4yODU1Myw0NjIuMDkzMjk0IEM0MDMuNzg5NzQ1LDQ2MS41MzU5ODcgNDAzLjg1ODQ3OSw0NjAuNjMyMDgxIDQwNC40MzUxNjcsNDYwLjExNzgxNyBDNDA1LjEyMzQwNyw0NTkuNTA1Mjk3IDQwNi4xODI1ODQsNDU5LjU2NjgyIDQwNi43OTQyMDIsNDYwLjI1NTI4NCBDNDA3LjE1NzAyNiw0NjAuNjYyNzMgNDA3LjM0MDAxNiw0NjEuMTg4MjYyIDQwNy4zMDg0NjYsNDYxLjczMzE3NCBDNDA3LjI3NjY5MSw0NjIuMjc4OTg4IDQwNy4wMzQ2NTgsNDYyLjc3OTA1NSA0MDYuNjI2OTg3LDQ2My4xNDE2NTQgQzQwNi4xNjgzODYsNDYzLjU1MDIyNiA0MDUuNjMyMjYyLDQ2My43NDY1MTIgNDA0Ljk0NjUwMiw0NjMuNzQ2NTEyIEM0MDQuNzA1MzcsNDYzLjc0NjUxMiA0MDQuNDQ0ODU3LDQ2My43MjE3MjIgNDA0LjE2MzE2Miw0NjMuNjc0Mzk3IEM0MDMuMTkyMDk5LDQ2My41MDk2NjIgNDAyLjE1NTAwNyw0NjMuMzI0ODY5IDQwMi4wMTU5NjIsNDYzLjMwNTQ4OCBDNDAxLjMxNzEzMSw0NjMuMjEyMTkxIDQwMC43MzYxNjEsNDYyLjczNzU4OSA0MDAuNzE3NjgyLDQ2Mi4wMzk2NTkgTDQwMC44OTQ1ODcsNDU4Ljk4NzY1MyBDNDAwLjg5NDU4Nyw0NTguNzkxMzY3IDQwMC43MzUyNiw0NTguNjMxMTM4IDQwMC41MzgwNzIsNDU4LjYzMTEzOCBDNDAwLjM0MDg4NSw0NTguNjMxMTM4IDQwMC4xODE1NTgsNDU4Ljc5MDQ2NSA0MDAuMTgxNTU4LDQ1OC45ODc2NTMgQzQwMC4xODE1NTgsNDU4Ljk4NzY1MyA0MDAuMjg1NDQ3LDQ2MC44NDE0MzcgNDAwLjI5NzYxNyw0NjEuMDc1NTgzIEM0MDAuMzIwNjAzLDQ2MS41MjAyMTIgMzk5LjkxMTEzLDQ2MS44NzY3MjYgMzk5LjQ2MDQxNiw0NjEuODc2NzI2IEMzOTguOTk4NDM1LDQ2MS44NzY3MjYgMzk4LjU4NzE1OSw0NjEuNTAwODMxIDM5OC42MjM0NDEsNDYxLjAzOTUyNiBDMzk4LjY0MzQ5OCw0NjAuNzg0MTk3IDM5OC42NjQ2ODIsNDYwLjUyMDA3OSAzOTguNjg1ODY1LDQ2MC4yNzI4NjIgTDM5OC43NTk3ODIsNDU5LjAwOTUxMiBDMzk4Ljc1OTc4Miw0NTguODEzMjI2IDM5OC42MDA0NTUsNDU4LjY1Mjk5OCAzOTguNDAzMjY4LDQ1OC42NTI5OTggQzM5OC4yMDYwOCw0NTguNjUyOTk4IDM5OC4wNDY3NTMsNDU4LjgxMjMyNSAzOTguMDQ2NzUzLDQ1OS4wMDk1MTIgTDM5OC4yMjAyNzgsNDYxLjk5OTk5NyBMMzk4LjIyMDI3OCw0NjIuMDA1MTggQzM5OC4yMjAyNzgsNDY0LjA5NzYxNyAzOTkuNDE3MzczLDQ2NS44MDI4OTIgNDAxLjUxMDcxMiw0NjUuODAxMDg5IEM0MDMuNjIyNTMxLDQ2NS43OTgzODUgNDA5LjYwODY4Myw0NjUuODAxMDg5IDQwOS42MDg2ODMsNDY1LjgwMTA4OSBDNDA5Ljc4MTA4MSw0NjUuODAxMDg5IDQwOS45MjAzNTEsNDY1LjY2MTE0MyA0MDkuOTIwMzUxLDQ2NS40ODk0MjEgQzQwOS45MjAzNTEsNDY1LjMxNzAyMyA0MDkuNzczMTkzLDQ2NS4yMzA3MTEgNDA5LjYwOTU4NCw0NjUuMTc4NjU0IFoiPjwvcGF0aD4NCiAgICAgICAgPC9nPg0KICAgIDwvZz4NCjwvc3ZnPg==&quot;); opacity: 0.5;"></span><span id="ghostery-non-secure-tracker" class="ghostery-pb-tracker" title="Non-secure Trackers" style="background: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxOHB4IiBoZWlnaHQ9IjE4cHgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4NCiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQwICgzMzc2MikgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+DQogICAgPHRpdGxlPndhcm5pbmc8L3RpdGxlPg0KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPg0KICAgIDxkZWZzPjwvZGVmcz4NCiAgICA8ZyBpZD0iUHVycGxlLUJveCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+DQogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNzMuMDAwMDAwLCAtNDUzLjAwMDAwMCkiIGlkPSJ3YXJuaW5nIiBmaWxsPSIjRkVCMDMyIj4NCiAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM3My4wMDAwMDAsIDQ1My4wMDAwMDApIj4NCiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNOSwwLjYzMDQzNDc4MyBDNC4zODQxNDQ5MywwLjYzMDQzNDc4MyAwLjYzMDQzNDc4Myw0LjM4NDE0NDkzIDAuNjMwNDM0NzgzLDkgQzAuNjMwNDM0NzgzLDEzLjYxNTg1NTEgNC4zODQxNDQ5MywxNy4zNjk1NjUyIDksMTcuMzY5NTY1MiBDMTMuNjE1ODU1MSwxNy4zNjk1NjUyIDE3LjM2OTU2NTIsMTMuNjE1ODU1MSAxNy4zNjk1NjUyLDkgQzE3LjM2OTU2NTIsNC4zODQxNDQ5MyAxMy42MTU4NTUxLDAuNjMwNDM0NzgzIDksMC42MzA0MzQ3ODMgWiBNNC42NDI5MjgxMSwxMS43ODk4NTUxIEM1LjI1MDQxMTY1LDExLjc4OTg1NTEgNS43NTY5NTIzNCwxMS4zNjA3NTY3IDUuODc4NzE2OTMsMTAuODgxMzY5NSBDNi4wMDA0ODE1MiwxMS4zNjEyNDM3IDYuNTA3MDIyMjIsMTEuNzIzNzM2OSA3LjExNDM4NCwxMS43MjM3MzY5IEM3LjcyNDE4MTA2LDExLjcyMzczNjkgOC4yMzI2Njk5OSwxMS4zNjUwMTg0IDguMzUxNTEyMjMsMTAuODgyNzA4OSBDOC40NzA5NjMzLDExLjM2NTAxODQgOC45Nzk0NTIyMywxMS43MzY1MjIyIDkuNTg4NzYyMjQsMTEuNzM2NTIyMiBDMTAuMTk0NjYyOCwxMS43MzY1MjIyIDEwLjcwMTIwMzUsMTEuMzk0OTcyNSAxMC44MjM0NTUyLDEwLjkxNjU1OTQgQzEwLjk0NTcwNjgsMTEuMzk0OTcyNSAxMS40NTIyNDc1LDExLjc4OTM2OCAxMi4wNTgyNjk5LDExLjc4OTM2OCBDMTIuMzUzNjcwOCwxMS43ODkzNjggMTIuNjI0NzE4OCwxMS42OTkzODQgMTIuODM5NzU1LDExLjU1OTU5ODIgQzExLjAwOTUxMTUsOC43MTgwOTk3NSAxMi4xNDUzMzE2LDQuMTM3NjgxMTYgMTIuMTQ1MzMxNiw0LjEzNzY4MTE2IEM2Ljk0NjQ3MDYzLDUuMjMxNjE0MjQgNC42NjU4MTk4NSwxMC4xMDAzNzE0IDQuMDU3OTcxMDEsMTEuNjY2MTQyMiBDNC4yMzI5NDY3MywxMS43NDMyMTkyIDQuNDMxNzg4MzEsMTEuNzg5ODU1MSA0LjY0MjkyODExLDExLjc4OTg1NTEgWiIgaWQ9Indhcm5pbmd0cmFja2VycyI+PC9wYXRoPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+&quot;); opacity: 0.5;"></span></div><div id="ghostery-title">Looking</div><div id="ghostery-minimize"><span id="ghostery-minimize-icon"></span></div><span id="ghostery-close" style="background: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxNXB4IiBoZWlnaHQ9IjE1cHgiIHZpZXdCb3g9IjAgMCAxNSAxNSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4NCiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDMuNy4yICgyODI3NikgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+DQogICAgPHRpdGxlPmNvbGxhcHNlIGNvcHkgMjwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJQdXJwbGUtQm94IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgICAgICAgPGcgaWQ9ImNvbGxhcHNlLWNvcHktMiI+DQogICAgICAgICAgICA8Y2lyY2xlIGlkPSJPdmFsLTMxNSIgZmlsbC1vcGFjaXR5PSIwLjI3MDE1Mzk4NiIgZmlsbD0iI0Q4RDhEOCIgY3g9IjcuNSIgY3k9IjcuNSIgcj0iNy41Ij48L2NpcmNsZT4NCiAgICAgICAgICAgIDxwYXRoIGQ9Ik00LjM2LDQuMzYgTDEwLjU3NDU2MzQsMTAuNTc0NTYzNCIgaWQ9IkxpbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSI+PC9wYXRoPg0KICAgICAgICAgICAgPHBhdGggZD0iTTQuMzYsNC4zNiBMMTAuNTc0NTYzNCwxMC41NzQ1NjM0IiBpZD0iTGluZS1Db3B5IiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuNjAwMDAwLCA3LjYwMDAwMCkgc2NhbGUoLTEsIDEpIHRyYW5zbGF0ZSgtNy42MDAwMDAsIC03LjYwMDAwMCkgIj48L3BhdGg+DQogICAgICAgIDwvZz4NCiAgICA8L2c+DQo8L3N2Zz4=&quot;);"></span></div><div id="ghostery-pb-background"><div id="ghostery-trackerList"></div></div></div>
+
+
+</body></html>
