@@ -66,55 +66,48 @@ The _long getCount()_ method returns the current count of the latch.
 In the example are used 2 latches: first as a one-time entry barrier, second as a one-time exit barrier.
 
 ```java
-private static final int PARTIES=3;
+public class CountdownLatchOneTimeEntryAndExitBarriers {
+    private static final int PARTIES = 3;
+    private static final Logger LOG = LoggerFactory.getLogger(CountdownLatchOneTimeEntryAndExitBarriers.class);
 
-public static void main(String[]args)throws InterruptedException{
-        CountDownLatch entryBarrier=new CountDownLatch(1);
-        CountDownLatch exitBarrier=new CountDownLatch(PARTIES);
+    public static void main(String[] args) throws InterruptedException {
+        CountDownLatch entryBarrier = new CountDownLatch(1);
+        CountDownLatch exitBarrier = new CountDownLatch(PARTIES);
 
-        for(int p=0;p<PARTIES; p++){
-        int delay=p+1;
-        Runnable task=new Worker(delay,entryBarrier,exitBarrier);
-        new Thread(task).start();
+        for (int p = 0; p < PARTIES; p++) {
+            int delay = p + 1;
+            Runnable task = new Worker(delay, entryBarrier, exitBarrier);
+            new Thread(task).start();
         }
 
-        logger.info("all threads waiting to start");
+        LOG.info("all threads waiting to start");
         sleep(1);
-
         entryBarrier.countDown();
-        logger.info("all threads started");
-
-        exitBarrier.await();
-        logger.info("all threads finished");
-        }
-
-private static class Worker implements Runnable {
-
-    private final int delay;
-    private final CountDownLatch entryBarrier;
-    private final CountDownLatch exitBarrier;
-
-    Worker(int delay, CountDownLatch entryBarrier, CountDownLatch exitBarrier) {
-        this.delay = delay;
-        this.entryBarrier = entryBarrier;
-        this.exitBarrier = exitBarrier;
+        LOG.info("all threads started");
+        exitBarrier.await();    // releasing all waiting threads if the count reaches 0.
+        LOG.info("all threads finished");
     }
 
-    @Override
-    public void run() {
-        try {
-            entryBarrier.await();
-            work();
-            exitBarrier.countDown();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public record Worker(int delay,
+                         CountDownLatch entryBarrier,
+                         CountDownLatch exitBarrier) implements Runnable {
 
-    private void work() {
-        logger.info("work {} started", delay);
-        sleep(delay);
-        logger.info("work {} finished", delay);
+        @Override
+        public void run() {
+            try {
+                entryBarrier.await();
+                work();
+                exitBarrier.countDown();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private void work() throws InterruptedException {
+            LOG.info("work {} started", delay);
+            sleep(delay);
+            LOG.info("work {} finished", delay);
+        }
     }
 }
 ```
@@ -183,58 +176,51 @@ The _boolean isBroken()_ method returns _true_ if this barrier has been broken b
 In the example are used 2 barriers: first as a cyclic entry barrier, second as a cyclic exit barrier.
 
 ```java
-private static final int PARTIES=3;
-private static final int ITERATIONS=3;
+public class CyclicBarrierCyclicEntryAndExitBarriers {
+    private static final int PARTIES = 3;
+    private static final int ITERATIONS = 3;
+    private static final Logger LOG = LoggerFactory.getLogger(CyclicBarrierCyclicEntryAndExitBarriers.class);
 
-public static void main(String[]args)throws BrokenBarrierException,InterruptedException{
-        CyclicBarrier entryBarrier=new CyclicBarrier(PARTIES+1,()->logger.info("iteration started"));
-        CyclicBarrier exitBarrier=new CyclicBarrier(PARTIES+1,()->logger.info("iteration finished"));
+    public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
+        var entryBarrier = new CyclicBarrier(PARTIES + 1, () -> LOG.info("iteration started"));
+        var exitBarrier = new CyclicBarrier(PARTIES + 1, () -> LOG.info("iteration finished"));
 
-        for(int i=0;i<ITERATIONS; i++){
-        for(int p=0;p<PARTIES; p++){
-        int delay=p+1;
-        Runnable task=new Worker(delay,entryBarrier,exitBarrier);
-        new Thread(task).start();
-        }
+        for (int i = 0; i < ITERATIONS; i++) {
+            for (int p = 0; p < PARTIES; p++) {
+                int delay = p + 1;
+                Runnable task = new Worker(delay, entryBarrier, exitBarrier);
+                new Thread(task).start();
+            }
 
-        logger.info("all threads waiting to start: iteration {}",i);
-        sleep(1);
-
-        entryBarrier.await();
-        logger.info("all threads started: iteration {}",i);
-
-        exitBarrier.await();
-        logger.info("all threads finished: iteration {}",i);
-        }
-        }
-
-private static class Worker implements Runnable {
-
-    private final int delay;
-    private final CyclicBarrier entryBarrier;
-    private final CyclicBarrier exitBarrier;
-
-    Worker(int delay, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
-        this.delay = delay;
-        this.entryBarrier = entryBarrier;
-        this.exitBarrier = exitBarrier;
-    }
-
-    @Override
-    public void run() {
-        try {
+            LOG.info("all threads waiting to start: iteration {}", i);
+            sleep(1);
             entryBarrier.await();
-            work();
+            LOG.info("all threads started: iteration {}", i);
             exitBarrier.await();
-        } catch (InterruptedException | BrokenBarrierException e) {
-            throw new RuntimeException(e);
+            LOG.info("all threads finished: iteration {}", i);
         }
     }
 
-    private void work() {
-        logger.info("work {} started", delay);
-        sleep(delay);
-        logger.info("work {} finished", delay);
+    private record Worker(int delay,
+                          CyclicBarrier entryBarrier,
+                          CyclicBarrier exitBarrier) implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                entryBarrier.await();
+                work();
+                exitBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private void work() throws InterruptedException {
+            LOG.info("work {} started", delay);
+            sleep(delay);
+            LOG.info("work {} finished", delay);
+        }
     }
 }
 ```
@@ -292,37 +278,37 @@ onAdvance_ method can also be used to perform a barrier action.
 By default the _onAdvance_ method returns _true_ when the number of registered parties has become 0 as the result of
 calls the _arriveAndDeregister_ method:
 
-```
-protected boolean onAdvance(int phase, int registeredParties) {
-   return registeredParties == 0;
-}
+```java
+protected boolean onAdvance(int phase,int registeredParties){
+        return registeredParties==0;
+        }
 ```
 
 The overridden _onAdvance_ method for one-time process:
 
-```
+```java
 @Override
-protected boolean onAdvance(int phase, int registeredParties) {
-   return true;
-}
+protected boolean onAdvance(int phase,int registeredParties){
+        return true;
+        }
 ```
 
 The overridden _onAdvance_ method for infinite iterations:
 
-```
+```java
 @Override
-protected boolean onAdvance(int phase, int registeredParties) {
-   return false;
-}
+protected boolean onAdvance(int phase,int registeredParties){
+        return false;
+        }
 ```
 
 The overridden _onAdvance_ method for _maxPhase_ iterations:
 
-```
+```java
 @Override
-protected boolean onAdvance(int phase, int registeredParties) {
-   return (phase >= maxPhase - 1) || (registeredParties == 0);
-}
+protected boolean onAdvance(int phase,int registeredParties){
+        return(phase>=maxPhase-1)||(registeredParties==0);
+        }
 ```
 
 #### Phaser termination
@@ -352,88 +338,105 @@ The _boolean isTerminated()_ method returns _true_ if this phaser has been termi
 In the example are used the basic phaser methods.
 
 ```java
-public static void main(String[]args){
-        Phaser phaser=new Phaser(3){
-@Override
-protected boolean onAdvance(int phase,int registeredParties){
-        log("inside onAdvance()",this);
-        return true;
-        }
+public class PhaserIntroduction {
+    private static final Logger log = LoggerFactory.getLogger(PhaserIntroduction.class);
+
+    public static void main(String[] args) {
+        Phaser phaser = new Phaser(3) {
+            @Override
+            protected boolean onAdvance(int phase, int registeredParties) {
+                log("inside onAdvance", this);
+                return true;
+            }
         };
-        log("after constructor",phaser);
+        log("after constructor", phaser);
 
         phaser.register();
-        log("after register()",phaser);
+        log("after register()", phaser);
 
         phaser.arrive();
-        log("after arrive()",phaser);
+        log("after arrive()", phaser);
 
-        Thread thread=new Thread(){
-@Override
-public void run(){
-        log("before arriveAndAwaitAdvance()",phaser);
-        phaser.arriveAndAwaitAdvance();
-        log("after arriveAndAwaitAdvance()",phaser);
-        }
-        };
+        Thread thread = new Thread(() -> {
+            log("before arriveAndAwaitAdvance()", phaser);
+            phaser.arriveAndAwaitAdvance();
+            log("after arriveAndAwaitAdvance()", phaser);
+        });
         thread.start();
 
         phaser.arrive();
-        log("after arrive()",phaser);
+        log("after arrive()", phaser);
 
         phaser.arriveAndDeregister();
-        log("after arriveAndDeregister()",phaser);
-        }
+        log("after arriveAndDeregister()", phaser);
+    }
+}
 ```
 
 In the example, a phaser is used to implement a one-time entry barrier.
 
 ```java
-private static final int PARTIES=3;
 
-public static void main(String[]args){
-        Phaser phaser=new Phaser(1);
-        log("after constructor",phaser);
+public class Phaser_OneTimeEntryBarrier extends Demo {
 
-        for(int p=0;p<PARTIES; p++){
-        int delay=p+1;
-        Runnable task=new Worker(delay,phaser);
-        new Thread(task).start();
+    private static final int PARTIES = 3;
+
+    public static void main(String[] args) {
+        Phaser phaser = new Phaser(1);
+        log("after constructor", phaser);
+
+        for (int p = 0; p < PARTIES; p++) {
+            int delay = p + 1;
+            Runnable task = new Worker(delay, phaser);
+            new Thread(task).start();
         }
 
-        log("all threads waiting to start",phaser);
+        log("all threads waiting to start", phaser);
         sleep(1);
 
-        log("before all threads started",phaser);
+        log("before all threads started", phaser);
         phaser.arriveAndDeregister();
-        log("after all threads started",phaser);
+        log("after all threads started", phaser);
 
         sleep(10);
-        log("all threads finished",phaser);
+        log("all threads finished", phaser);
+    }
+
+    private static void log(String message, Phaser phaser) {
+        logger.info("{} phase: {}, registered/arrived/unarrived: {}={}+{}, terminated: {}",
+                String.format("%-40s", message),
+                phaser.getPhase(),
+                phaser.getRegisteredParties(),
+                phaser.getArrivedParties(),
+                phaser.getUnarrivedParties(),
+                phaser.isTerminated());
+    }
+
+    private static class Worker implements Runnable {
+
+        private final int delay;
+        private final Phaser phaser;
+
+        Worker(int delay, Phaser phaser) {
+            phaser.register();
+
+            this.delay = delay;
+            this.phaser = phaser;
         }
 
-private static class Worker implements Runnable {
+        @Override
+        public void run() {
+            log("before arriveAndAwaitAdvance()", phaser);
+            phaser.arriveAndAwaitAdvance();
+            log("after arriveAndAwaitAdvance()", phaser);
+            work();
+        }
 
-    private final int delay;
-    private final Phaser phaser;
-
-    Worker(int delay, Phaser phaser) {
-        phaser.register();
-
-        this.delay = delay;
-        this.phaser = phaser;
-    }
-
-    @Override
-    public void run() {
-        phaser.arriveAndAwaitAdvance();
-        work();
-    }
-
-    private void work() {
-        logger.info("work {} started", delay);
-        sleep(delay);
-        logger.info("work {} finished", delay);
+        private void work() {
+            logger.info("work {} started", delay);
+            sleep(delay);
+            logger.info("work {} finished", delay);
+        }
     }
 }
 ```
@@ -441,57 +444,76 @@ private static class Worker implements Runnable {
 In the example, a phaser is used to implement one-time entry and exit barriers.
 
 ```java
-private static final int PARTIES=3;
+public class PhaserOneTimeEntryAndExitBarriers {
 
-public static void main(String[]args){
-        Phaser phaser=new Phaser(1);
-        log("after constructor",phaser);
+    private static final int PARTIES = 3;
+    private static final Logger logger = LoggerFactory.getLogger(PhaserOneTimeEntryAndExitBarriers.class);
 
-        for(int p=0;p<PARTIES; p++){
-        int delay=p+1;
-        Runnable task=new Worker(delay,phaser);
-        new Thread(task).start();
+    public static void main(String[] args) throws InterruptedException {
+        Phaser phaser = new Phaser(1);
+        log("after constructor", phaser);
+
+        for (int p = 0; p < PARTIES; p++) {
+            int delay = p + 1;
+            Runnable task = new Worker(delay, phaser);
+            new Thread(task).start();
         }
 
-        log("all threads waiting to start",phaser);
+        log("all threads waiting to start", phaser);
         sleep(1);
 
-        log("before all threads started",phaser);
+        log("before all threads started", phaser);
         phaser.arriveAndDeregister();
-        log("after all threads started",phaser);
+        log("after all threads started", phaser);
 
         phaser.register();
-        while(!phaser.isTerminated()){
-        phaser.arriveAndAwaitAdvance();
-        phaser.arriveAndDeregister();
+        while (!phaser.isTerminated()) {
+            phaser.arriveAndAwaitAdvance();
+            phaser.arriveAndDeregister();
         }
 
-        log("all threads finished",phaser);
+        log("all threads finished", phaser);
+    }
+
+    private static void log(String message, Phaser phaser) {
+        logger.info("{} phase: {}, registered/arrived/unarrived: {}={}+{}, terminated: {}",
+                String.format("%-40s", message),
+                phaser.getPhase(),
+                phaser.getRegisteredParties(),
+                phaser.getArrivedParties(),
+                phaser.getUnarrivedParties(),
+                phaser.isTerminated());
+    }
+
+    private record Worker(int delay, Phaser phaser) implements Runnable {
+
+        private Worker {
+            phaser.register();
+
         }
 
-private static class Worker implements Runnable {
+        @Override
+        public void run() {
+            log("before arriveAndAwaitAdvance()", phaser);
+            phaser.arriveAndAwaitAdvance();
+            log("after arriveAndAwaitAdvance()", phaser);
 
-    private final int delay;
-    private final Phaser phaser;
+            work();
 
-    Worker(int delay, Phaser phaser) {
-        phaser.register();
+            log("before arriveAndDeregister()", phaser);
+            phaser.arriveAndDeregister();
+            log("after arriveAndDeregister()", phaser);
+        }
 
-        this.delay = delay;
-        this.phaser = phaser;
-    }
-
-    @Override
-    public void run() {
-        phaser.arriveAndAwaitAdvance();
-        work();
-        phaser.arriveAndDeregister();
-    }
-
-    private void work() {
-        logger.info("work {} started", delay);
-        sleep(delay);
-        logger.info("work {} finished", delay);
+        private void work() {
+            logger.info("work {} started", delay);
+            try {
+                sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            logger.info("work {} finished", delay);
+        }
     }
 }
 ```
@@ -499,65 +521,83 @@ private static class Worker implements Runnable {
 In the example, a phaser is used to implement cyclic entry and exit barriers.
 
 ```java
-private static final int PARTIES=3;
-private static final int ITERATIONS=3;
+public class PhaserCyclicEntryAndExitBarriers {
 
-public static void main(String[]args){
-        Phaser phaser=new Phaser(1){
-final private int maxPhase=ITERATIONS;
+    private static final int PARTIES = 3;
+    private static final int ITERATIONS = 3;
+    private static final Logger logger = LoggerFactory.getLogger(PhaserCyclicEntryAndExitBarriers.class);
 
-@Override
-protected boolean onAdvance(int phase,int registeredParties){
-        return(phase>=maxPhase-1)||(registeredParties==0);
-        }
+    public static void main(String[] args) throws InterruptedException {
+        Phaser phaser = new Phaser(1) {
+            final private int maxPhase = ITERATIONS;
+
+            @Override
+            protected boolean onAdvance(int phase, int registeredParties) {
+                return (phase >= maxPhase - 1) || (registeredParties == 0);
+            }
         };
-        log("after constructor",phaser);
+        log("after constructor", phaser);
 
-        for(int p=0;p<PARTIES; p++){
-        int delay=p+1;
-        Runnable task=new Worker(delay,phaser);
-        new Thread(task).start();
+        for (int p = 0; p < PARTIES; p++) {
+            int delay = p + 1;
+            Runnable task = new Worker(delay, phaser);
+            new Thread(task).start();
         }
 
-        log("all threads waiting to start",phaser);
+        log("all threads waiting to start", phaser);
         sleep(1);
 
-        log("before all threads started",phaser);
+        log("before all threads started", phaser);
         phaser.arriveAndDeregister();
-        log("after all threads started",phaser);
+        log("after all threads started", phaser);
 
         phaser.register();
-        while(!phaser.isTerminated()){
-        phaser.arriveAndAwaitAdvance();
-        }
-
-        log("all threads finished",phaser);
-        }
-
-private static class Worker implements Runnable {
-
-    private final int delay;
-    private final Phaser phaser;
-
-    Worker(int delay, Phaser phaser) {
-        phaser.register();
-
-        this.delay = delay;
-        this.phaser = phaser;
-    }
-
-    @Override
-    public void run() {
-        do {
-            work();
+        while (!phaser.isTerminated()) {
             phaser.arriveAndAwaitAdvance();
-        } while (!phaser.isTerminated());
+        }
+
+        log("all threads finished", phaser);
     }
 
-    void work() {
-        logger.info("work {} started", delay);
-        sleep(delay);
-        logger.info("work {} finished", delay);
+    private static void log(String message, Phaser phaser) {
+        logger.info("{} phase: {}, registered/arrived/unarrived: {}={}+{}, terminated: {}",
+                String.format("%-40s", message),
+                phaser.getPhase(),
+                phaser.getRegisteredParties(),
+                phaser.getArrivedParties(),
+                phaser.getUnarrivedParties(),
+                phaser.isTerminated());
+    }
+
+    private record Worker(int delay, Phaser phaser) implements Runnable {
+
+        private Worker {
+            phaser.register();
+
+        }
+
+        @Override
+        public void run() {
+            log("before arriveAndAwaitAdvance()", phaser);
+            phaser.arriveAndAwaitAdvance();
+            log("after arriveAndAwaitAdvance()", phaser);
+
+            work();
+
+            log("before arriveAndDeregister()", phaser);
+            phaser.arriveAndDeregister();
+            log("after arriveAndDeregister()", phaser);
+        }
+
+        private void work() {
+            logger.info("work {} started", delay);
+            try {
+                sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            logger.info("work {} finished", delay);
+        }
     }
 }
 ```
