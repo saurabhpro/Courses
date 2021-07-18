@@ -56,15 +56,15 @@ public class Board {
     }
 
     private int[][] copyBoard(int[][] tiles) {
-        final int[][] blocksBoard;
-        blocksBoard = new int[dimension][dimension];
+        final int[][] blocksBoardCopy = new int[dimension][dimension];
 
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                blocksBoard[i][j] = tiles[i][j];
+                blocksBoardCopy[i][j] = tiles[i][j];
             }
         }
-        return blocksBoard;
+
+        return blocksBoardCopy;
     }
 
     // string representation of this board

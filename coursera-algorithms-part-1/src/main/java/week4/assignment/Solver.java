@@ -1,6 +1,10 @@
 package week4.assignment;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.awt.*;
 import java.util.Deque;
@@ -43,36 +47,37 @@ public class Solver {
         if (initial == null) {
             throw new IllegalArgumentException("board is null");
         }
-        MinPQ<SearchNode> pqoriginal = new MinPQ<>();
-        MinPQ<SearchNode> pqtwin = new MinPQ<>();
 
-        pqoriginal.insert(new SearchNode(initial, null));
-        pqtwin.insert(new SearchNode(initial.twin(), null));
+        MinPQ<SearchNode> pqOriginal = new MinPQ<>();
+        MinPQ<SearchNode> pqTwin = new MinPQ<>();
+
+        pqOriginal.insert(new SearchNode(initial, null));
+        pqTwin.insert(new SearchNode(initial.twin(), null));
 
         while (true) {
-            SearchNode originalnode = pqoriginal.delMin();
-            SearchNode twinnode = pqtwin.delMin();
+            SearchNode originalNode = pqOriginal.delMin();
+            SearchNode twinNode = pqTwin.delMin();
 
-            if (originalnode.board.isGoal()) {
-                this.node = originalnode;
+            if (originalNode.board.isGoal()) {
+                this.node = originalNode;
                 return;
-            } else if (twinnode.board.isGoal()) {
+            } else if (twinNode.board.isGoal()) {
                 this.node = null;
                 return;
             }
 
-            for (Board neighbour : originalnode.board.neighbors()) {
-                if (originalnode.previous != null && originalnode.previous.board.equals(neighbour)) {
+            for (Board neighbour : originalNode.board.neighbors()) {
+                if (originalNode.previous != null && originalNode.previous.board.equals(neighbour)) {
                     continue;
                 }
-                pqoriginal.insert(new SearchNode(neighbour, originalnode));
+                pqOriginal.insert(new SearchNode(neighbour, originalNode));
             }
 
-            for (Board neighbour : twinnode.board.neighbors()) {
-                if (twinnode.previous != null && twinnode.previous.board.equals(neighbour)) {
+            for (Board neighbour : twinNode.board.neighbors()) {
+                if (twinNode.previous != null && twinNode.previous.board.equals(neighbour)) {
                     continue;
                 }
-                pqtwin.insert(new SearchNode(neighbour, twinnode));
+                pqTwin.insert(new SearchNode(neighbour, twinNode));
             }
         }
     }
@@ -95,12 +100,15 @@ public class Solver {
         if (!isSolvable()) {
             return null;
         }
+
         Deque<Board> solution = new LinkedList<>();
-        SearchNode solutionnode = node;   //to make node immutable,we use an extra searchnode here
+        SearchNode solutionnode = node;   // to make node immutable,we use an extra searchNode here
+
         while (solutionnode != null) {
             solution.addFirst(solutionnode.board);
             solutionnode = solutionnode.previous;
         }
+
         return solution;
     }
 
