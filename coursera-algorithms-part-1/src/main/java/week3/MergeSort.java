@@ -2,6 +2,7 @@ package week3;
 
 import edu.princeton.cs.algs4.Insertion;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class MergeSort {
@@ -49,17 +50,17 @@ public class MergeSort {
                                        Comparable<Integer>[] aux,
                                        int lo,
                                        int hi) {
-
+        System.out.println();
         //improvement 1(for small subarrays.CUTOFF maximum is 7)
-        if (hi <= lo + CUTOFF - 1) {
-            Insertion.sort(arr, lo, hi);
-            return;
-        }
-
-//        // base case
-//        if (hi <= lo) {
+//        if (hi <= lo + CUTOFF - 1) {
+//            Insertion.sort(arr, lo, hi);
 //            return;
 //        }
+
+        // base case
+        if (hi <= lo) {
+            return;
+        }
 
         // Find the middle point
         int mid = lo + (hi - lo) / 2;
@@ -80,6 +81,8 @@ public class MergeSort {
     public static <Integer> void sort(Comparable<Integer>[] arr) {
         final Comparable<Integer>[] aux = new Comparable[arr.length];
         sort(arr, aux, 0, arr.length - 1);
+
+        System.out.println(Arrays.toString(arr));
     }
 
     public static <Integer> boolean less(Comparable<Integer> a, Comparable<Integer> b) {
