@@ -6,7 +6,7 @@ import week4.miniproject_4.boruvka.Edge;
 /**
  * An edge class used in the sequential Boruvka implementation.
  */
-public final class SeqEdge extends Edge<SeqComponent> implements Comparable<Edge> {
+public final class SeqEdge implements Edge<SeqComponent>, Comparable<Edge> {
 
     /**
      * Source component.
@@ -82,13 +82,7 @@ public final class SeqEdge extends Edge<SeqComponent> implements Comparable<Edge
      */
     @Override
     public int compareTo(final Edge e) {
-        if (e.weight() == weight) {
-            return 0;
-        } else if (weight < e.weight()) {
-            return -1;
-        } else {
-            return 1;
-        }
+        return Double.compare(weight, e.weight());
     }
 
     /**

@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * Sequential implementatin of Boruvka's minimum spanning tree algorithm.
  */
-public final class SeqBoruvka extends AbstractBoruvka<SeqComponent> {
+public final class SeqBoruvka implements AbstractBoruvka<SeqComponent> {
 
     /**
      * Constructor.

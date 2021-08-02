@@ -6,13 +6,13 @@ package week4.miniproject_4.boruvka;
  *
  * @param <C> Component type that this edge connects.
  */
-public abstract class Edge<C extends Component> {
+public interface Edge<C extends Component> {
     /**
      * Fetch the weight of this edge.
      *
      * @return Weight of this edge.
      */
-    public abstract double weight();
+    double weight();
 
     /**
      * Given one member of this edge, swap it out for a different component.
@@ -21,21 +21,21 @@ public abstract class Edge<C extends Component> {
      * @param to The component to replace with
      * @return this
      */
-    public abstract Edge<C> replaceComponent(final C from, final C to);
+    Edge<C> replaceComponent(final C from, final C to);
 
     /**
      * Source component for this edge.
      *
      * @return Source component for this edge.
      */
-    public abstract C fromComponent();
+    C fromComponent();
 
     /**
      * Destination component for this edge.
      *
      * @return Destination component for this edge.
      */
-    public abstract C toComponent();
+    C toComponent();
 
     /**
      * Given one member of this edge, return the other.

@@ -9,11 +9,13 @@ import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static week4.miniproject_4.ParBoruvka.ParComponent;
+
 /**
  * A parallel implementation of Boruvka's algorithm to compute a Minimum
  * Spanning Tree.
  */
-public final class ParBoruvka extends AbstractBoruvka<ParBoruvka.ParComponent> {
+public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
 
     /**
      * Constructor.
@@ -84,7 +86,7 @@ public final class ParBoruvka extends AbstractBoruvka<ParBoruvka.ParComponent> {
      * be a singleton representing a single node in the graph, or may be the
      * result of collapsing edges to form a component from multiple nodes.
      */
-    public static final class ParComponent extends Component<ParComponent> {
+    public static final class ParComponent implements Component<ParComponent> {
 
 
         /**
@@ -271,7 +273,7 @@ public final class ParBoruvka extends AbstractBoruvka<ParBoruvka.ParComponent> {
     /**
      * A ParEdge represents a weighted edge between two ParComponents.
      */
-    public static final class ParEdge extends Edge<ParComponent> implements Comparable<Edge> {
+    public static final class ParEdge implements Edge<ParComponent>, Comparable<Edge> {
         /**
          * Source component.
          */

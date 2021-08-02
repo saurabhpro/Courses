@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Component implementation used for the sequential Boruvka implementation.
  */
-public final class SeqComponent extends Component<SeqComponent> {
+public final class SeqComponent implements Component<SeqComponent> {
 
     /**
      * A unique identifier for this component in the graph that contains
