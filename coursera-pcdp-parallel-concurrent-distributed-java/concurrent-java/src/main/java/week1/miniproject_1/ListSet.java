@@ -35,6 +35,7 @@ public abstract class ListSet {
      * method must use ListSet.head as the head of the list.
      *
      * @param o The integer to add.
+     *
      * @return false if this value already exists in the list, true otherwise
      */
     abstract boolean add(Integer o);
@@ -44,6 +45,7 @@ public abstract class ListSet {
      * ListSet.head as the head of the list.
      *
      * @param o The integer to remove.
+     *
      * @return true if this value is found in the list and successfully removed,
      * false otherwise
      */
@@ -54,6 +56,7 @@ public abstract class ListSet {
      * ListSet.head as the head of the list.
      *
      * @param o The integer to check for.
+     *
      * @return true if this list contains the target value, false otherwise.
      */
     abstract boolean contains(Integer o);

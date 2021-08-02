@@ -1,8 +1,6 @@
 package edu.coursera.parallel.week4.miniproject_4;
 
-import java.util.Arrays;
 import java.util.concurrent.Phaser;
-import java.util.stream.IntStream;
 
 /**
  * Wrapper class for implementing one-dimensional iterative averaging using

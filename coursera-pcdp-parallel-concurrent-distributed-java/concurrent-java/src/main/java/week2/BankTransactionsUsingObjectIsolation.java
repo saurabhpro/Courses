@@ -2,7 +2,9 @@ package week2;
 
 import java.util.Random;
 
-import static edu.rice.pcdp.PCDP.*;
+import static edu.rice.pcdp.PCDP.async;
+import static edu.rice.pcdp.PCDP.finish;
+import static edu.rice.pcdp.PCDP.isolated;
 
 /**
  * A thread-safe transaction implementation using object-based isolation.

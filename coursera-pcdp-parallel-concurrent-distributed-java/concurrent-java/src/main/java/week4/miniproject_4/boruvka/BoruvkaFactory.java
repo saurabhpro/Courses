@@ -12,6 +12,7 @@ public interface BoruvkaFactory<C extends Component, E extends Edge> {
      * Create a new component with the given ID.
      *
      * @param nodeId Node ID
+     *
      * @return New component with ID nodeId
      */
     C newComponent(int nodeId);
@@ -19,9 +20,10 @@ public interface BoruvkaFactory<C extends Component, E extends Edge> {
     /**
      * Create a new edge given the components that edge links, and its weight.
      *
-     * @param from Source component.
-     * @param to Destination component.
+     * @param from   Source component.
+     * @param to     Destination component.
      * @param weight Weight of the edge.
+     *
      * @return New edge.
      */
     E newEdge(C from, C to, double weight);

@@ -18,7 +18,8 @@ public interface Edge<C extends Component> {
      * Given one member of this edge, swap it out for a different component.
      *
      * @param from The component already in this edge
-     * @param to The component to replace with
+     * @param to   The component to replace with
+     *
      * @return this
      */
     Edge<C> replaceComponent(final C from, final C to);
@@ -41,7 +42,8 @@ public interface Edge<C extends Component> {
      * Given one member of this edge, return the other.
      *
      * @param component One component of this edge.
+     *
      * @return The other component of this edge.
      */
-    public abstract C getOther(final C component);
+    C getOther(final C component);
 }

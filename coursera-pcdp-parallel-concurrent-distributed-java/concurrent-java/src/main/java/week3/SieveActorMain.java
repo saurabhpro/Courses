@@ -51,7 +51,7 @@ public class SieveActorMain {
     private static class SieveActor extends Actor {
 
         private static final int MAX_LOCAL_PRIMES = 10_000;
-        private final int localPrimes[];
+        private final int[] localPrimes;
         private int numLocalPrimes;
         private SieveActor nextActor;
 

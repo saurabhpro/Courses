@@ -14,6 +14,13 @@ import java.util.stream.IntStream;
 public class PascalTriangleRecursionSeqMemoized {
     public static final Logger LOG = LoggerFactory.getLogger(RecursivePascalTriangle.class);
 
+    public static void main(String[] args) {
+        int row = 9;
+        IntStream.range(0, 5).forEach(i -> {
+            RecursivePascalTriangle.display(row);
+        });
+    }
+
     record RecursivePascalTriangle(int a, int b) {
         private static int pascalTriangle(int a, int b, int[][] store) {
             if (b == 0 || b == a) {
@@ -46,12 +53,5 @@ public class PascalTriangleRecursionSeqMemoized {
             long timeElapsed = Duration.between(start, finish).toMillis();
             LOG.info("Seq Time: {} ms", timeElapsed);
         }
-    }
-
-    public static void main(String[] args) {
-        int row = 9;
-        IntStream.range(0, 5).forEach(i -> {
-            RecursivePascalTriangle.display(row);
-        });
     }
 }

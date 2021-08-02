@@ -1,9 +1,8 @@
 package week1.miniproject_1;
 
-import java.util.LinkedList;
-import java.util.Iterator;
-
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * A single website in a graph of websites.

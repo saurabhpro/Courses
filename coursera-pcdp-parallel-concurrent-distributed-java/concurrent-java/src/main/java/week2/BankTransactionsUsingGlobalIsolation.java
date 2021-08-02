@@ -2,7 +2,9 @@ package week2;
 
 import java.util.Random;
 
-import static edu.rice.pcdp.PCDP.*;
+import static edu.rice.pcdp.PCDP.async;
+import static edu.rice.pcdp.PCDP.finish;
+import static edu.rice.pcdp.PCDP.isolated;
 
 /**
  * A thread-safe transaction implementation using global isolation.
@@ -81,10 +83,8 @@ public final class BankTransactionsUsingGlobalIsolation {
 
     private static void busyWork(final int srcIndex, final int destIndex) {
         for (int i = 0; i < srcIndex * 100; i++) {
-            ;
         }
         for (int i = 0; i < destIndex * 100; i++) {
-            ;
         }
     }
 }

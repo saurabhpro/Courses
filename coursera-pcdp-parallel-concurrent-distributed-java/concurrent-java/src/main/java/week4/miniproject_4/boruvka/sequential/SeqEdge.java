@@ -9,6 +9,10 @@ import week4.miniproject_4.boruvka.Edge;
 public final class SeqEdge implements Edge<SeqComponent>, Comparable<Edge> {
 
     /**
+     * Weight of this edge.
+     */
+    public double weight;
+    /**
      * Source component.
      */
     protected SeqComponent fromComponent;
@@ -16,10 +20,6 @@ public final class SeqEdge implements Edge<SeqComponent>, Comparable<Edge> {
      * Destination component.
      */
     protected SeqComponent toComponent;
-    /**
-     * Weight of this edge.
-     */
-    public double weight;
 
     /**
      * Constructor.

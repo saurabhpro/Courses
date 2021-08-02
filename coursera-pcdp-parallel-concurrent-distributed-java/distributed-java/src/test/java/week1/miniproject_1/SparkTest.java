@@ -9,18 +9,17 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.junit.jupiter.api.Test;
 import scala.Tuple2;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SparkTest {
-
-    private enum EdgeDistribution {
-        INCREASING,
-        RANDOM,
-        UNIFORM
-    }
 
     private static JavaSparkContext getSparkContext(final int nCores) {
         Logger.getLogger("org").setLevel(Level.OFF);
@@ -296,5 +295,11 @@ public class SparkTest {
 
         testDriver(nNodes, minEdgesPerNode, maxEdgesPerNode, niterations,
                 edgeConfig);
+    }
+
+    private enum EdgeDistribution {
+        INCREASING,
+        RANDOM,
+        UNIFORM
     }
 }

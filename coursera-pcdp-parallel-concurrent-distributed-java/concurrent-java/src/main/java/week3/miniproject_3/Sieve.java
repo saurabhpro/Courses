@@ -9,6 +9,7 @@ public abstract class Sieve {
      * of Eratosthenes.
      *
      * @param limit Only find primes less than or equal to this limit.
+     *
      * @return The number of primes that are <= limit.
      */
     public abstract int countPrimes(final int limit);

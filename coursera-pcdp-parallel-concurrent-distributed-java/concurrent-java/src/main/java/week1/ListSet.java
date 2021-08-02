@@ -14,6 +14,7 @@ public interface ListSet {
      * method must use ListSet.head as the head of the list.
      *
      * @param key The integer to add.
+     *
      * @return false if this value already exists in the list, true otherwise
      */
     boolean add(int key);
@@ -23,6 +24,7 @@ public interface ListSet {
      * ListSet.head as the head of the list.
      *
      * @param key The integer to remove.
+     *
      * @return true if this value is found in the list and successfully removed,
      * false otherwise
      */
@@ -33,6 +35,7 @@ public interface ListSet {
      * ListSet.head as the head of the list.
      *
      * @param key The integer to check for.
+     *
      * @return true if this list contains the target value, false otherwise.
      */
     boolean contains(int key);

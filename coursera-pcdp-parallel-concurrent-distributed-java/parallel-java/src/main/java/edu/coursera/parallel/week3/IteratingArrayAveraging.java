@@ -6,14 +6,13 @@ public class IteratingArrayAveraging {
 
     private final int n;
     private double[] myNew;
+    private double[] myVal;
 
     public IteratingArrayAveraging(int n) {
         this.n = n;
         this.myNew = myNew;
         this.myVal = myVal;
     }
-
-    private double[] myVal;
 
     public void runSeq(int iterations) {
         for (int i = 0; i < iterations; i++) {

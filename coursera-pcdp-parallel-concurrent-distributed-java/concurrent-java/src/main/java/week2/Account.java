@@ -39,6 +39,7 @@ public final class Account {
      * Remove the specified amount from the current balance of the account.
      *
      * @param amount The amount to subtract from the current balance.
+     *
      * @return true if it was possible to subtract that amount, false otherwise.
      */
     public boolean withdraw(final int amount) {
@@ -53,6 +54,7 @@ public final class Account {
      * Add the specified amount to the current balance.
      *
      * @param amount The amount to add.
+     *
      * @return true if it was possible to add that amount (i.e. amount > 0),
      * false otherwise.
      */

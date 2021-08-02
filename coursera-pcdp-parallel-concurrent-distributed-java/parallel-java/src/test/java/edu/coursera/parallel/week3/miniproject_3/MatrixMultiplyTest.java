@@ -1,14 +1,12 @@
 package edu.coursera.parallel.week3.miniproject_3;
 
 import edu.coursera.parallel.helper.Utils;
-import edu.coursera.parallel.week3.miniproject_3.MatrixMultiply;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MatrixMultiplyTest {
 

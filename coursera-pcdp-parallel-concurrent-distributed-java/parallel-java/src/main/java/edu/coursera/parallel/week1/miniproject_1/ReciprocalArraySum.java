@@ -82,6 +82,61 @@ public final class ReciprocalArraySum {
     }
 
     /**
+     * TODO: Modify this method to compute the same reciprocal sum as
+     * seqArraySum, but use two tasks running in parallel under the Java Fork
+     * Join framework. You may assume that the length of the input array is
+     * evenly divisible by 2.
+     *
+     * @param input Input array
+     *
+     * @return The sum of the reciprocals of the array input
+     */
+    protected static double parArraySum(final double[] input) {
+        if (input.length % 2 != 0) {
+            throw new IllegalArgumentException("expected even inputs");
+        }
+        return parManyTaskArraySum(input, 2);
+    }
+
+    /**
+     * TODO: Extend the work you did to implement parArraySum to use a set
+     * number of tasks to compute the reciprocal array sum. You may find the
+     * above utilities getChunkStartInclusive and getChunkEndExclusive helpful
+     * in computing the range of element indices that belong to each chunk.
+     *
+     * @param input    Input array
+     * @param numTasks The number of tasks to create
+     *
+     * @return The sum of the reciprocals of the array input
+     */
+    protected static double parManyTaskArraySum(final double[] input, final int numTasks) {
+        if (input.length % 2 != 0) {
+            throw new IllegalArgumentException("expected even inputs");
+        }
+
+        double sum = 0.0;
+        final List<ReciprocalArraySumTask> taskList = new ArrayList<>();
+
+        // Compute sum of reciprocals of array elements
+        for (int i = 0; i < numTasks; i++) {
+            taskList.add(new ReciprocalArraySumTask(
+                    getChunkStartInclusive(i, numTasks, input.length),
+                    getChunkEndExclusive(i, numTasks, input.length),
+                    input
+            ));
+        }
+
+        // forks all tasks in the specified collection
+        ForkJoinTask.invokeAll(taskList);
+
+        for (ReciprocalArraySumTask reciprocalArraySumTask : taskList) {
+            sum += reciprocalArraySumTask.getValue();
+        }
+
+        return sum;
+    }
+
+    /**
      * This class stub can be filled in to implement the body of each task
      * created to perform reciprocal array sum in parallel.
      */
@@ -150,60 +205,5 @@ public final class ReciprocalArraySum {
                 this.value = leftSum.getValue() + rightSum.getValue();
             }
         }
-    }
-
-    /**
-     * TODO: Modify this method to compute the same reciprocal sum as
-     * seqArraySum, but use two tasks running in parallel under the Java Fork
-     * Join framework. You may assume that the length of the input array is
-     * evenly divisible by 2.
-     *
-     * @param input Input array
-     *
-     * @return The sum of the reciprocals of the array input
-     */
-    protected static double parArraySum(final double[] input) {
-        if (input.length % 2 != 0) {
-            throw new IllegalArgumentException("expected even inputs");
-        }
-        return parManyTaskArraySum(input, 2);
-    }
-
-    /**
-     * TODO: Extend the work you did to implement parArraySum to use a set
-     * number of tasks to compute the reciprocal array sum. You may find the
-     * above utilities getChunkStartInclusive and getChunkEndExclusive helpful
-     * in computing the range of element indices that belong to each chunk.
-     *
-     * @param input    Input array
-     * @param numTasks The number of tasks to create
-     *
-     * @return The sum of the reciprocals of the array input
-     */
-    protected static double parManyTaskArraySum(final double[] input, final int numTasks) {
-        if (input.length % 2 != 0) {
-            throw new IllegalArgumentException("expected even inputs");
-        }
-
-        double sum = 0.0;
-        final List<ReciprocalArraySumTask> taskList = new ArrayList<>();
-
-        // Compute sum of reciprocals of array elements
-        for (int i = 0; i < numTasks; i++) {
-            taskList.add(new ReciprocalArraySumTask(
-                    getChunkStartInclusive(i, numTasks, input.length),
-                    getChunkEndExclusive(i, numTasks, input.length),
-                    input
-            ));
-        }
-
-        // forks all tasks in the specified collection
-        ForkJoinTask.invokeAll(taskList);
-
-        for (ReciprocalArraySumTask reciprocalArraySumTask : taskList) {
-            sum += reciprocalArraySumTask.getValue();
-        }
-
-        return sum;
     }
 }

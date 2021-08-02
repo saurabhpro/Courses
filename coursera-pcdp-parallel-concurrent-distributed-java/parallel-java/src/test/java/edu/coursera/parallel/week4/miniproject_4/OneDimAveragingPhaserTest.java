@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.Phaser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class OneDimAveragingPhaserTest {
@@ -19,30 +18,6 @@ public class OneDimAveragingPhaserTest {
             return Runtime.getRuntime().availableProcessors();
         } else {
             return Integer.parseInt(ncoresStr);
-        }
-    }
-
-    private double[] createArray(final int N, final int iterations) {
-        final double[] input = new double[N + 2];
-        int index = N + 1;
-        while (index > 0) {
-            input[index] = 1.0;
-            index -= (iterations / 4);
-        }
-        return input;
-    }
-
-    /**
-     * A reference implementation of runSequential, in case the one in the main source file is accidentally modified.
-     */
-    public void runSequential(final int iterations, double[] myNew, double[] myVal, final int n) {
-        for (int iter = 0; iter < iterations; iter++) {
-            for (int j = 1; j <= n; j++) {
-                myNew[j] = (myVal[j - 1] + myVal[j + 1]) / 2.0;
-            }
-            double[] tmp = myNew;
-            myNew = myVal;
-            myVal = tmp;
         }
     }
 
@@ -92,6 +67,29 @@ public class OneDimAveragingPhaserTest {
         }
     }
 
+    private double[] createArray(final int N, final int iterations) {
+        final double[] input = new double[N + 2];
+        int index = N + 1;
+        while (index > 0) {
+            input[index] = 1.0;
+            index -= (iterations / 4);
+        }
+        return input;
+    }
+
+    /**
+     * A reference implementation of runSequential, in case the one in the main source file is accidentally modified.
+     */
+    public void runSequential(final int iterations, double[] myNew, double[] myVal, final int n) {
+        for (int iter = 0; iter < iterations; iter++) {
+            for (int j = 1; j <= n; j++) {
+                myNew[j] = (myVal[j - 1] + myVal[j + 1]) / 2.0;
+            }
+            double[] tmp = myNew;
+            myNew = myVal;
+            myVal = tmp;
+        }
+    }
 
     private void checkResult(final double[] ref, final double[] output) {
         for (int i = 0; i < ref.length; i++) {
@@ -104,6 +102,7 @@ public class OneDimAveragingPhaserTest {
      * A helper function for tests of the two-task parallel implementation.
      *
      * @param N The size of the array to test
+     *
      * @return The speedup achieved, not all tests use this information
      */
     private double parTestHelper(final int N, final int ntasks) {

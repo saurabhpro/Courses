@@ -1,4 +1,3 @@
-
 package edu.coursera.parallel.week2;
 
 import org.slf4j.Logger;

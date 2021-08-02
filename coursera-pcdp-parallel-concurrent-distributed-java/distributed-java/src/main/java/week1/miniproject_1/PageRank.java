@@ -46,6 +46,7 @@ public final class PageRank {
      *              website IDs.
      * @param ranks The current ranks of each website, keyed on unique website
      *              IDs.
+     *
      * @return The new ranks of the websites graph, using the PageRank
      * algorithm to update site ranks.
      */

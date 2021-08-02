@@ -12,6 +12,15 @@ import java.util.stream.IntStream;
 
 class SequentialComputer {
 
+    static int doCompute(List<Integer> range, int start, int end) {
+        int result = 0;
+        for (int i = start; i < end; i++) {
+            // double temp = Intensive.doCompute(range.get(i));
+            result += range.get(i);
+        }
+        return result;
+    }
+
     /**
      * Mock class to do a long duration work
      */
@@ -29,24 +38,14 @@ class SequentialComputer {
             return acc;
         }
     }
-
-    static int doCompute(List<Integer> range, int start, int end) {
-        int result = 0;
-        for (int i = start; i < end; i++) {
-            // double temp = Intensive.doCompute(range.get(i));
-            result += range.get(i);
-        }
-        return result;
-    }
 }
 
 class ParallelComputer extends RecursiveAction {
+    private static final int SEQUENTIAL_THRESHOLD = 1000;
     private final List<Integer> range;
     private final int start;
     private final int end;
     private int value;
-
-    private static final int SEQUENTIAL_THRESHOLD = 1000;
 
     ParallelComputer(List<Integer> range, int start, int end) {
         if (start > end) {

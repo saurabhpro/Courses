@@ -16,6 +16,15 @@ public final class SolutionToBoruvka<C extends Component> {
     private C solution = null;
 
     /**
+     * Get the provided solution.
+     *
+     * @return Computed solution.
+     */
+    public C getSolution() {
+        return solution;
+    }
+
+    /**
      * Provide a solution to the testing code. Single assignment.
      *
      * @param setSolution Computed solution.
@@ -24,14 +33,5 @@ public final class SolutionToBoruvka<C extends Component> {
         assert (solution == null);
         assert (setSolution != null);
         this.solution = setSolution;
-    }
-
-    /**
-     * Get the provided solution.
-     *
-     * @return Computed solution.
-     */
-    public C getSolution() {
-        return solution;
     }
 }

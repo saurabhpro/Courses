@@ -27,6 +27,23 @@ public final class Account {
     }
 
     /**
+     * A dummy busy work function for simulating more work to increase isolated
+     * contention. While this work is artificial in this setting, it serves to
+     * more accurately simulate real-world conditions where a bank transfer is
+     * not a shared-memory operation (i.e., it must contend with network
+     * latencies, disk latencies, etc.).
+     *
+     * @param srcID  The source account ID
+     * @param destID The destination account ID
+     */
+    private static void busyWork(final int srcID, final int destID) {
+        for (int i = 0; i < srcID * 100; i++) {
+        }
+        for (int i = 0; i < destID * 100; i++) {
+        }
+    }
+
+    /**
      * Get the remaining balance in this account.
      *
      * @return The current balance.
@@ -39,6 +56,7 @@ public final class Account {
      * Remove the specified amount from the current balance of the account.
      *
      * @param amount The amount to subtract from the current balance.
+     *
      * @return true if it was possible to subtract that amount, false otherwise.
      */
     public boolean withdraw(final int amount) {
@@ -53,6 +71,7 @@ public final class Account {
      * Add the specified amount to the current balance.
      *
      * @param amount The amount to add.
+     *
      * @return true if it was possible to add that amount (i.e. amount > 0),
      * false otherwise.
      */
@@ -65,30 +84,12 @@ public final class Account {
     }
 
     /**
-     * A dummy busy work function for simulating more work to increase isolated
-     * contention. While this work is artificial in this setting, it serves to
-     * more accurately simulate real-world conditions where a bank transfer is
-     * not a shared-memory operation (i.e., it must contend with network
-     * latencies, disk latencies, etc.).
-     *
-     * @param srcID  The source account ID
-     * @param destID The destination account ID
-     */
-    private static void busyWork(final int srcID, final int destID) {
-        for (int i = 0; i < srcID * 100; i++) {
-            ;
-        }
-        for (int i = 0; i < destID * 100; i++) {
-            ;
-        }
-    }
-
-    /**
      * Transfer the specified amount from this account to the specified target
      * account.
      *
      * @param amount The amount to transfer.
      * @param target The destination of this transfer.
+     *
      * @return true if the transfer is successful, false otherwise.
      */
     public boolean performTransfer(final int amount, final Account target) {

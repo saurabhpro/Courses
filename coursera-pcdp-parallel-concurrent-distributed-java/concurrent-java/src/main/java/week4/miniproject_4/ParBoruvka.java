@@ -90,40 +90,34 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
 
 
         /**
-         * Lock object for each component
-         */
-        private final Lock lock = new ReentrantLock(true);
-
-
-        /**
          * A unique identifier for this component in the graph that contains
          * it.
          */
         public final int nodeId;
-
+        /**
+         * Lock object for each component
+         */
+        private final Lock lock = new ReentrantLock(true);
+        /**
+         * Whether this component has already been collapsed into another
+         * component.
+         */
+        public boolean isDead = false;
         /**
          * List of edges attached to this component, sorted by weight from least
          * to greatest.
          */
         private List<Edge<ParComponent>> edges = new ArrayList<>();
-
         /**
          * The weight this component accounts for. A component gains weight when
          * it is merged with another component across an edge with a certain
          * weight.
          */
         private double totalWeight = 0;
-
         /**
          * Number of edges that have been collapsed to create this component.
          */
         private long totalEdges = 0;
-
-        /**
-         * Whether this component has already been collapsed into another
-         * component.
-         */
-        public boolean isDead = false;
 
         /**
          * Constructor.
@@ -242,6 +236,7 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
          * Test for equality based on node ID.
          *
          * @param o Object to compare against.
+         *
          * @return true if they are the same component in the graph.
          */
         @Override
@@ -275,19 +270,17 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
      */
     public static final class ParEdge implements Edge<ParComponent>, Comparable<Edge> {
         /**
+         * Weight of this edge.
+         */
+        public double weight;
+        /**
          * Source component.
          */
         protected ParComponent fromComponent;
-
         /**
          * Destination component.
          */
         protected ParComponent toComponent;
-
-        /**
-         * Weight of this edge.
-         */
-        public double weight;
 
         /**
          * Constructor.

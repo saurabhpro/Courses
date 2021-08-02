@@ -13,6 +13,11 @@ class Fibonacci extends RecursiveTask<Integer> {
         this.n = n;
     }
 
+    public static void main(String[] args) {
+        var fibonacci = new Fibonacci(118);
+        LOG.info(String.valueOf(fibonacci.compute()));
+    }
+
     /**
      * A future task extends the RecursiveTask class in the FJ framework, instead of RecursiveAction as in regular tasks.
      * <p>
@@ -37,10 +42,5 @@ class Fibonacci extends RecursiveTask<Integer> {
         // since f1 ws forked, it would join the main thread here
         // and we call f2 recursively
         return f2.compute() + f1.join();
-    }
-
-    public static void main(String[] args) {
-        var fibonacci = new Fibonacci(118);
-        LOG.info(String.valueOf(fibonacci.compute()));
     }
 }
