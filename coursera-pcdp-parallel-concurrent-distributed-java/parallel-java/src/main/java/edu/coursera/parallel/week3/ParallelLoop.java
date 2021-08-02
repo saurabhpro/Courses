@@ -3,8 +3,6 @@ package edu.coursera.parallel.week3;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-import static edu.rice.pcdp.PCDP.forasync;
-
 public class ParallelLoop {
 
     public static void main(String[] args) {

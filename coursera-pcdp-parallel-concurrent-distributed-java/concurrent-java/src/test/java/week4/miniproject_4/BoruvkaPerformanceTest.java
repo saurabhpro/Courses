@@ -1,6 +1,7 @@
 package week4.miniproject_4;
 
 
+import helper.Utils;
 import org.junit.jupiter.api.Test;
 import week4.miniproject_4.boruvka.BoruvkaFactory;
 import week4.miniproject_4.boruvka.Component;
@@ -17,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoruvkaPerformanceTest {
-    static final double expectedSpeedup = 1.3;
+    static final double expectedSpeedup = 1.7;
 
     private static int getNCores() {
         String ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
@@ -102,8 +103,9 @@ public class BoruvkaPerformanceTest {
                 new ParBoruvka());
         assertEquals(seqResults.totalEdges, parResults.totalEdges);
         assertReasonablePercentError(seqResults.totalWeight, parResults.totalWeight);
+
         final double speedup = seqResults.elapsedTime / parResults.elapsedTime;
-        assertTrue(speedup >= expectedSpeedup,
+        Utils.softAssertTrue(speedup >= expectedSpeedup,
                 String.format("Expected speedup of at least %fx, but was %fx", expectedSpeedup, speedup));
     }
 
@@ -115,8 +117,9 @@ public class BoruvkaPerformanceTest {
                 new ParBoruvka());
         assertEquals(seqResults.totalEdges, parResults.totalEdges);
         assertReasonablePercentError(seqResults.totalWeight, parResults.totalWeight);
+
         final double speedup = seqResults.elapsedTime / parResults.elapsedTime;
-        assertTrue(speedup >= expectedSpeedup,
+        Utils.softAssertTrue(speedup >= expectedSpeedup,
                 String.format("Expected speedup of at least %fx, but was %fx", expectedSpeedup, speedup));
 
     }

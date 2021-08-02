@@ -1,6 +1,7 @@
 package week5;
 
-import edu.princeton.cs.algs4.StdIn;
+//import edu.princeton.cs.algs4.StdIn;
+
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.jupiter.api.Test;
@@ -89,7 +90,8 @@ class RedBlackBSTTest {
         StdOut.println();
 
         // insert N elements in order if one command-line argument supplied
-        int n = Integer.parseInt(StdIn.readString());
+        // int n = Integer.parseInt(StdIn.readString());
+        int n = 9;
         RedBlackBST<Integer, Integer> st2 = new RedBlackBST<>();
         for (int i = 0; i < n; i++) {
             st2.put(i, i);

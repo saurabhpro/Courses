@@ -38,6 +38,12 @@
             <systemPath>${project.basedir}/libs/algs4.jar</systemPath>
             <scope>system</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.32</version>
+        </dependency>
     </dependencies>
 
     <!-- additional (optional) -->
