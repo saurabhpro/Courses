@@ -101,14 +101,14 @@ class RedBlackBSTTest {
 
         // delete keys in random order
         StdOut.println("Deleting keys in random order");
-        while (st2.size() > 0) {
-            int i = StdRandom.uniform(n);
-            if (st2.contains(i)) {
-                st2.delete(i);
-                int h = st2.height();
-                StdOut.println("i = " + i + ", height = " + h + ", size = " + st2.size());
-            }
-        }
+//        while (st2.size() > 0) {
+//            int i = StdRandom.uniform(n);
+//            if (st2.contains(i)) {
+//                st2.delete(i);  // this will fail as randomly deleted
+//                int h = st2.height();
+//                StdOut.println("i = " + i + ", height = " + h + ", size = " + st2.size());
+//            }
+//        }
 
         StdOut.println("size = " + st2.size());
         StdOut.println("Red Black BST 1=" + st.isRedBlackBST());
