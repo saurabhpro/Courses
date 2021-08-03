@@ -25,17 +25,13 @@ public class SparkRDDExample {
         // necessary to define the master url
         SparkConf configuration = new SparkConf()
                 .setAppName("Simple Application")
-                .setMaster("local[4]");
-
+                .setMaster("local[4]");     // with 4 output partitions
 
         List<Integer> data = IntStream.range(1, 1_000_000).boxed().collect(Collectors.toList());
 
         try (JavaSparkContext sc = new JavaSparkContext(configuration)) {
             Instant start = Instant.now();
-            int acc = 0;
-            for (Integer datum : data) {
-                acc += datum;
-            }
+            int acc = data.stream().mapToInt(datum -> datum).sum();
             LOG.info("Sum of sequential {} numbers = {} in {} ms", data.size(), acc,
                     Duration.between(start, Instant.now()).toMillis());
 
