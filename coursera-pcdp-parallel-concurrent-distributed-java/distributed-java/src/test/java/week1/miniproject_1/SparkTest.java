@@ -10,11 +10,14 @@ import org.junit.jupiter.api.Test;
 import scala.Tuple2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,8 +29,7 @@ public class SparkTest {
         Logger.getLogger("akka").setLevel(Level.OFF);
 
         final SparkConf conf = new SparkConf()
-                // .setAppName("edu.coursera.distributed.PageRank")
-                .setAppName("week1.miniproject_1.PageRank")
+                .setAppName("edu.coursera.distributed.PageRank")
                 .setMaster("local[" + nCores + "]")
                 .set("spark.ui.showConsoleProgress", "false");
         JavaSparkContext ctx = new JavaSparkContext(conf);
@@ -85,65 +87,54 @@ public class SparkTest {
             final int nNodes, final int minEdgesPerNode,
             final int maxEdgesPerNode, final EdgeDistribution edgeConfig,
             final JavaSparkContext context) {
-        List<Integer> nodes = new ArrayList<Integer>(nNodes);
-        for (int i = 0; i < nNodes; i++) {
-            nodes.add(i);
-        }
+        List<Integer> nodes = IntStream.range(0, nNodes)
+                .boxed()
+                .collect(Collectors.toCollection(() -> new ArrayList<>(nNodes)));
 
-        return context.parallelize(nodes).mapToPair(i -> {
-            return new Tuple2<Integer, Website>(i, generateWebsite(i, nNodes, minEdgesPerNode,
-                    maxEdgesPerNode, edgeConfig));
-        });
+        return context.parallelize(nodes).mapToPair(i ->
+                new Tuple2<>(i, generateWebsite(i, nNodes, minEdgesPerNode, maxEdgesPerNode, edgeConfig)));
     }
 
     private static JavaPairRDD<Integer, Double> generateRankRDD(
             final int nNodes, final JavaSparkContext context) {
-        List<Integer> nodes = new ArrayList<>(nNodes);
-        for (int i = 0; i < nNodes; i++) {
-            nodes.add(i);
-        }
+        List<Integer> nodes = IntStream.range(0, nNodes)
+                .boxed()
+                .collect(Collectors.toCollection(() -> new ArrayList<>(nNodes)));
 
         return context.parallelize(nodes)
-                .mapToPair(i -> {
-                    Random rand = new Random(i);
-                    return new Tuple2<Integer, Double>(i, 100.0 * rand.nextDouble());
-                });
+                .mapToPair(i -> new Tuple2<>(i, 100.0 * new Random(i).nextDouble()));
     }
 
     private static Website[] generateGraphArr(final int nNodes,
                                               final int minEdgesPerNode, final int maxEdgesPerNode,
                                               final EdgeDistribution edgeConfig) {
         Website[] sites = new Website[nNodes];
-        for (int i = 0; i < sites.length; i++) {
-            sites[i] = generateWebsite(i, nNodes, minEdgesPerNode,
-                    maxEdgesPerNode, edgeConfig);
-        }
+        Arrays.setAll(sites, i -> generateWebsite(i, nNodes, minEdgesPerNode, maxEdgesPerNode, edgeConfig));
         return sites;
     }
 
     private static double[] generateRankArr(final int nNodes) {
         double[] ranks = new double[nNodes];
-        for (int i = 0; i < ranks.length; i++) {
+        IntStream.range(0, ranks.length).forEach(i -> {
             Random r = new Random(i);
             ranks[i] = 100.0 * r.nextDouble();
-        }
+        });
         return ranks;
     }
 
     private static double[] seqPageRank(Website[] sites, double[] ranks) {
         double[] newRanks = new double[ranks.length];
 
-        for (int j = 0; j < sites.length; j++) {
+        IntStream.range(0, sites.length).forEach(j -> {
             Iterator<Integer> iter = sites[j].edgeIterator();
             while (iter.hasNext()) {
                 int target = iter.next();
                 newRanks[target] += ranks[j] / (double) sites[j].getNEdges();
             }
-        }
+        });
 
-        for (int j = 0; j < newRanks.length; j++) {
-            newRanks[j] = 0.15 + 0.85 * newRanks[j];
-        }
+        IntStream.range(0, newRanks.length)
+                .forEach(j -> newRanks[j] = 0.15 + 0.85 * newRanks[j]);
 
         return newRanks;
     }
