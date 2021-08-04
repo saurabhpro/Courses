@@ -63,7 +63,7 @@ public class KafkaTestContainersLiveTest {
     private String topic;
 
     @Test
-    public void givenKafkaDockerContainer_whenSendingtoDefaultTemplate_thenMessageReceived() throws Exception {
+    public void givenKafkaDockerContainer_whenSendingToDefaultTemplate_thenMessageReceived() throws Exception {
         template.send(topic, "Sending with default template");
         consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
 
@@ -72,7 +72,7 @@ public class KafkaTestContainersLiveTest {
     }
 
     @Test
-    public void givenKafkaDockerContainer_whenSendingtoSimpleProducer_thenMessageReceived() throws Exception {
+    public void givenKafkaDockerContainer_whenSendingToSimpleProducer_thenMessageReceived() throws Exception {
         producer.send(topic, "Saurabh is sending with own controller");
         consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
 

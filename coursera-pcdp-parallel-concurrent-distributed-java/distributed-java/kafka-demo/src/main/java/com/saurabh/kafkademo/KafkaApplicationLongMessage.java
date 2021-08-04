@@ -71,7 +71,6 @@ public class KafkaApplicationLongMessage {
         public void listenGroupLongMessage(String message) {
             System.out.println("Received Message in group 'longMessage'\n" + message);
         }
-
     }
 
 }
