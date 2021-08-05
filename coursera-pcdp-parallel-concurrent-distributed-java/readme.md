@@ -114,3 +114,10 @@ This week is basically the same as week 2 but now we need to execute each reques
 ## Author
 
 Saurabh Kumar
+
+https://github.com/walkccc/Coursera-PCDP-Java
+https://github.com/efontan/pcdp
+https://github.com/balta2ar/parallel-concurrent-distributed-java
+https://github.com/techytoes/Parallel-Programming-Coursera
+https://github.com/zhangruochi/Parallel-Concurrent-and-Distributed-Programming-in-Java-Specialization
+
