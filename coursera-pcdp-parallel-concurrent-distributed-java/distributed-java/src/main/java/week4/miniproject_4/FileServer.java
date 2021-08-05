@@ -69,8 +69,8 @@ public final class FileServer {
     }
 
     private static Optional<String> readFileContent(PCDPFilesystem fs, String filePath) {
-        String fileConent = fs.readFile(new PCDPPath(filePath));
-        return Optional.ofNullable(fileConent);
+        String fileContent = fs.readFile(new PCDPPath(filePath));
+        return Optional.ofNullable(fileContent);
     }
 
     private static boolean isGetRequest(String firstLine) {
