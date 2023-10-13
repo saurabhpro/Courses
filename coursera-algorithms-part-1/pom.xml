@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>16</java.version>
+        <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <junit-platform.version>5.9.3</junit-platform.version>
@@ -35,7 +35,6 @@
             <groupId>princeton</groupId>
             <artifactId>algs4</artifactId>
             <version>1.0</version>
-            <systemPath>${project.basedir}/libs/algs4.jar</systemPath>
             <scope>system</scope>
         </dependency>
 
