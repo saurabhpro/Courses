@@ -15,10 +15,8 @@ public class PascalTriangleRecursionSeqMemoized {
     public static final Logger LOG = LoggerFactory.getLogger(RecursivePascalTriangle.class);
 
     public static void main(String[] args) {
-        int row = 9;
-        IntStream.range(0, 5).forEach(i -> {
-            RecursivePascalTriangle.display(row);
-        });
+        final var row = 9;
+        IntStream.range(0, 5).forEach(i -> RecursivePascalTriangle.display(row));
     }
 
     record RecursivePascalTriangle(int a, int b) {
@@ -35,22 +33,22 @@ public class PascalTriangleRecursionSeqMemoized {
         }
 
         public static void display(int num) {
-            final int[][] store = new int[num][num];
+            final var store = new int[num][num];
             Arrays.stream(store).forEach(a -> Arrays.fill(a, Integer.MIN_VALUE));
 
-            final Instant start = Instant.now();
-            final StringBuilder sb = new StringBuilder("\n");
+            final var start = Instant.now();
+            final var sb = new StringBuilder("\n");
             // CODE HERE
-            for (int a = 0; a < num; a++) {
-                for (int b = 0; b <= a; b++) {
+            for (var a = 0; a < num; a++) {
+                for (var b = 0; b <= a; b++) {
                     sb.append(String.format("%d ", RecursivePascalTriangle.pascalTriangle(a, b, store)));
                 }
                 sb.append('\n');
             }
             LOG.info(sb.toString());
 
-            final Instant finish = Instant.now();
-            long timeElapsed = Duration.between(start, finish).toMillis();
+            final var finish = Instant.now();
+            final var timeElapsed = Duration.between(start, finish).toMillis();
             LOG.info("Seq Time: {} ms", timeElapsed);
         }
     }

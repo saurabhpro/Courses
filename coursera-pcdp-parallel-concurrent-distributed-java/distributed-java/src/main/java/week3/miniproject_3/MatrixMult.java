@@ -59,18 +59,18 @@ public class MatrixMult {
          */
 
         // Each process has a Rank to Identify it
-        final int myRank = mpi.MPI_Comm_rank(mpi.MPI_COMM_WORLD);
+        final var myRank = mpi.MPI_Comm_rank(mpi.MPI_COMM_WORLD);
 
         // Number of Processes
-        final int size = mpi.MPI_Comm_size(mpi.MPI_COMM_WORLD);
+        final var size = mpi.MPI_Comm_size(mpi.MPI_COMM_WORLD);
 
-        final int nRows = c.getNRows();
-        final int rowChunck = (nRows + size - 1) / size;
+        final var nRows = c.getNRows();
+        final var rowChunck = (nRows + size - 1) / size;
         // Divide into Chunks for each process. Each Process runs only the row chunk
 
         // Get Start and End Index of each chunk
-        final int startRow = myRank * rowChunck;
-        int endRow = (myRank + 1) * rowChunck;
+        final var startRow = myRank * rowChunck;
+        var endRow = (myRank + 1) * rowChunck;
         //  Edge Case check -> endIndex is bound by actual Size of Resultant matrix
         if (endRow > nRows) {
             endRow = nRows;
@@ -86,13 +86,13 @@ public class MatrixMult {
         mpi.MPI_Bcast(b.getValues(), 0, b.getNRows() * b.getNCols(), 0, mpi.MPI_COMM_WORLD);
 
         // compute answer for rows assigned to this rank
-        for (int i = startRow; i < endRow; ++i) {
-            for (int j = 0; j < c.getNCols(); ++j) {
+        for (var i = startRow; i < endRow; ++i) {
+            for (var j = 0; j < c.getNCols(); ++j) {
                 // initialize the output array
                 c.set(i, j, 0.0);
 
                 // for each cell increment
-                for (int k = 0; k < b.getNRows(); ++k) {
+                for (var k = 0; k < b.getNRows(); ++k) {
                     c.incr(i, j, a.get(i, k) * b.get(k, j));
                 }
             }
@@ -101,24 +101,24 @@ public class MatrixMult {
         // master rank to sum all results
         if (myRank == 0) {
             // Buffer for the Other Process's Results that Rank 0 will receive
-            MPI.MPI_Request[] requests = new MPI.MPI_Request[size - 1];
+            final var requests = new MPI.MPI_Request[size - 1];
 
             // Iterate through Ranks and Receive their Results in non Blocking way
-            for (int i = 1; i < size; ++i) {
+            for (var i = 1; i < size; ++i) {
 
                 // get Row Start and Row End for ith Chunk
-                final int rankStartRow = i * rowChunck;
-                int rankEndRow = (i + 1) * rowChunck;
+                final var rankStartRow = i * rowChunck;
+                var rankEndRow = (i + 1) * rowChunck;
 
                 // EdgeCase if Rank End row -> (i + 1) * chunkSize is greater than number of Actual Rows
                 if (rankEndRow > nRows) {
                     rankEndRow = nRows;
                 }
 
-                final int rowOffset = rankStartRow * c.getNCols();
+                final var rowOffset = rankStartRow * c.getNCols();
 
                 //Number of Elements in the chunk
-                final int nElements = (rankEndRow - rankStartRow) * c.getNCols();
+                final var nElements = (rankEndRow - rankStartRow) * c.getNCols();
 
                 // non-blocking receive to post all receive and not wait for result here
                 requests[i - 1] =

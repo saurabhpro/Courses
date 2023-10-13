@@ -13,7 +13,7 @@ class PascalsTriangleMemoizedTest {
     void chooseMemoizedPar() {
         finish(() -> {
             try {
-                final var i = PascalsTriangleMemoized.chooseMemoizedPar(5, 2);
+                var i = PascalsTriangleMemoized.chooseMemoizedPar(5, 2);
                 Assertions.assertEquals(10, i);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();

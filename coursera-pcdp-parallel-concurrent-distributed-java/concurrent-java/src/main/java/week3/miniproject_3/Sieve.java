@@ -12,5 +12,5 @@ public abstract class Sieve {
      *
      * @return The number of primes that are <= limit.
      */
-    public abstract int countPrimes(final int limit);
+    public abstract int countPrimes(int limit);
 }

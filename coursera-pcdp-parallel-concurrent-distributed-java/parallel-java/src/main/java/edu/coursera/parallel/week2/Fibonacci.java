@@ -14,7 +14,7 @@ class Fibonacci extends RecursiveTask<Integer> {
     }
 
     public static void main(String[] args) {
-        var fibonacci = new Fibonacci(118);
+        final var fibonacci = new Fibonacci(118);
         LOG.info(String.valueOf(fibonacci.compute()));
     }
 
@@ -35,9 +35,9 @@ class Fibonacci extends RecursiveTask<Integer> {
             return n;
         }
 
-        Fibonacci f1 = new Fibonacci(n - 1);
+        final var f1 = new Fibonacci(n - 1);
         f1.fork();
-        Fibonacci f2 = new Fibonacci(n - 2);
+        final var f2 = new Fibonacci(n - 2);
 
         // since f1 ws forked, it would join the main thread here
         // and we call f2 recursively

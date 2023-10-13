@@ -23,7 +23,7 @@ public final class Setup {
      * @return Dummy value
      */
     public static int setup(final int val) {
-        final int[] result = new int[1];
+        final var result = new int[1];
         finish(() -> async(() -> result[0] = val));
         return result[0];
     }

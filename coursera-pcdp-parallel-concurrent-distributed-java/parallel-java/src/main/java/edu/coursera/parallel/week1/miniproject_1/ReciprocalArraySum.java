@@ -23,11 +23,11 @@ public final class ReciprocalArraySum {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double seqArraySum(final double[] input, final int start, final int end) {
+    private static double seqArraySum(final double[] input, final int start, final int end) {
         double sum = 0;
 
         // Compute sum of reciprocals of array elements
-        for (int i = start; i < end; i++) {
+        for (var i = start; i < end; i++) {
             sum += 1 / input[i];
         }
 
@@ -60,7 +60,7 @@ public final class ReciprocalArraySum {
      * nElements
      */
     private static int getChunkStartInclusive(final int chunk, final int nChunks, final int nElements) {
-        final int chunkSize = getChunkSize(nChunks, nElements);
+        final var chunkSize = getChunkSize(nChunks, nElements);
         return chunk * chunkSize;
     }
 
@@ -75,8 +75,8 @@ public final class ReciprocalArraySum {
      * @return The exclusive end index for this chunk
      */
     private static int getChunkEndExclusive(final int chunk, final int nChunks, final int nElements) {
-        final int chunkSize = getChunkSize(nChunks, nElements);
-        final int end = (chunk + 1) * chunkSize;
+        final var chunkSize = getChunkSize(nChunks, nElements);
+        final var end = (chunk + 1) * chunkSize;
 
         return Math.min(end, nElements);
     }
@@ -91,7 +91,7 @@ public final class ReciprocalArraySum {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double parArraySum(final double[] input) {
+    private static double parArraySum(final double[] input) {
         if (input.length % 2 != 0) {
             throw new IllegalArgumentException("expected even inputs");
         }
@@ -109,16 +109,16 @@ public final class ReciprocalArraySum {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double parManyTaskArraySum(final double[] input, final int numTasks) {
+    private static double parManyTaskArraySum(final double[] input, final int numTasks) {
         if (input.length % 2 != 0) {
             throw new IllegalArgumentException("expected even inputs");
         }
 
-        double sum = 0.0;
+        var sum = 0.0;
         final List<ReciprocalArraySumTask> taskList = new ArrayList<>();
 
         // Compute sum of reciprocals of array elements
-        for (int i = 0; i < numTasks; i++) {
+        for (var i = 0; i < numTasks; i++) {
             taskList.add(new ReciprocalArraySumTask(
                     getChunkStartInclusive(i, numTasks, input.length),
                     getChunkEndExclusive(i, numTasks, input.length),
@@ -129,7 +129,7 @@ public final class ReciprocalArraySum {
         // forks all tasks in the specified collection
         ForkJoinTask.invokeAll(taskList);
 
-        for (ReciprocalArraySumTask reciprocalArraySumTask : taskList) {
+        for (final var reciprocalArraySumTask : taskList) {
             sum += reciprocalArraySumTask.getValue();
         }
 
@@ -190,13 +190,13 @@ public final class ReciprocalArraySum {
          */
         @Override
         protected void compute() {
-            final int range = this.endIndexExclusive - this.startIndexInclusive;
+            final var range = this.endIndexExclusive - this.startIndexInclusive;
             if (range <= SEQUENTIAL_THRESHOLD) {
                 this.value = ReciprocalArraySum.seqArraySum(input, startIndexInclusive, endIndexExclusive);
             } else {
-                final int middle = (this.startIndexInclusive + this.endIndexExclusive) >>> 1;
-                ReciprocalArraySumTask leftSum = new ReciprocalArraySumTask(this.startIndexInclusive, middle, this.input);
-                ReciprocalArraySumTask rightSum = new ReciprocalArraySumTask(middle, this.endIndexExclusive, this.input);
+                final var middle = (this.startIndexInclusive + this.endIndexExclusive) >>> 1;
+                final var leftSum = new ReciprocalArraySumTask(this.startIndexInclusive, middle, this.input);
+                final var rightSum = new ReciprocalArraySumTask(middle, this.endIndexExclusive, this.input);
 
                 leftSum.fork();
                 rightSum.compute();

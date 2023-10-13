@@ -14,7 +14,7 @@ public final class SieveSequential extends Sieve {
     public int countPrimes(final int limit) {
         final List<Integer> localPrimes = new ArrayList<Integer>();
         localPrimes.add(2);
-        for (int i = 3; i <= limit; i += 2) {
+        for (var i = 3; i <= limit; i += 2) {
             checkPrime(i, localPrimes);
         }
 
@@ -32,9 +32,9 @@ public final class SieveSequential extends Sieve {
      */
     private void checkPrime(final int candidate,
                             final List<Integer> primesList) {
-        boolean isPrime = true;
-        final int s = primesList.size();
-        for (final Integer loopPrime : primesList) {
+        var isPrime = true;
+        final var s = primesList.size();
+        for (final var loopPrime : primesList) {
             if (candidate % loopPrime == 0) {
                 isPrime = false;
                 break;

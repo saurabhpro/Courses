@@ -6,10 +6,10 @@ public class SieveOfEratosthenes {
 
     // Driver Program to test above function
     public static void main(String[] args) {
-        int n = 130_000_000;
+        final var n = 130_000_000;
         System.out.print("Following are the prime numbers ");
         System.out.println("smaller than or equal to " + n);
-        SieveOfEratosthenes g = new SieveOfEratosthenes();
+        final var g = new SieveOfEratosthenes();
         g.sieveOfEratosthenes(n);
     }
 
@@ -17,13 +17,13 @@ public class SieveOfEratosthenes {
         // Create a boolean array "prime[0..n]" and initialize
         // all entries it as true. A value in prime[i] will
         // finally be false if i is Not a prime, else true.
-        boolean[] prime = new boolean[n + 1];
+        final var prime = new boolean[n + 1];
 
         IntStream.rangeClosed(0, n)
                 .parallel()
                 .forEach(i -> prime[i] = true);
 
-        final double sqrt = Math.sqrt(n);
+        final var sqrt = Math.sqrt(n);
         IntStream.iterate(2, p -> p < sqrt, p -> p + 1)
                 .filter(p -> prime[p]) // If prime[p] is not changed, then it is a prime
                 .flatMap(p -> IntStream.iterate(p * p, i -> i <= n, i -> i + p))

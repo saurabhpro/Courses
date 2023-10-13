@@ -12,12 +12,12 @@ public class CountdownLatchOneTimeEntryAndExitBarriers {
     private static final Logger LOG = LoggerFactory.getLogger(CountdownLatchOneTimeEntryAndExitBarriers.class);
 
     public static void main(String[] args) throws InterruptedException {
-        CountDownLatch entryBarrier = new CountDownLatch(1);
-        CountDownLatch exitBarrier = new CountDownLatch(PARTIES);
+        final var entryBarrier = new CountDownLatch(1);
+        final var exitBarrier = new CountDownLatch(PARTIES);
 
-        for (int p = 0; p < PARTIES; p++) {
-            int delay = p + 1;
-            Runnable task = new Worker(delay, entryBarrier, exitBarrier);
+        for (var p = 0; p < PARTIES; p++) {
+            final var delay = p + 1;
+            final Runnable task = new Worker(delay, entryBarrier, exitBarrier);
             new Thread(task).start();
         }
 

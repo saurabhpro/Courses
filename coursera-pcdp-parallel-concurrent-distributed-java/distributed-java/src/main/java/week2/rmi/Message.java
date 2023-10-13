@@ -38,7 +38,7 @@ public class Message implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
+        final var message = (Message) o;
         return Objects.equals(messageText, message.messageText) && Objects.equals(contentType, message.contentType);
     }
 

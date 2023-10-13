@@ -78,7 +78,7 @@ public final class Website implements Serializable {
     @Override
     public boolean equals(final Object o) {
         if (o instanceof Website) {
-            Website other = (Website) o;
+            final var other = (Website) o;
             return other.id == id;
         }
         return false;

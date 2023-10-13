@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import static edu.rice.pcdp.PCDP.*;
+import static edu.rice.pcdp.PCDP.async;
+import static edu.rice.pcdp.PCDP.finish;
+import static edu.rice.pcdp.PCDP.forall;
 
-public class TestQuiz {
+class TestQuiz {
 
     @Test
     void t4() {

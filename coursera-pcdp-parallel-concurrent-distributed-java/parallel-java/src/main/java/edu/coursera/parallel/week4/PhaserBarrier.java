@@ -11,22 +11,22 @@ public class PhaserBarrier {
 
     public static void main(String[] args) {
         // initialize phaser ph	for use by n tasks ("parties")
-        int n = 9;
-        final Phaser ph = new Phaser(n);
+        final var n = 9;
+        final var ph = new Phaser(n);
 
-        Instant start = Instant.now();
+        final var start = Instant.now();
         // Create forall loop with n iterations that operate on phaser
         forall(0, n - 1, (i) -> {
                     System.out.println("HELLO, " + i);
-                    int phase = ph.arrive();
-                    String myId = lookup(i); // convert int to a string
+            final var phase = ph.arrive();
+            final var myId = lookup(i); // convert int to a string
 
                     ph.awaitAdvance(phase);
                     System.out.println("BYE, " + myId);
                 }
         );
 
-        Instant end = Instant.now();
+        final var end = Instant.now();
         System.out.printf("Total Time taken: %s s ", Duration.between(start, end).toSeconds());
     }
 

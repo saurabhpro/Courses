@@ -1,14 +1,15 @@
 package week1.miniproject_1;
 
 public class ReversedSequenceGenerator implements SequenceGenerator {
+
     private final SequenceGenerator seq;
     private int[] buffered;
     private int iter;
 
-    public ReversedSequenceGenerator(final SequenceGenerator setSeq) {
+    public ReversedSequenceGenerator(SequenceGenerator setSeq) {
         this.seq = setSeq;
         this.buffered = new int[this.seq.sequenceLength()];
-        for (int i = buffered.length - 1; i >= 0; i--) {
+        for (var i = buffered.length - 1; i >= 0; i--) {
             buffered[i] = seq.next();
         }
         this.iter = 0;
@@ -28,7 +29,7 @@ public class ReversedSequenceGenerator implements SequenceGenerator {
     public void reset() {
         this.seq.reset();
         this.buffered = new int[this.seq.sequenceLength()];
-        for (int i = buffered.length - 1; i >= 0; i--) {
+        for (var i = buffered.length - 1; i >= 0; i--) {
             this.buffered[i] = seq.next();
         }
         this.iter = 0;

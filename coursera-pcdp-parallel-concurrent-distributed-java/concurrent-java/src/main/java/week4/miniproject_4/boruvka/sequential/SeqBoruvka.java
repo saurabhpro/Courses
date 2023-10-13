@@ -3,7 +3,6 @@ package week4.miniproject_4.boruvka.sequential;
 
 import week4.miniproject_4.AbstractBoruvka;
 import week4.miniproject_4.SolutionToBoruvka;
-import week4.miniproject_4.boruvka.Edge;
 
 import java.util.Queue;
 
@@ -41,12 +40,12 @@ public final class SeqBoruvka implements AbstractBoruvka<SeqComponent> {
             }
 
             // retrieve loopNode's edge with minimum cost
-            final Edge<SeqComponent> e = loopNode.getMinEdge();
+            final var e = loopNode.getMinEdge();
             if (e == null) {
                 break; // done - we've contracted the graph to a single node
             }
 
-            final SeqComponent other = e.getOther(loopNode);
+            final var other = e.getOther(loopNode);
             other.isDead = true;
             // merge node other into node loopNode
             loopNode.merge(other, e.weight());

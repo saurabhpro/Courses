@@ -12,31 +12,31 @@ import static edu.rice.pcdp.PCDP.finish;
 public class SieveActorMain {
 
     public static void main() {
-        final int limit = 500_000;
+        final var limit = 500_000;
         System.out.println("SieveActorMain.main: limit = " + limit);
 
-        for (int iter = 0; iter < 2; iter++) {
+        for (var iter = 0; iter < 2; iter++) {
             System.out.printf("Run %d\n", iter);
 
-            for (int w = 1; w <= Runtime.getRuntime().availableProcessors(); w++) {
+            for (var w = 1; w <= Runtime.getRuntime().availableProcessors(); w++) {
 
 
-                final long parStartTime = System.nanoTime();
+                final var parStartTime = System.nanoTime();
 
-                final SieveActor sieveActor = new SieveActor(2);
+                final var sieveActor = new SieveActor(2);
                 finish(() -> {
                     /// sieveActor.start();
-                    for (int i = 3; i <= limit; i += 2) {
+                    for (var i = 3; i <= limit; i += 2) {
                         ///   sieveActor.send(i);
                     }
                     ///  sieveActor.send(0);
                 });
 
-                final long parExecTime = System.nanoTime() - parStartTime;
-                final double execTime = parExecTime / 1e6;
+                final var parExecTime = System.nanoTime() - parStartTime;
+                final var execTime = parExecTime / 1e6;
 
-                int numPrimes = 0;
-                SieveActor loopActor = sieveActor;
+                var numPrimes = 0;
+                var loopActor = sieveActor;
                 while (loopActor != null) {
                     numPrimes += loopActor.numLocalPrimes();
                     loopActor = loopActor.nextActor();
@@ -79,7 +79,7 @@ public class SieveActorMain {
                 }
                 /// exit();
             } else {
-                final boolean locallyPrime = isLocallyPrime(candidate);
+                final var locallyPrime = isLocallyPrime(candidate);
                 if (locallyPrime) {
                     if (numLocalPrimes < MAX_LOCAL_PRIMES) {
                         localPrimes[numLocalPrimes] = candidate;
@@ -95,13 +95,13 @@ public class SieveActorMain {
         }
 
         private boolean isLocallyPrime(final int candidate) {
-            final boolean[] isPrime = {true};
+            final var isPrime = new boolean[]{true};
             checkPrimeKernel(candidate, isPrime, 0, numLocalPrimes);
             return isPrime[0];
         }
 
         private void checkPrimeKernel(final int candidate, final boolean[] isPrime, final int startIndex, final int endIndex) {
-            for (int i = startIndex; i < endIndex; i++) {
+            for (var i = startIndex; i < endIndex; i++) {
                 if (candidate % localPrimes[i] == 0) {
                     isPrime[0] = false;
                     break;

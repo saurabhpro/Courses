@@ -36,8 +36,8 @@ public class PascalsTriangleMemoized {
      */
     public static void main(final String[] args) {
 
-        final int n = args.length > 0 ? Integer.parseInt(args[0]) : 30;
-        final int k = args.length > 1 ? Integer.parseInt(args[1]) : (n - 3);
+        final var n = args.length > 0 ? Integer.parseInt(args[0]) : 30;
+        final var k = args.length > 1 ? Integer.parseInt(args[1]) : (n - 3);
 
         LOG.info(" N = {}", n);
         LOG.info(" K = {}", k);
@@ -51,9 +51,9 @@ public class PascalsTriangleMemoized {
     private static void kernel(final String mode, final int N, final int K, final Callable<Integer> hjProcedure) {
         LOG.info("===============================================");
         LOG.info("Running: {}", mode);
-        Instant start = Instant.now();
+        final var start = Instant.now();
         finish(() -> {
-            int res = 0;
+            var res = 0;
             try {
                 res = hjProcedure.call();
             } catch (Exception e) {
@@ -78,8 +78,8 @@ public class PascalsTriangleMemoized {
             return computeBaseCaseResult();
         }
 
-        final int left = chooseRecursiveSeq(N - 1, K - 1);
-        final int right = chooseRecursiveSeq(N - 1, K);
+        final var left = chooseRecursiveSeq(N - 1, K - 1);
+        final var right = chooseRecursiveSeq(N - 1, K);
 
         return computeSum(left, right);
     }
@@ -90,10 +90,10 @@ public class PascalsTriangleMemoized {
             return computeBaseCaseResult();
         }
 
-        final Future<Integer> left = future(() -> chooseRecursivePar(N - 1, K - 1));
-        final Future<Integer> right = future(() -> chooseRecursivePar(N - 1, K));
+        final var left = future(() -> chooseRecursivePar(N - 1, K - 1));
+        final var right = future(() -> chooseRecursivePar(N - 1, K));
 
-        final Future<Integer> resultFuture = future(() -> {
+        final var resultFuture = future(() -> {
             final int leftValue = left.get();
             final int rightValue = right.get();
             return computeSum(leftValue, rightValue);
@@ -103,43 +103,43 @@ public class PascalsTriangleMemoized {
 
 
     private static int chooseMemoizedSeq(final int N, final int K) {
-        final Map.Entry<Integer, Integer> key = Map.entry(N, K);
+        final var key = Map.entry(N, K);
 
         if (chooseMemoizedSeqCache.containsKey(key)) {
             return chooseMemoizedSeqCache.get(key);
         }
 
         if (N == 0 || K == 0 || N == K) {
-            final int result = computeBaseCaseResult();
+            final var result = computeBaseCaseResult();
             chooseMemoizedSeqCache.put(key, result);
             return result;
         }
 
-        final int left = chooseMemoizedSeq(N - 1, K - 1);
-        final int right = chooseMemoizedSeq(N - 1, K);
+        final var left = chooseMemoizedSeq(N - 1, K - 1);
+        final var right = chooseMemoizedSeq(N - 1, K);
 
-        final int result = computeSum(left, right);
+        final var result = computeSum(left, right);
         chooseMemoizedSeqCache.put(key, result);
         return result;
     }
 
     static int chooseMemoizedPar(final int N, final int K) throws ExecutionException, InterruptedException {
-        final Map.Entry<Integer, Integer> key = Map.entry(N, K);
+        final var key = Map.entry(N, K);
         if (chooseMemoizedParCache.containsKey(key)) {
-            final Future<Integer> result = chooseMemoizedParCache.get(key);
+            final var result = chooseMemoizedParCache.get(key);
             return result.get();
         }
 
-        final Future<Integer> resultFuture = future(() -> {
+        final var resultFuture = future(() -> {
             if (N == 0 || K == 0 || N == K) {
                 return computeBaseCaseResult();
             }
 
-            final Future<Integer> left = future(() -> chooseMemoizedPar(N - 1, K - 1));
-            final Future<Integer> right = future(() -> chooseMemoizedPar(N - 1, K));
+            final var left = future(() -> chooseMemoizedPar(N - 1, K - 1));
+            final var right = future(() -> chooseMemoizedPar(N - 1, K));
 
-            final Integer leftValue = left.get();
-            final Integer rightValue = right.get();
+            final var leftValue = left.get();
+            final var rightValue = right.get();
             return computeSum(leftValue, rightValue);
         });
         chooseMemoizedParCache.put(key, resultFuture);

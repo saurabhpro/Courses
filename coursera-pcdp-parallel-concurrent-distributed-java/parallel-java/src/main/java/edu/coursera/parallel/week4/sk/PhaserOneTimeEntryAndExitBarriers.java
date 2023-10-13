@@ -13,12 +13,12 @@ public class PhaserOneTimeEntryAndExitBarriers {
     private static final Logger logger = LoggerFactory.getLogger(PhaserOneTimeEntryAndExitBarriers.class);
 
     public static void main(String[] args) throws InterruptedException {
-        Phaser phaser = new Phaser(1);
+        final var phaser = new Phaser(1);
         log("after constructor", phaser);
 
-        for (int p = 0; p < PARTIES; p++) {
-            int delay = p + 1;
-            Runnable task = new Worker(delay, phaser);
+        for (var p = 0; p < PARTIES; p++) {
+            final var delay = p + 1;
+            final Runnable task = new Worker(delay, phaser);
             new Thread(task).start();
         }
 

@@ -11,15 +11,15 @@ public final class SeqEdge implements Edge<SeqComponent>, Comparable<Edge> {
     /**
      * Weight of this edge.
      */
-    public double weight;
+    public final double weight;
     /**
      * Source component.
      */
-    protected SeqComponent fromComponent;
+    private SeqComponent fromComponent;
     /**
      * Destination component.
      */
-    protected SeqComponent toComponent;
+    private SeqComponent toComponent;
 
     /**
      * Constructor.
@@ -28,8 +28,8 @@ public final class SeqEdge implements Edge<SeqComponent>, Comparable<Edge> {
      * @param to   To edges.
      * @param w    Weight of this edge.
      */
-    protected SeqEdge(final SeqComponent from, final SeqComponent to,
-                      final double w) {
+    SeqEdge(final SeqComponent from, final SeqComponent to,
+            final double w) {
         fromComponent = from;
         toComponent = to;
         weight = w;

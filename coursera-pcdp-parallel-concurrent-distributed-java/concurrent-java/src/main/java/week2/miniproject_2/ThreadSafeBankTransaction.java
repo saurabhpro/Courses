@@ -12,5 +12,5 @@ public interface ThreadSafeBankTransaction {
      * @param src    Source account
      * @param dst    Destination account
      */
-    void issueTransfer(final int amount, final Account src, final Account dst);
+    void issueTransfer(int amount, Account src, Account dst);
 }

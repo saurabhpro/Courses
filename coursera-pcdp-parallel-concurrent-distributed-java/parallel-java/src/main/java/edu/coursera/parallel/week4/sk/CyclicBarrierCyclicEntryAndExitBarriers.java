@@ -14,13 +14,13 @@ public class CyclicBarrierCyclicEntryAndExitBarriers {
     private static final Logger LOG = LoggerFactory.getLogger(CyclicBarrierCyclicEntryAndExitBarriers.class);
 
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
-        var entryBarrier = new CyclicBarrier(PARTIES + 1, () -> LOG.info("iteration started"));
-        var exitBarrier = new CyclicBarrier(PARTIES + 1, () -> LOG.info("iteration finished"));
+        final var entryBarrier = new CyclicBarrier(PARTIES + 1, () -> LOG.info("iteration started"));
+        final var exitBarrier = new CyclicBarrier(PARTIES + 1, () -> LOG.info("iteration finished"));
 
-        for (int i = 0; i < ITERATIONS; i++) {
-            for (int p = 0; p < PARTIES; p++) {
-                int delay = p + 1;
-                Runnable task = new Worker(delay, entryBarrier, exitBarrier);
+        for (var i = 0; i < ITERATIONS; i++) {
+            for (var p = 0; p < PARTIES; p++) {
+                final var delay = p + 1;
+                final Runnable task = new Worker(delay, entryBarrier, exitBarrier);
                 new Thread(task).start();
             }
 

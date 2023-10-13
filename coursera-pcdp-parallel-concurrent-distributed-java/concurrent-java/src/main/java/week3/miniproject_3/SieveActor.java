@@ -24,7 +24,7 @@ public final class SieveActor extends Sieve {
      */
     @Override
     public int countPrimes(final int limit) {
-        SieveActorActor[] sieveActorActor = new SieveActorActor[1];
+        final var sieveActorActor = new SieveActorActor[1];
 
         finish(() -> {
             // start with 3
@@ -36,8 +36,8 @@ public final class SieveActor extends Sieve {
                     .forEach(sieveActorActor[0]::send);
         });
 
-        SieveActorActor loopActor = sieveActorActor[0];
-        int numPrimes = 1;  // 1 as we already considered 2
+        var loopActor = sieveActorActor[0];
+        var numPrimes = 1;  // 1 as we already considered 2
 
         while (loopActor != null) {
             loopActor = loopActor.nextActor.get();
@@ -68,7 +68,7 @@ public final class SieveActor extends Sieve {
          */
         @Override
         public void process(final Object msg) {
-            int candidate = (Integer) msg;
+            final int candidate = (Integer) msg;
             if (candidate % prime == 0) {
                 return;
             }

@@ -41,7 +41,7 @@ class ListPeople {
         }
 
         // Read the existing address book.
-        AddressBook addressBook =
+        final var addressBook =
                 AddressBook.parseFrom(new FileInputStream(args[0]));
 
         print(addressBook);

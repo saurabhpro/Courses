@@ -1,6 +1,10 @@
 package week3.miniproject_3.util;
 
-import com.sun.jna.*;
+import com.sun.jna.Library;
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
+import com.sun.jna.NativeLibrary;
+import com.sun.jna.Pointer;
 
 import java.nio.DoubleBuffer;
 import java.nio.IntBuffer;
@@ -11,7 +15,9 @@ import java.nio.IntBuffer;
  * https://www.open-mpi.org/doc/v1.8/
  */
 public final class MPI {
+
     private interface MPILib extends Library {
+
         MPILib INSTANCE = (MPILib) Native.loadLibrary("mpi", MPILib.class);
         NativeLibrary lib = NativeLibrary.getInstance("mpi");
 
@@ -74,8 +80,8 @@ public final class MPI {
      * Constructor.
      */
     public MPI() {
-        Pointer ptr = MPILib.lib.getGlobalVariableAddress(
-                "ompi_mpi_comm_world");
+        var ptr = MPILib.lib.getGlobalVariableAddress(
+            "ompi_mpi_comm_world");
         MPI_COMM_WORLD = new MPI_Comm(ptr);
 
         ptr = MPILib.lib.getGlobalVariableAddress("ompi_mpi_integer");
@@ -96,7 +102,7 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public void MPI_Init() throws MPIException {
-        final int err = MPILib.INSTANCE.MPI_Init(new int[0], new String[0]);
+        final var err = MPILib.INSTANCE.MPI_Init(new int[0], new String[0]);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -108,7 +114,7 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public void MPI_Finalize() throws MPIException {
-        final int err = MPILib.INSTANCE.MPI_Finalize();
+        final var err = MPILib.INSTANCE.MPI_Finalize();
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -122,8 +128,8 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public int MPI_Comm_size(final MPI_Comm comm) throws MPIException {
-        int[] result = new int[1];
-        final int err = MPILib.INSTANCE.MPI_Comm_size(comm.comm, result);
+        final var result = new int[1];
+        final var err = MPILib.INSTANCE.MPI_Comm_size(comm.comm, result);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -138,8 +144,8 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public int MPI_Comm_rank(final MPI_Comm comm) throws MPIException {
-        int[] result = new int[1];
-        final int err = MPILib.INSTANCE.MPI_Comm_rank(comm.comm, result);
+        final var result = new int[1];
+        final var err = MPILib.INSTANCE.MPI_Comm_rank(comm.comm, result);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -159,9 +165,9 @@ public final class MPI {
      */
     public void MPI_Bcast(final double[] buf, final int offset, final int count,
                           final int root, final MPI_Comm comm) throws MPIException {
-        final DoubleBuffer wrapper = DoubleBuffer.wrap(buf, offset, count);
-        final int err = MPILib.INSTANCE.MPI_Bcast(wrapper, count,
-                MPI_DOUBLE.datatype, root, comm.comm);
+        final var wrapper = DoubleBuffer.wrap(buf, offset, count);
+        final var err = MPILib.INSTANCE.MPI_Bcast(wrapper, count,
+            MPI_DOUBLE.datatype, root, comm.comm);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -180,10 +186,10 @@ public final class MPI {
      */
     public void MPI_Send(final int[] buf, final int offset, final int count,
                          final int dst, final int tag, final MPI_Comm comm)
-            throws MPIException {
-        final IntBuffer wrapper = IntBuffer.wrap(buf, offset, count);
-        final int err = MPILib.INSTANCE.MPI_Send(wrapper, count,
-                MPI_INTEGER.datatype, dst, tag, comm.comm);
+        throws MPIException {
+        final var wrapper = IntBuffer.wrap(buf, offset, count);
+        final var err = MPILib.INSTANCE.MPI_Send(wrapper, count,
+            MPI_INTEGER.datatype, dst, tag, comm.comm);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -202,10 +208,10 @@ public final class MPI {
      */
     public void MPI_Send(final double[] buf, final int offset, final int count,
                          final int dst, final int tag, final MPI_Comm comm)
-            throws MPIException {
-        final DoubleBuffer wrapper = DoubleBuffer.wrap(buf, offset, count);
-        final int err = MPILib.INSTANCE.MPI_Send(wrapper, count,
-                MPI_DOUBLE.datatype, dst, tag, comm.comm);
+        throws MPIException {
+        final var wrapper = DoubleBuffer.wrap(buf, offset, count);
+        final var err = MPILib.INSTANCE.MPI_Send(wrapper, count,
+            MPI_DOUBLE.datatype, dst, tag, comm.comm);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -224,11 +230,11 @@ public final class MPI {
      */
     public void MPI_Recv(final int[] buf, final int offset, final int count,
                          final int src, final int tag, final MPI_Comm comm)
-            throws MPIException {
-        final IntBuffer wrapper = IntBuffer.wrap(buf, offset, count);
-        final int err = MPILib.INSTANCE.MPI_Recv(wrapper, count,
-                MPI_INTEGER.datatype, src, tag, comm.comm,
-                MPI_STATUS_IGNORE.status);
+        throws MPIException {
+        final var wrapper = IntBuffer.wrap(buf, offset, count);
+        final var err = MPILib.INSTANCE.MPI_Recv(wrapper, count,
+            MPI_INTEGER.datatype, src, tag, comm.comm,
+            MPI_STATUS_IGNORE.status);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -247,11 +253,11 @@ public final class MPI {
      */
     public void MPI_Recv(final double[] buf, final int offset, final int count,
                          final int src, final int tag, final MPI_Comm comm)
-            throws MPIException {
-        final DoubleBuffer wrapper = DoubleBuffer.wrap(buf, offset, count);
-        final int err = MPILib.INSTANCE.MPI_Recv(wrapper, count,
-                MPI_DOUBLE.datatype, src, tag, comm.comm,
-                MPI_STATUS_IGNORE.status);
+        throws MPIException {
+        final var wrapper = DoubleBuffer.wrap(buf, offset, count);
+        final var err = MPILib.INSTANCE.MPI_Recv(wrapper, count,
+            MPI_DOUBLE.datatype, src, tag, comm.comm,
+            MPI_STATUS_IGNORE.status);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -271,12 +277,12 @@ public final class MPI {
      */
     public MPI_Request MPI_Irecv(final double[] buf, final int offset,
                                  final int count, final int src, final int tag, final MPI_Comm comm)
-            throws MPIException {
-        Recv_MPI_Request request = new Recv_MPI_Request(count * 8, buf, offset,
-                count);
-        final int err = MPILib.INSTANCE.MPI_Irecv(request.buf, count,
-                MPI_DOUBLE.datatype, src, tag, comm.comm,
-                request.request);
+        throws MPIException {
+        final var request = new Recv_MPI_Request(count * 8, buf, offset,
+            count);
+        final var err = MPILib.INSTANCE.MPI_Irecv(request.buf, count,
+            MPI_DOUBLE.datatype, src, tag, comm.comm,
+            request.request);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -297,12 +303,12 @@ public final class MPI {
      */
     public MPI_Request MPI_Isend(final double[] buf, final int offset,
                                  final int count, final int dst, final int tag, final MPI_Comm comm)
-            throws MPIException {
-        Send_MPI_Request request = new Send_MPI_Request(count * 8);
+        throws MPIException {
+        final var request = new Send_MPI_Request(count * 8);
         request.buf.write(0, buf, offset, count);
-        final int err = MPILib.INSTANCE.MPI_Isend(request.buf, count,
-                MPI_DOUBLE.datatype, dst, tag, comm.comm,
-                request.request);
+        final var err = MPILib.INSTANCE.MPI_Isend(request.buf, count,
+            MPI_DOUBLE.datatype, dst, tag, comm.comm,
+            request.request);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -316,8 +322,9 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public void MPI_Wait(final MPI_Request request) throws MPIException {
-        final int err = MPILib.INSTANCE.MPI_Wait(request.request,
-                MPI_STATUS_IGNORE.status);
+        final var err = MPILib.INSTANCE.MPI_Wait(
+            request.request,
+            MPI_STATUS_IGNORE.status);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -331,7 +338,7 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public void MPI_Waitall(final MPI_Request[] requests) throws MPIException {
-        for (int i = 0; i < requests.length; i++) {
+        for (var i = 0; i < requests.length; i++) {
             MPI_Wait(requests[i]);
         }
     }
@@ -343,7 +350,7 @@ public final class MPI {
      * @throws MPIException On MPI error
      */
     public void MPI_Barrier(final MPI_Comm comm) throws MPIException {
-        final int err = MPILib.INSTANCE.MPI_Barrier(comm.comm);
+        final var err = MPILib.INSTANCE.MPI_Barrier(comm.comm);
         if (err != 0) {
             throw new MPIException(err);
         }
@@ -353,6 +360,7 @@ public final class MPI {
      * Wrapper for an MPI_Comm.
      */
     public static class MPI_Comm {
+
         /**
          * Pointer to the native communicator.
          */
@@ -372,10 +380,11 @@ public final class MPI {
      * Wrapper for an MPI_Datatype.
      */
     public static final class MPI_Datatype {
+
         /**
          * Pointer to native memory storing the actual datatype info.
          */
-        protected final Pointer datatype;
+        private final Pointer datatype;
 
         /**
          * Constructor.
@@ -392,6 +401,7 @@ public final class MPI {
      * MPI communication.
      */
     public abstract static class MPI_Request {
+
         /**
          * Wrapped request object.
          */
@@ -422,7 +432,8 @@ public final class MPI {
     /**
      * An MPI_Request object for an asynchronous receive.
      */
-    public final class Recv_MPI_Request extends MPI_Request {
+    public static final class Recv_MPI_Request extends MPI_Request {
+
         /**
          * The destination buffer in the JVM.
          */
@@ -464,7 +475,8 @@ public final class MPI {
     /**
      * An MPI_Request object for an asynchronous send.
      */
-    public final class Send_MPI_Request extends MPI_Request {
+    public static final class Send_MPI_Request extends MPI_Request {
+
         /**
          * Constructor.
          *
@@ -486,10 +498,11 @@ public final class MPI {
      * Wrapper for the native pointer to an MPI_Status object.
      */
     public static final class MPI_Status {
+
         /**
          * Wrapped MPI_Status object.
          */
-        protected final Pointer status;
+        private final Pointer status;
 
         /**
          * Constructor.
@@ -506,6 +519,7 @@ public final class MPI {
      * MPI error.
      */
     public static final class MPIException extends Exception {
+
         /**
          * MPI Error code.
          */

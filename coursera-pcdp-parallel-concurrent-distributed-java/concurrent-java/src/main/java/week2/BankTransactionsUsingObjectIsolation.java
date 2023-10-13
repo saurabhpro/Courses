@@ -19,13 +19,13 @@ public final class BankTransactionsUsingObjectIsolation {
 
         System.out.println("BankTransactionsUsingObjectIsolation starts...");
 
-        final int numAccounts = 2_000;
-        final int numTransactions = 500_000;
+        final var numAccounts = 2_000;
+        final var numTransactions = 500_000;
 
-        for (int i = 0; i < 5; i++) {
+        for (var i = 0; i < 5; i++) {
             System.out.println("Iteration-" + i);
 
-            for (int w = 1; w <= Runtime.getRuntime().availableProcessors(); w++) {
+            for (var w = 1; w <= Runtime.getRuntime().availableProcessors(); w++) {
                 benchmarkBody(numAccounts, numTransactions, w);
             }
         }
@@ -33,24 +33,24 @@ public final class BankTransactionsUsingObjectIsolation {
 
     private static void benchmarkBody(final int numAccounts, final int numTransactions, final int numWorkers) {
 
-        final Account[] bankAccounts = new Account[numAccounts];
-        for (int i = 0; i < numAccounts; i++) {
+        final var bankAccounts = new Account[numAccounts];
+        for (var i = 0; i < numAccounts; i++) {
             bankAccounts[i] = new Account(i, 1000 * (randomIntValue(new Random(1000), numAccounts) + 1));
         }
 
-        final long preSumOfBalances = sumBalances(bankAccounts);
+        final var preSumOfBalances = sumBalances(bankAccounts);
         // System.out.printf("Sum of balances before execution = %d. \n", preSumOfBalances);
 
         finish(() -> {
-            for (int i = 0; i < numTransactions - 1; i++) {
-                final int ii = i;
+            for (var i = 0; i < numTransactions - 1; i++) {
+                final var ii = i;
                 async(() -> kernelBody(ii, numAccounts, bankAccounts));
             }
             // async peeling
             kernelBody(numTransactions - 1, numAccounts, bankAccounts);
         });
 
-        final long postSumOfBalances = sumBalances(bankAccounts);
+        final var postSumOfBalances = sumBalances(bankAccounts);
         assert (preSumOfBalances == postSumOfBalances) : ("Error in checking sum of balances");
         System.out.printf("  Sum of balances after execution  = %d. \n", postSumOfBalances);
     }
@@ -61,27 +61,27 @@ public final class BankTransactionsUsingObjectIsolation {
 
     private static long sumBalances(final Account[] bankAccounts) {
         long res = 0;
-        for (final Account bankAccount : bankAccounts) {
+        for (final var bankAccount : bankAccounts) {
             res += bankAccount.balance();
         }
         return res;
     }
 
     private static void kernelBody(final int taskId, final int numAccounts, final Account[] bankAccounts) {
-        final Random myRandom = new Random(100L * (taskId + 1));
+        final var myRandom = new Random(100L * (taskId + 1));
 
-        final int srcIndex = randomIntValue(myRandom, numAccounts);
-        final Account srcAccount = bankAccounts[srcIndex];
+        final var srcIndex = randomIntValue(myRandom, numAccounts);
+        final var srcAccount = bankAccounts[srcIndex];
 
-        final int destIndex = randomIntValue(myRandom, numAccounts);
-        final Account destAccount = bankAccounts[destIndex];
+        final var destIndex = randomIntValue(myRandom, numAccounts);
+        final var destAccount = bankAccounts[destIndex];
 
 
         // local isolation
         isolated(srcAccount, destAccount, () -> {
             busyWork(srcIndex, destIndex);
-            final int transferAmount = randomIntValue(myRandom, srcAccount.balance());
-            final boolean success = srcAccount.withdraw(transferAmount);
+            final var transferAmount = randomIntValue(myRandom, srcAccount.balance());
+            final var success = srcAccount.withdraw(transferAmount);
             if (success) {
                 destAccount.deposit(transferAmount);
             }
@@ -89,10 +89,10 @@ public final class BankTransactionsUsingObjectIsolation {
     }
 
     private static void busyWork(final int srcIndex, final int destIndex) {
-        for (int i = 0; i < srcIndex * 100; i++) {
+        for (var i = 0; i < srcIndex * 100; i++) {
 
         }
-        for (int i = 0; i < destIndex * 100; i++) {
+        for (var i = 0; i < destIndex * 100; i++) {
 
         }
     }

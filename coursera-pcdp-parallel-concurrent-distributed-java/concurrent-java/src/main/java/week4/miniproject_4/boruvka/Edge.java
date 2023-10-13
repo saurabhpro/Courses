@@ -22,7 +22,7 @@ public interface Edge<C extends Component> {
      *
      * @return this
      */
-    Edge<C> replaceComponent(final C from, final C to);
+    Edge<C> replaceComponent(C from, C to);
 
     /**
      * Source component for this edge.
@@ -45,5 +45,5 @@ public interface Edge<C extends Component> {
      *
      * @return The other component of this edge.
      */
-    C getOther(final C component);
+    C getOther(C component);
 }

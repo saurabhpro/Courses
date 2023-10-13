@@ -27,12 +27,12 @@ class AddressBookProtosTest {
     @Test
     public void givenGeneratedProtobufClass_whenCreateClass_thenShouldCreateJavaInstance() {
         //when
-        String email = "j@test.com";
-        int id = new Random(10).nextInt(100);
-        String name = "Saurabh Program";
-        PhoneNumber number = PhoneNumber.newBuilder()
+        var email = "j@test.com";
+        var id = new Random(10).nextInt(100);
+        var name = "Saurabh Program";
+        var number = PhoneNumber.newBuilder()
                 .setNumber("01234567890").build();
-        Person person =
+        var person =
                 Person.newBuilder()
                         .setId(id)
                         .setName(name)
@@ -52,11 +52,11 @@ class AddressBookProtosTest {
     @Test
     public void givenAddressBookWithOnePerson_whenSaveAsAFile_shouldLoadFromFileToJavaClass() throws IOException {
         //given
-        String email = "j@test.com";
-        int id = new Random(10).nextInt(100);
-        String name = "Saurabh Program";
+        var email = "j@test.com";
+        var id = new Random(10).nextInt(100);
+        var name = "Saurabh Program";
 
-        PhoneNumber number = PhoneNumber.newBuilder()
+        var number = PhoneNumber.newBuilder()
                 .setNumber("01234567890")
                 .setType(Person.PhoneType.HOME)
                 .build();
@@ -70,22 +70,22 @@ class AddressBookProtosTest {
                         .build();
 
         //when
-        AddressBook addressBook = AddressBook.newBuilder().addPeople(person).build();
+        var addressBook = AddressBook.newBuilder().addPeople(person).build();
 
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+        try (var fos = new FileOutputStream(filePath)) {
             addressBook.writeTo(fos);
         }
 
         //then
-        try (FileInputStream fis = new FileInputStream(filePath)) {
-            AddressBook deserialized =
+        try (var fis = new FileInputStream(filePath)) {
+            var deserialized =
                     AddressBook.newBuilder()
                             .mergeFrom(fis)
                             .build();
 
             ListPeople.print(deserialized);
 
-            final Person people = deserialized.getPeople(0);
+            var people = deserialized.getPeople(0);
             assertEquals(people.getEmail(), email);
             assertEquals(people.getId(), id);
             assertEquals(people.getName(), name);

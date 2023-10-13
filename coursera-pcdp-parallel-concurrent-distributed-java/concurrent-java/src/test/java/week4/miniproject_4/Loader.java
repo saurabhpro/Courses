@@ -5,9 +5,20 @@ import week4.miniproject_4.boruvka.Component;
 import week4.miniproject_4.boruvka.Edge;
 import week4.miniproject_4.util.IntPair;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StreamTokenizer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.zip.GZIPInputStream;
+
+import static java.util.Collections.shuffle;
 
 /**
  * This class should not be modified.
@@ -15,56 +26,58 @@ import java.util.zip.GZIPInputStream;
  * @author <a href="http://shams.web.rice.edu/">Shams Imam</a> (shams@rice.edu)
  */
 public final class Loader {
+
     /**
      * Read edges from the provided input file.
      */
-    public static <C extends Component, E extends Edge> void read(final String fileName,
-                                                                  final BoruvkaFactory<C, E> boruvkaFactory, final Queue<C> nodesLoaded) {
+    public static <C extends Component, E extends Edge> void read(String fileName,
+                                                                  BoruvkaFactory<C, E> boruvkaFactory,
+                                                                  Queue<C> nodesLoaded) {
 
-        final Map<Integer, C> nodesMap = new HashMap<>();
-        final Map<IntPair, E> edgesMap = new HashMap<>();
+        Map<Integer, C> nodesMap = new HashMap<>();
+        Map<IntPair, E> edgesMap = new HashMap<>();
 
         double totalWeight = 0;
-        int edges = 0;
+        var edges = 0;
         try {
             // Open the compressed file
-            final GZIPInputStream in = new GZIPInputStream(new FileInputStream(fileName));
-            final Reader r = new BufferedReader(new InputStreamReader(in));
-            final StreamTokenizer st = new StreamTokenizer(r);
-            final String cstring = "c";
-            final String pstring = "p";
+            var in = new GZIPInputStream(new FileInputStream(fileName));
+            Reader r = new BufferedReader(new InputStreamReader(in));
+            var st = new StreamTokenizer(r);
+            final var cstring = "c";
+            final var pstring = "p";
             st.commentChar(cstring.charAt(0));
             st.commentChar(pstring.charAt(0));
             // read graph
             while (st.nextToken() != StreamTokenizer.TT_EOF) {
                 assert (st.sval.equals("a"));
                 st.nextToken();
-                final int from = (int) st.nval;
+                var from = (int) st.nval;
                 st.nextToken();
-                final int to = (int) st.nval;
-                final C nodeFrom = getComponent(boruvkaFactory, nodesMap, from);
-                final C nodeTo = getComponent(boruvkaFactory, nodesMap, to);
+                var to = (int) st.nval;
+                var nodeFrom = getComponent(boruvkaFactory, nodesMap, from);
+                var nodeTo = getComponent(boruvkaFactory, nodesMap, to);
                 assert (nodeTo != nodeFrom); // Assume no self-loops in the input graph
                 st.nextToken();
-                final int weight = (int) st.nval;
+                var weight = (int) st.nval;
                 addEdge(boruvkaFactory, edgesMap, from, to, nodeFrom, nodeTo, weight);
                 totalWeight += weight;
                 edges++;
             }
             // Close the file and stream
             in.close();
-        } catch (final IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        final List<C> nodesList = new ArrayList<>();
-        nodesList.addAll(nodesMap.values());
-        Collections.shuffle(nodesList);
+        List<C> nodesList = new ArrayList<>(nodesMap.values());
+        shuffle(nodesList);
         nodesLoaded.addAll(nodesList);
     }
 
-    private static <C extends Component, E extends Edge> C getComponent(final BoruvkaFactory<C, E> factory,
-                                                                        final Map<Integer, C> nodesMap, final int node) {
+    private static <C extends Component, E extends Edge> C getComponent(BoruvkaFactory<C, E> factory,
+                                                                        Map<Integer, C> nodesMap,
+                                                                        int node) {
         if (!nodesMap.containsKey(node)) {
             nodesMap.put(node, factory.newComponent(node));
         }
@@ -72,17 +85,17 @@ public final class Loader {
     }
 
     private static <C extends Component, E extends Edge> void addEdge(
-            final BoruvkaFactory<C, E> factory, final Map<IntPair, E> edgesMap,
-            final int from, final int to, final C fromC, final C toC, final double w) {
+        BoruvkaFactory<C, E> factory, Map<IntPair, E> edgesMap,
+        int from, int to, C fromC, C toC, double w) {
 
-        final IntPair p;
+        IntPair p;
         if (from < to) {
             p = new IntPair(from, to);
         } else {
             p = new IntPair(to, from);
         }
         if (!edgesMap.containsKey(p)) {
-            final E e = factory.newEdge(fromC, toC, w);
+            var e = factory.newEdge(fromC, toC, w);
             edgesMap.put(p, e);
             fromC.addEdge(e);
             toC.addEdge(e);

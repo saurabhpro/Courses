@@ -2,12 +2,9 @@ package week2.miniproject_2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * A basic and very limited implementation of a file server that responds to GET
@@ -35,7 +32,7 @@ public final class FileServer {
         while (true) {
 
             // TODO 1) Use socket.accept to get a Socket object
-            Socket s = socket.accept();
+            final var s = socket.accept();
 
             /*
              * TODO 2) Using Socket.getInputStream(), parse the received HTTP
@@ -46,20 +43,20 @@ public final class FileServer {
              *
              *     GET /path/to/file HTTP/1.1
              */
-            InputStream stream = s.getInputStream();
-            InputStreamReader reader = new InputStreamReader(stream);
-            BufferedReader bufferedReader = new BufferedReader(reader);
+            final var stream = s.getInputStream();
+            final var reader = new InputStreamReader(stream);
+            final var bufferedReader = new BufferedReader(reader);
 
-            String line = bufferedReader.readLine();
+            final var line = bufferedReader.readLine();
             if (line == null || !line.startsWith("GET")) {
                 throw new RuntimeException("Invalid request");
             }
-            final String path = line.split(" ")[1];
+            final var path = line.split(" ")[1];
 
-            PCDPPath pcdpPath = new PCDPPath(path);
+            final var pcdpPath = new PCDPPath(path);
 
-            try (OutputStream out = s.getOutputStream();
-                 PrintWriter printer = new PrintWriter(out)) {
+            try (final var out = s.getOutputStream();
+                 final var printer = new PrintWriter(out)) {
 
                 /*
                  * TODO 3) Using the parsed path to the target file, construct an
@@ -81,7 +78,7 @@ public final class FileServer {
                  *
                  * Don't forget to close the output stream.
                  */
-                final String content = fs.readFile(pcdpPath);
+                final var content = fs.readFile(pcdpPath);
                 if (content == null) {
                     printer.write("HTTP/1.0 404 Not Found\r\n");
                     printer.write("Server: FileServer\r\n");

@@ -24,7 +24,7 @@ public final class BankTransactionsUsingObjectIsolation
          * rather than a global isolation.
          */
         isolated(src, dst, () -> {
-            boolean success = src.withdraw(amount);
+            final var success = src.withdraw(amount);
             if (success) {
                 dst.deposit(amount);
             }

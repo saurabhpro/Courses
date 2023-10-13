@@ -45,14 +45,14 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
                 continue;
             }
 
-            final Edge<ParComponent> minEdge = loopNode.getMinEdge();
+            final var minEdge = loopNode.getMinEdge();
             if (minEdge == null) {
                 // No Edge  -- > all nodes merged to MST graph
                 solution.setSolution(loopNode);
                 break;
             }
 
-            final ParComponent other = minEdge.getOther(loopNode);
+            final var other = minEdge.getOther(loopNode);
 
             // Try to get lock on Other node so no other thread is also Merging with this Node
             if (!other.lock.tryLock()) {
@@ -159,7 +159,7 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
          * Edge is inserted in weight order, from least to greatest.
          */
         public void addEdge(final Edge<ParComponent> e) {
-            int i = 0;
+            var i = 0;
             while (i < edges.size()) {
                 if (e.weight() < edges.get(i).weight()) {
                     break;
@@ -175,7 +175,7 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
          * @return Edge with the smallest weight attached to this component.
          */
         public Edge<ParComponent> getMinEdge() {
-            if (edges.size() == 0) {
+            if (edges.isEmpty()) {
                 return null;
             }
             return edges.get(0);
@@ -193,12 +193,12 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
             totalEdges += other.totalEdges + 1;
 
             final List<Edge<ParComponent>> newEdges = new ArrayList<>();
-            int i = 0;
-            int j = 0;
+            var i = 0;
+            var j = 0;
             while (i + j < edges.size() + other.edges.size()) {
                 // Get rid of inter-component edges
                 while (i < edges.size()) {
-                    final Edge<ParComponent> e = edges.get(i);
+                    final var e = edges.get(i);
                     if ((e.fromComponent() != this
                             && e.fromComponent() != other)
                             || (e.toComponent() != this
@@ -208,7 +208,7 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
                     i++;
                 }
                 while (j < other.edges.size()) {
-                    final Edge<ParComponent> e = other.edges.get(j);
+                    final var e = other.edges.get(j);
                     if ((e.fromComponent() != this
                             && e.fromComponent() != other)
                             || (e.toComponent() != this
@@ -245,11 +245,10 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
                 return true;
             }
 
-            if (!(o instanceof Component)) {
+            if (!(o instanceof Component component)) {
                 return false;
             }
 
-            final Component component = (Component) o;
             return component.nodeId() == nodeId;
         }
 
@@ -272,15 +271,15 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
         /**
          * Weight of this edge.
          */
-        public double weight;
+        public final double weight;
         /**
          * Source component.
          */
-        protected ParComponent fromComponent;
+        private ParComponent fromComponent;
         /**
          * Destination component.
          */
-        protected ParComponent toComponent;
+        private ParComponent toComponent;
 
         /**
          * Constructor.
@@ -343,13 +342,7 @@ public final class ParBoruvka implements AbstractBoruvka<ParComponent> {
          */
         @Override
         public int compareTo(final Edge e) {
-            if (e.weight() == weight) {
-                return 0;
-            } else if (weight < e.weight()) {
-                return -1;
-            } else {
-                return 1;
-            }
+            return Double.compare(weight, e.weight());
         }
 
         /**

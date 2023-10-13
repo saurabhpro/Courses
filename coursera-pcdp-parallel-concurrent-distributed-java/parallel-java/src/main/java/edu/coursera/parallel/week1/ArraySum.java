@@ -11,23 +11,23 @@ public class ArraySum {
     static double sum1, sum2;
 
     public static double seqArraySum(double[] x) {
-        long startTime = System.nanoTime();
+        final var startTime = System.nanoTime();
         sum1 = sum2 = 0;
 
-        for (int i = 0; i < x.length / 2; i++) {
+        for (var i = 0; i < x.length / 2; i++) {
             sum1 += x[i];
         }
-        for (int i = x.length / 2; i < x.length; i++) {
+        for (var i = x.length / 2; i < x.length; i++) {
             sum2 += x[i];
         }
-        double sum = sum1 + sum2;
-        long timeNanos = System.nanoTime() - startTime;
+        final var sum = sum1 + sum2;
+        final var timeNanos = System.nanoTime() - startTime;
         printResults("seqArraySum", timeNanos, sum);
         return sum;
     }
 
     public static double parArraySum(double[] x) {
-        long startTime = System.nanoTime();
+        final var startTime = System.nanoTime();
         sum1 = sum2 = 0;
 
         finish(() -> {
@@ -38,8 +38,8 @@ public class ArraySum {
             IntStream.range(x.length / 2, x.length).forEach(i -> sum2 += x[i]);
         });
 
-        double sum = sum1 + sum2;
-        long timeNanos = System.nanoTime() - startTime;
+        final var sum = sum1 + sum2;
+        final var timeNanos = System.nanoTime() - startTime;
         printResults("parArraySum", timeNanos, sum);
         return sum;
     }
@@ -49,7 +49,7 @@ public class ArraySum {
     }
 
     public static void main(String[] args) {
-        double[] arr = new double[200_000_000];
+        final var arr = new double[200_000_000];
         Arrays.setAll(arr, i -> Math.random());
 
         IntStream.range(0, 5).forEach(i -> {

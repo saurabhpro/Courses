@@ -37,8 +37,8 @@ public final class CoarseLists {
             try {
                 lock.lock();
 
-                Entry pred = this.head;
-                Entry curr = pred.next;
+                var pred = this.head;
+                var curr = pred.next;
 
                 while (curr.object.compareTo(object) < 0) {
                     pred = curr;
@@ -48,7 +48,7 @@ public final class CoarseLists {
                 if (object.equals(curr.object)) {
                     return false;
                 } else {
-                    final Entry entry = new Entry(object);
+                    final var entry = new Entry(object);
                     entry.next = curr;
                     pred.next = entry;
                     return true;
@@ -66,8 +66,8 @@ public final class CoarseLists {
             try {
                 lock.lock();
 
-                Entry pred = this.head;
-                Entry curr = pred.next;
+                var pred = this.head;
+                var curr = pred.next;
 
                 while (curr.object.compareTo(object) < 0) {
                     pred = curr;
@@ -93,8 +93,8 @@ public final class CoarseLists {
             try {
                 lock.lock();
 
-                Entry pred = this.head;
-                Entry curr = pred.next;
+                var pred = this.head;
+                var curr = pred.next;
 
                 while (curr.object.compareTo(object) < 0) {
                     pred = curr;
@@ -137,8 +137,8 @@ public final class CoarseLists {
             try {
                 lock.writeLock().lock();
 
-                Entry pred = this.head;
-                Entry curr = pred.next;
+                var pred = this.head;
+                var curr = pred.next;
 
                 while (curr.object.compareTo(object) < 0) {
                     pred = curr;
@@ -148,7 +148,7 @@ public final class CoarseLists {
                 if (object.equals(curr.object)) {
                     return false;
                 } else {
-                    final Entry entry = new Entry(object);
+                    final var entry = new Entry(object);
                     entry.next = curr;
                     pred.next = entry;
                     return true;
@@ -166,8 +166,8 @@ public final class CoarseLists {
             try {
                 lock.writeLock().lock();
 
-                Entry pred = this.head;
-                Entry curr = pred.next;
+                var pred = this.head;
+                var curr = pred.next;
 
                 while (curr.object.compareTo(object) < 0) {
                     pred = curr;
@@ -193,8 +193,8 @@ public final class CoarseLists {
             try {
                 lock.readLock().lock();
 
-                Entry pred = this.head;
-                Entry curr = pred.next;
+                var pred = this.head;
+                var curr = pred.next;
 
                 while (curr.object.compareTo(object) < 0) {
                     pred = curr;

@@ -7,7 +7,7 @@ class FibonacciTest {
 
     @Test
     void compute() {
-        final var fibonacci = new Fibonacci(15);
+        var fibonacci = new Fibonacci(15);
         Assertions.assertEquals(610, fibonacci.compute());
     }
 }

@@ -15,7 +15,7 @@ class ReciprocalArraySumTest {
     final static private int REPEATS = 60;
 
     private static int getNCores() {
-        String ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
+        var ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
         if (ncoresStr == null) {
             return Runtime.getRuntime().availableProcessors();
         } else {
@@ -30,11 +30,11 @@ class ReciprocalArraySumTest {
      *
      * @return Initialized double array of length N
      */
-    private double[] createArray(final int N) {
-        final double[] input = new double[N];
-        final Random rand = new Random(314);
+    private double[] createArray(int N) {
+        var input = new double[N];
+        var rand = new Random(314);
 
-        for (int i = 0; i < N; i++) {
+        for (var i = 0; i < N; i++) {
             input[i] = rand.nextInt(100);
             // Don't allow zero values in the input array to prevent divide-by-zero
             if (input[i] == 0.0) {
@@ -52,7 +52,7 @@ class ReciprocalArraySumTest {
      *
      * @return Reciprocal sum of input
      */
-    private double seqArraySum(final double[] input) {
+    private double seqArraySum(double[] input) {
         // Compute sum of reciprocals of array elements
         return Arrays.stream(input).map(v -> 1 / v).sum();
     }
@@ -66,11 +66,11 @@ class ReciprocalArraySumTest {
      *
      * @return The speedup achieved, not all tests use this information
      */
-    private double parTestHelper(final int N, final boolean useManyTaskVersion, final int ntasks) {
+    private double parTestHelper(int N, boolean useManyTaskVersion, int ntasks) {
         // Create a random input
-        final double[] input = createArray(N);
+        var input = createArray(N);
         // Use a reference sequential version to compute the correct result
-        final double correct = seqArraySum(input);
+        var correct = seqArraySum(input);
         // Use the parallel implementation to compute the result
         double sum;
         if (useManyTaskVersion) {
@@ -79,9 +79,9 @@ class ReciprocalArraySumTest {
             assert ntasks == 2;
             sum = ReciprocalArraySumOriginal.parArraySum(input);
         }
-        final double err = Math.abs(sum - correct);
+        var err = Math.abs(sum - correct);
         // Assert the expected output was produced
-        final String errMsg = String.format("Mismatch in result for N = %d, expected = %f, computed = %f, absolute " +
+        var errMsg = String.format("Mismatch in result for N = %d, expected = %f, computed = %f, absolute " +
                 "error = %f", N, correct, sum, err);
         assertTrue(err < 1E-2, errMsg);
 
@@ -89,14 +89,14 @@ class ReciprocalArraySumTest {
          * Run several repeats of the sequential and parallel versions to get an accurate measurement of parallel
          * performance.
          */
-        final long seqStartTime = System.currentTimeMillis();
-        for (int r = 0; r < REPEATS; r++) {
+        var seqStartTime = System.currentTimeMillis();
+        for (var r = 0; r < REPEATS; r++) {
             seqArraySum(input);
         }
-        final long seqEndTime = System.currentTimeMillis();
+        var seqEndTime = System.currentTimeMillis();
 
-        final long parStartTime = System.currentTimeMillis();
-        for (int r = 0; r < REPEATS; r++) {
+        var parStartTime = System.currentTimeMillis();
+        for (var r = 0; r < REPEATS; r++) {
             if (useManyTaskVersion) {
                 ReciprocalArraySumOriginal.parManyTaskArraySum(input, ntasks);
             } else {
@@ -104,10 +104,10 @@ class ReciprocalArraySumTest {
                 ReciprocalArraySumOriginal.parArraySum(input);
             }
         }
-        final long parEndTime = System.currentTimeMillis();
+        var parEndTime = System.currentTimeMillis();
 
-        final long seqTime = (seqEndTime - seqStartTime) / REPEATS;
-        final long parTime = (parEndTime - parStartTime) / REPEATS;
+        var seqTime = (seqEndTime - seqStartTime) / REPEATS;
+        var parTime = (parEndTime - parStartTime) / REPEATS;
 
         return (double) seqTime / (double) parTime;
     }
@@ -117,9 +117,9 @@ class ReciprocalArraySumTest {
      */
     @Test
     void testParSimpleTwoMillion() {
-        final double minimalExpectedSpeedup = 1.5;
-        final double speedup = parTestHelper(2_000_000, false, 2);
-        final String errMsg = String.format("It was expected that the two-task parallel implementation would run at " +
+        final var minimalExpectedSpeedup = 1.5;
+        var speedup = parTestHelper(2_000_000, false, 2);
+        var errMsg = String.format("It was expected that the two-task parallel implementation would run at " +
                 "least %fx faster, but it only achieved %fx speedup", minimalExpectedSpeedup, speedup);
         Utils.softAssertTrue(speedup >= minimalExpectedSpeedup, errMsg);
     }
@@ -129,9 +129,9 @@ class ReciprocalArraySumTest {
      */
     @Test
     void testParSimpleTwoHundredMillion() {
-        final double speedup = parTestHelper(200_000_000, false, 2);
-        final double minimalExpectedSpeedup = 1.5;
-        final String errMsg = String.format("It was expected that the two-task parallel implementation would run at " +
+        var speedup = parTestHelper(200_000_000, false, 2);
+        final var minimalExpectedSpeedup = 1.5;
+        var errMsg = String.format("It was expected that the two-task parallel implementation would run at " +
                 "least %fx faster, but it only achieved %fx speedup", minimalExpectedSpeedup, speedup);
         Utils.softAssertTrue(speedup >= minimalExpectedSpeedup, errMsg);
     }
@@ -141,10 +141,10 @@ class ReciprocalArraySumTest {
      */
     @Test
     void testParManyTaskTwoMillion() {
-        final int ncores = getNCores();
-        final double minimalExpectedSpeedup = (double) ncores * 0.6;
-        final double speedup = parTestHelper(2_000_000, true, ncores);
-        final String errMsg = String.format("It was expected that the many-task parallel implementation would run at " +
+        var ncores = getNCores();
+        var minimalExpectedSpeedup = (double) ncores * 0.6;
+        var speedup = parTestHelper(2_000_000, true, ncores);
+        var errMsg = String.format("It was expected that the many-task parallel implementation would run at " +
                 "least %fx faster, but it only achieved %fx speedup", minimalExpectedSpeedup, speedup);
         Utils.softAssertTrue(speedup >= minimalExpectedSpeedup, errMsg);
     }
@@ -154,10 +154,10 @@ class ReciprocalArraySumTest {
      */
     @Test
     void testParManyTaskTwoHundredMillion() {
-        final int ncores = getNCores();
-        final double speedup = parTestHelper(200_000_000, true, ncores);
-        final double minimalExpectedSpeedup = (double) ncores * 0.8;
-        final String errMsg = String.format("It was expected that the many-task parallel implementation would run at " +
+        var ncores = getNCores();
+        var speedup = parTestHelper(200_000_000, true, ncores);
+        var minimalExpectedSpeedup = (double) ncores * 0.8;
+        var errMsg = String.format("It was expected that the many-task parallel implementation would run at " +
                 "least %fx faster, but it only achieved %fx speedup", minimalExpectedSpeedup, speedup);
         Utils.softAssertTrue(speedup >= minimalExpectedSpeedup, errMsg);
     }

@@ -7,12 +7,13 @@ import java.util.Arrays;
  * implementation. This thread simply hits the list with a large number of adds.
  */
 public class AddTestThread extends TestThread implements Runnable {
-    public AddTestThread(final SequenceGenerator seq, final int seqToUse, final ListSet setL) {
+
+    public AddTestThread(SequenceGenerator seq, int seqToUse, ListSet setL) {
         super(seq, seqToUse, setL);
     }
 
     @Override
     public void run() {
-        Arrays.stream(nums).forEach(num -> l.add(num));
+        Arrays.stream(nums).forEach(l::add);
     }
 }

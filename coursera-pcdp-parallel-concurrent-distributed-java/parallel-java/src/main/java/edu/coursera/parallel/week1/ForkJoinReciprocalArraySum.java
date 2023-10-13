@@ -7,13 +7,13 @@ import java.util.stream.IntStream;
 
 public class ForkJoinReciprocalArraySum {
     public static double seqArraySum(double[] x) {
-        final long startTime = System.nanoTime();
+        final var startTime = System.nanoTime();
         double sum = 0;
-        for (double v : x) {
+        for (final var v : x) {
             sum += 1 / v;
         }
 
-        final long timeNanos = System.nanoTime() - startTime;
+        final var timeNanos = System.nanoTime() - startTime;
         printResults("seqArraySum", timeNanos, sum);
 
         return sum;
@@ -25,14 +25,14 @@ public class ForkJoinReciprocalArraySum {
      * @return sum of 1/x[i] for 0 <= i <= x.length
      */
     public static double parArraySum(double[] x) {
-        final long startTime = System.nanoTime();
+        final var startTime = System.nanoTime();
 
         // special class to work with RecursiveTask
         final var t = new SumArray(x, 0, x.length);
         ForkJoinPool.commonPool().invoke(t);
 
-        final double sum = t.ans;
-        final long timeNanos = System.nanoTime() - startTime;
+        final var sum = t.ans;
+        final var timeNanos = System.nanoTime() - startTime;
         printResults("parArraySum", timeNanos, sum);
 
         return sum;
@@ -44,7 +44,7 @@ public class ForkJoinReciprocalArraySum {
 
     public static void main(String[] args) {
         // note : for a small array size, seq is very fast, hence i need this massive thing on a top mac config
-        double[] arr = new double[200_000_000];
+        final var arr = new double[200_000_000];
 
         // making an array smartly
         Arrays.setAll(arr, i -> i + 1);
@@ -78,12 +78,12 @@ public class ForkJoinReciprocalArraySum {
         @Override
         protected void compute() {
             if (hi - lo < SEQUENTIAL_THRESHOLD) {
-                for (int i = lo; i < hi; i++) {
+                for (var i = lo; i < hi; i++) {
                     ans += 1 / arr[i];
                 }
             } else {
-                var left = new SumArray(arr, lo, (hi + lo) / 2);
-                var right = new SumArray(arr, (hi + lo) / 2, hi);
+                final var left = new SumArray(arr, lo, (hi + lo) / 2);
+                final var right = new SumArray(arr, (hi + lo) / 2, hi);
 
                 left.fork();
                 right.compute();

@@ -8,14 +8,14 @@ import java.util.Random;
 import static edu.rice.pcdp.PCDP.async;
 import static edu.rice.pcdp.PCDP.finish;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BankTransactionsTest {
+
     private final static int numAccounts = 3_000;
     private final static int numTransactions = 800_000;
 
     private static int getNCores() {
-        String ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
+        var ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
         if (ncoresStr == null) {
             return Runtime.getRuntime().availableProcessors();
         } else {
@@ -23,77 +23,78 @@ public class BankTransactionsTest {
         }
     }
 
-    private static int randomIntValue(final Random random, final int limit) {
+    private static int randomIntValue(Random random, int limit) {
         return (int) (Math.abs(random.nextDouble() * 10000) % limit);
     }
 
-    private static long sumBalances(final Account[] bankAccounts) {
+    private static long sumBalances(Account[] bankAccounts) {
         long res = 0;
-        for (final Account bankAccount : bankAccounts) {
+        for (var bankAccount : bankAccounts) {
             res += bankAccount.balance();
         }
         return res;
     }
 
-    private static long testDriver(final ThreadSafeBankTransaction impl) {
-        final Account[] bankAccounts = new Account[numAccounts];
-        for (int i = 0; i < numAccounts; i++) {
-            bankAccounts[i] = new Account(i,
-                    1000 * (randomIntValue(new Random(1000), numAccounts) + 1));
+    private static long testDriver(ThreadSafeBankTransaction impl) {
+        var bankAccounts = new Account[numAccounts];
+        for (var i = 0; i < numAccounts; i++) {
+            bankAccounts[i] = new Account(
+                i,
+                1000 * (randomIntValue(new Random(1000), numAccounts) + 1));
         }
 
-        final long preSumOfBalances = sumBalances(bankAccounts);
-        final long startTime = System.currentTimeMillis();
+        var preSumOfBalances = sumBalances(bankAccounts);
+        var startTime = System.currentTimeMillis();
         finish(() -> {
-            for (int i = 0; i < numTransactions; i++) {
-                final int ii = i;
+            for (var i = 0; i < numTransactions; i++) {
+                var ii = i;
 
                 async(() -> {
-                    final Random myRandom = new Random(100L * (ii + 1));
+                    var myRandom = new Random(100L * (ii + 1));
 
-                    final int srcIndex = randomIntValue(myRandom, numAccounts);
-                    final Account srcAccount = bankAccounts[srcIndex];
+                    var srcIndex = randomIntValue(myRandom, numAccounts);
+                    var srcAccount = bankAccounts[srcIndex];
 
-                    final int destIndex = randomIntValue(myRandom, numAccounts);
-                    final Account destAccount = bankAccounts[destIndex];
+                    var destIndex = randomIntValue(myRandom, numAccounts);
+                    var destAccount = bankAccounts[destIndex];
 
-                    final int transferAmount = randomIntValue(myRandom,
-                            srcAccount.balance());
+                    var transferAmount = randomIntValue(
+                        myRandom,
+                        srcAccount.balance());
 
                     impl.issueTransfer(transferAmount, srcAccount, destAccount);
                 });
             }
         });
-        final long elapsed = System.currentTimeMillis() - startTime;
+        var elapsed = System.currentTimeMillis() - startTime;
 
         System.out.println(impl.getClass().getSimpleName() + ": Performed " +
-                numTransactions + " transactions with " + numAccounts +
-                " accounts and " + getNCores() + " threads, in " + elapsed +
-                " ms");
+            numTransactions + " transactions with " + numAccounts +
+            " accounts and " + getNCores() + " threads, in " + elapsed +
+            " ms");
 
-        final long postSumOfBalances = sumBalances(bankAccounts);
+        var postSumOfBalances = sumBalances(bankAccounts);
         assertEquals(preSumOfBalances, postSumOfBalances, "Expected total balance before and after simulation to be " +
-                "equal, but was " + preSumOfBalances + " before and " +
-                postSumOfBalances + " after");
+            "equal, but was " + preSumOfBalances + " before and " +
+            postSumOfBalances + " after");
 
         return elapsed;
     }
-
 
     @Test
     public void testObjectIsolation() {
         // warmup
         testDriver(new BankTransactionsUsingGlobalIsolation());
-        final long globalTime = testDriver(
-                new BankTransactionsUsingGlobalIsolation());
+        var globalTime = testDriver(
+            new BankTransactionsUsingGlobalIsolation());
 
         // warmup
         testDriver(new BankTransactionsUsingObjectIsolation());
-        final long objectTime = testDriver(
-                new BankTransactionsUsingObjectIsolation());
-        final double improvement = (double) globalTime / (double) objectTime;
+        var objectTime = testDriver(
+            new BankTransactionsUsingObjectIsolation());
+        var improvement = (double) globalTime / (double) objectTime;
 
-        final int ncores = getNCores();
+        var ncores = getNCores();
         double expected;
         if (ncores == 2) {
             expected = 1.4;
@@ -102,9 +103,9 @@ public class BankTransactionsTest {
         } else {
             expected = 0.7 * ncores;
         }
-        final String msg = String.format("Expected an improvement of at " +
-                        "least %fx with object-based isolation, but saw %fx", expected,
-                improvement);
+        var msg = String.format("Expected an improvement of at " +
+                "least %fx with object-based isolation, but saw %fx", expected,
+            improvement);
         Utils.softAssertTrue(improvement >= expected, msg);
     }
 }

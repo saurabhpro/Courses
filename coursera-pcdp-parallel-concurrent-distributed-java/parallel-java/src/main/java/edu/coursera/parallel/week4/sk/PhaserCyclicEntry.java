@@ -13,7 +13,7 @@ public class PhaserCyclicEntry {
     private static final Logger log = LoggerFactory.getLogger(PhaserCyclicEntry.class);
 
     public static void main(String[] args) throws InterruptedException {
-        Phaser phaser = new Phaser(1) {
+        final var phaser = new Phaser(1) {
             final private int maxPhase = ITERATIONS;
 
             @Override
@@ -22,9 +22,9 @@ public class PhaserCyclicEntry {
             }
         };
         log.info("after constructor {}", phaser);
-        for (int p = 0; p < PARTIES; p++) {
-            int delay = p + 1;
-            Runnable task = new Worker(delay, phaser);
+        for (var p = 0; p < PARTIES; p++) {
+            final var delay = p + 1;
+            final Runnable task = new Worker(delay, phaser);
             new Thread(task).start();
         }
         log.info("all threads waiting to start {}", phaser);

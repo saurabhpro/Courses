@@ -20,11 +20,11 @@ public final class ReciprocalArraySumOriginal {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double seqArraySum(final double[] input) {
+    private static double seqArraySum(final double[] input) {
         double sum = 0;
 
         // Compute sum of reciprocals of array elements
-        for (int i = 0; i < input.length; i++) {
+        for (var i = 0; i < input.length; i++) {
             sum += 1 / input[i];
         }
 
@@ -58,7 +58,7 @@ public final class ReciprocalArraySumOriginal {
      */
     private static int getChunkStartInclusive(final int chunk,
                                               final int nChunks, final int nElements) {
-        final int chunkSize = getChunkSize(nChunks, nElements);
+        final var chunkSize = getChunkSize(nChunks, nElements);
         return chunk * chunkSize;
     }
 
@@ -74,8 +74,8 @@ public final class ReciprocalArraySumOriginal {
      */
     private static int getChunkEndExclusive(final int chunk, final int nChunks,
                                             final int nElements) {
-        final int chunkSize = getChunkSize(nChunks, nElements);
-        final int end = (chunk + 1) * chunkSize;
+        final var chunkSize = getChunkSize(nChunks, nElements);
+        final var end = (chunk + 1) * chunkSize;
         return Math.min(end, nElements);
     }
 
@@ -89,13 +89,13 @@ public final class ReciprocalArraySumOriginal {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double parArraySum(final double[] input) {
+    static double parArraySum(final double[] input) {
         assert input.length % 2 == 0;
 
         double sum = 0;
 
         // Compute sum of reciprocals of array elements
-        for (int i = 0; i < input.length; i++) {
+        for (var i = 0; i < input.length; i++) {
             sum += 1 / input[i];
         }
 
@@ -113,12 +113,12 @@ public final class ReciprocalArraySumOriginal {
      *
      * @return The sum of the reciprocals of the array input
      */
-    protected static double parManyTaskArraySum(final double[] input,
-                                                final int numTasks) {
+    static double parManyTaskArraySum(final double[] input,
+                                      final int numTasks) {
         double sum = 0;
 
         // Compute sum of reciprocals of array elements
-        for (int i = 0; i < input.length; i++) {
+        for (var i = 0; i < input.length; i++) {
             sum += 1 / input[i];
         }
 

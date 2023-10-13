@@ -2,7 +2,6 @@ package edu.coursera.parallel.week2.miniproject_2;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -23,11 +22,11 @@ public final class StudentAnalytics {
      * @return Average age of enrolled students
      */
     public double averageAgeOfEnrolledStudentsImperative(final Student[] studentArray) {
-        List<Student> activeStudents = Arrays.stream(studentArray)
+        final var activeStudents = Arrays.stream(studentArray)
                 .filter(Student::checkIsCurrent)
                 .collect(Collectors.toList());
 
-        double ageSum = activeStudents.stream()
+        final var ageSum = activeStudents.stream()
                 .mapToDouble(Student::getAge)
                 .sum();
 
@@ -62,13 +61,13 @@ public final class StudentAnalytics {
      * @return Most common first name of inactive students
      */
     public String mostCommonFirstNameOfInactiveStudentsImperative(final Student[] studentArray) {
-        List<Student> inactiveStudents = Arrays.stream(studentArray)
+        final var inactiveStudents = Arrays.stream(studentArray)
                 .filter(s -> !s.checkIsCurrent())
                 .collect(Collectors.toList());
 
-        Map<String, Integer> nameCounts = new HashMap<>();
+        final Map<String, Integer> nameCounts = new HashMap<>();
 
-        for (Student s : inactiveStudents) {
+        for (final var s : inactiveStudents) {
             if (nameCounts.containsKey(s.getFirstName())) {
                 nameCounts.put(s.getFirstName(), nameCounts.get(s.getFirstName()) + 1);
             } else {
@@ -77,8 +76,8 @@ public final class StudentAnalytics {
         }
 
         String mostCommon = null;
-        int mostCommonCount = -1;
-        for (Map.Entry<String, Integer> entry : nameCounts.entrySet()) {
+        var mostCommonCount = -1;
+        for (final var entry : nameCounts.entrySet()) {
             if (mostCommon == null || entry.getValue() > mostCommonCount) {
                 mostCommon = entry.getKey();
                 mostCommonCount = entry.getValue();
@@ -99,7 +98,7 @@ public final class StudentAnalytics {
      * @return Most common first name of inactive students
      */
     public String mostCommonFirstNameOfInactiveStudentsParallelStream(final Student[] studentArray) {
-        Map<String, Long> namesCountMap = Arrays.stream(studentArray)
+        final var namesCountMap = Arrays.stream(studentArray)
                 .parallel()
                 .filter(s -> !s.checkIsCurrent())
                 .map(Student::getFirstName)
@@ -142,7 +141,7 @@ public final class StudentAnalytics {
      * @return Number of failed grades from students older than 20 years old.
      */
     public int countNumberOfFailedStudentsOlderThan20ParallelStream(final Student[] studentArray) {
-        long count = Arrays.stream(studentArray)
+        final var count = Arrays.stream(studentArray)
                 .parallel()
                 .filter(getStudentPredicate())
                 .count();

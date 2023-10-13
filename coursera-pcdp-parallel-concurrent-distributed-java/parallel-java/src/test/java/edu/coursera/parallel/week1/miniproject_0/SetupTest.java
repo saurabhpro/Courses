@@ -11,7 +11,7 @@ class SetupTest {
      */
     @Test
     void testSetup() {
-        final int result = Setup.setup(42);
+        var result = Setup.setup(42);
         assertEquals(42, result);
     }
 }

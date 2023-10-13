@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ServerSocket;
 import java.net.SocketException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.ClosedByInterruptException;
 import java.util.HashMap;
@@ -37,9 +38,9 @@ public class FileServerTest {
 
     private int port;
 
-    private static String getRandomFileContents(final int len) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < len; i++) {
+    private static String getRandomFileContents(int len) {
+        var sb = new StringBuilder();
+        for (var i = 0; i < len; i++) {
             sb.append(rand.nextInt(10));
         }
         return sb.toString();
@@ -47,7 +48,7 @@ public class FileServerTest {
 
     private static void deleteRecursively(File f) throws IOException {
         if (f.isDirectory()) {
-            for (File c : Objects.requireNonNull(f.listFiles())) {
+            for (var c : Objects.requireNonNull(f.listFiles())) {
                 deleteRecursively(c);
             }
         }
@@ -60,10 +61,10 @@ public class FileServerTest {
     }
 
     private PCDPFilesystem getFilesystem() {
-        PCDPFilesystem fs = new PCDPFilesystem();
+        var fs = new PCDPFilesystem();
 
-        for (Map.Entry<String, String> entry : files.entrySet()) {
-            PCDPPath path = new PCDPPath(entry.getKey());
+        for (var entry : files.entrySet()) {
+            var path = new PCDPPath(entry.getKey());
             System.out.println(entry);
             fs.addFile(path, entry.getValue());
         }
@@ -76,13 +77,13 @@ public class FileServerTest {
                 Thread.currentThread().getStackTrace()[2].getMethodName());
         port = ThreadLocalRandom.current().nextInt(3000, 9000);
 
-        final ServerSocket socket = new ServerSocket(port);
+        var socket = new ServerSocket(port);
         socket.setReuseAddress(true);
-        final PCDPFilesystem fs = getFilesystem();
+        var fs = getFilesystem();
 
         Runnable runner = () -> {
             try {
-                FileServer server = new FileServer();
+                var server = new FileServer();
                 server.run(socket, fs);
             } catch (SocketException | ClosedByInterruptException s) {
                 // Do nothing, assume killed by main thread
@@ -91,14 +92,14 @@ public class FileServerTest {
             }
         };
 
-        Thread thread = new Thread(runner);
+        var thread = new Thread(runner);
 
         thread.start();
 
         return new HttpServer(thread, socket);
     }
 
-    private HttpResponse sendHttpRequest(final String path, final boolean print)
+    private HttpResponse sendHttpRequest(String path, boolean print)
             throws IOException {
         assert !path.startsWith("/");
 
@@ -106,21 +107,21 @@ public class FileServerTest {
             System.err.print("Requesting " + path + "... ");
         }
 
-        URL obj = new URL("http://localhost:" + port + "/" + path);
+        var obj = URI.create("http://localhost:" + port + "/" + path).toURL();
 
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        var con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         con.setConnectTimeout(5000); // 5 seconds
         con.setReadTimeout(5000); // 5 seconds
 
-        final int responseCode = con.getResponseCode();
+        var responseCode = con.getResponseCode();
 
-        final String responseStr;
+        String responseStr;
         if (responseCode != 404) {
-            BufferedReader in = new BufferedReader(
+            var in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuilder response = new StringBuilder();
+            var response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
@@ -141,7 +142,7 @@ public class FileServerTest {
 
     @Test
     public void testTermination() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
         // Termination
         server.socket.close();
@@ -151,9 +152,9 @@ public class FileServerTest {
 
     @Test
     public void testFileGet() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/A.txt", true);
+        var response = sendHttpRequest(rootDirName + "/A.txt", true);
         assertEquals(200, response.code);
         assertEquals(files.get("/static/A.txt"), response.body);
 
@@ -165,9 +166,9 @@ public class FileServerTest {
 
     @Test
     public void testFileGets() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/A.txt", true);
+        var response = sendHttpRequest(rootDirName + "/A.txt", true);
         assertEquals(200, response.code);
         assertEquals(files.get("/static/A.txt"), response.body);
 
@@ -183,9 +184,9 @@ public class FileServerTest {
 
     @Test
     public void testNestedFileGet() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/dir1/C.txt", true);
+        var response = sendHttpRequest(rootDirName + "/dir1/C.txt", true);
         assertEquals(200, response.code);
         assertEquals(files.get("/static/dir1/C.txt"), response.body);
 
@@ -197,9 +198,9 @@ public class FileServerTest {
 
     @Test
     public void testDoublyNestedFileGet() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/dir3/dir4/E.txt", true);
+        var response = sendHttpRequest(rootDirName + "/dir3/dir4/E.txt", true);
         assertEquals(200, response.code);
         assertEquals(files.get("/static/dir3/dir4/E.txt"), response.body);
 
@@ -211,9 +212,9 @@ public class FileServerTest {
 
     @Test
     public void testLargeFileGet() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/ABC.txt", true);
+        var response = sendHttpRequest(rootDirName + "/ABC.txt", true);
         assertEquals(200, response.code);
         assertEquals(files.get("/static/ABC.txt"), response.body);
 
@@ -225,9 +226,9 @@ public class FileServerTest {
 
     @Test
     public void testMissingFileGet() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/missing.txt", true);
+        var response = sendHttpRequest(rootDirName + "/missing.txt", true);
         assertEquals(404, response.code);
 
         // Termination
@@ -238,9 +239,9 @@ public class FileServerTest {
 
     @Test
     public void testMissingNestedFileGet() throws IOException, InterruptedException {
-        final HttpServer server = launchServer();
+        var server = launchServer();
 
-        HttpResponse response = sendHttpRequest(rootDirName + "/missingdir/missing.txt", true);
+        var response = sendHttpRequest(rootDirName + "/missingdir/missing.txt", true);
         assertEquals(404, response.code);
 
         // Termination
@@ -253,7 +254,7 @@ public class FileServerTest {
         public final int code;
         public final String body;
 
-        public HttpResponse(final int setCode, final String setBody) {
+        public HttpResponse(int setCode, String setBody) {
             code = setCode;
             body = setBody;
         }
@@ -263,7 +264,7 @@ public class FileServerTest {
         public final Thread thread;
         public final ServerSocket socket;
 
-        HttpServer(final Thread setThread, final ServerSocket setSocket) {
+        HttpServer(Thread setThread, ServerSocket setSocket) {
             thread = setThread;
             socket = setSocket;
         }

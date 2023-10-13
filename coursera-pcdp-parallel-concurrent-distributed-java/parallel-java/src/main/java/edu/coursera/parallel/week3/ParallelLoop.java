@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 public class ParallelLoop {
 
     public static void main(String[] args) {
-        int[] A = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        int[] B = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        int[] C;
+        final var A = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        final var B = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        final int[] C;
 
         C = IntStream.range(0, 10)
                 .parallel()

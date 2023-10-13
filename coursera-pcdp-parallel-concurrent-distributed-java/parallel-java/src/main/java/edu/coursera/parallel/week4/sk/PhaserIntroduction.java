@@ -9,7 +9,7 @@ public class PhaserIntroduction {
     private static final Logger log = LoggerFactory.getLogger(PhaserIntroduction.class);
 
     public static void main(String[] args) {
-        Phaser phaser = new Phaser(3) {
+        final var phaser = new Phaser(3) {
             @Override
             protected boolean onAdvance(int phase, int registeredParties) {
                 log("inside onAdvance", this);
@@ -24,7 +24,7 @@ public class PhaserIntroduction {
         phaser.arrive();
         log("after arrive()", phaser);
 
-        Thread thread = new Thread(() -> {
+        final var thread = new Thread(() -> {
             log("before arriveAndAwaitAdvance()", phaser);
             phaser.arriveAndAwaitAdvance();
             log("after arriveAndAwaitAdvance()", phaser);

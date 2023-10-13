@@ -19,7 +19,7 @@ public interface Component<C extends Component> {
      *
      * @param e Edge to add, which is anchored on this component.
      */
-    void addEdge(final Edge<C> e);
+    void addEdge(Edge<C> e);
 
     /**
      * Compute the total weight of this component.

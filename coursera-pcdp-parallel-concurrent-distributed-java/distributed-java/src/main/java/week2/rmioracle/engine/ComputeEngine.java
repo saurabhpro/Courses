@@ -4,7 +4,6 @@ import week2.rmioracle.compute.Compute;
 import week2.rmioracle.compute.Task;
 
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ComputeEngine implements Compute {
@@ -22,10 +21,10 @@ public class ComputeEngine implements Compute {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-            String name = "Compute";
-            Compute engine = new ComputeEngine();
-            Compute stub = (Compute) UnicastRemoteObject.exportObject(engine, 0);
-            Registry registry = LocateRegistry.getRegistry();
+            final var name = "Compute";
+            final Compute engine = new ComputeEngine();
+            final var stub = (Compute) UnicastRemoteObject.exportObject(engine, 0);
+            final var registry = LocateRegistry.getRegistry();
             registry.rebind(name, stub);
             System.out.println("week2.rmioracle.engine.ComputeEngine bound");
         } catch (Exception e) {

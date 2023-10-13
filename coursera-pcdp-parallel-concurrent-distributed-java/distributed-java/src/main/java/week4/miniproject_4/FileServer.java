@@ -1,6 +1,9 @@
 package week4.miniproject_4;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Optional;
@@ -12,7 +15,6 @@ import java.util.concurrent.Executors;
  * requests from HTTP clients.
  */
 public final class FileServer {
-
 
     private static final String GET_METHOD = "GET";
     private static final String SPACE_SEPARATOR = " ";
@@ -43,16 +45,16 @@ public final class FileServer {
         while (true) {
 
             // TODO 1) Use socket.accept to get a Socket object
-            final Socket request = socket.accept();
+            final var request = socket.accept();
 
             final Runnable worker = () -> {
                 try {
-                    String firstLine = extractRequestFirstLine(request);
+                    final var firstLine = extractRequestFirstLine(request);
 
                     if (isGetRequest(firstLine)) {
-                        String filePath = extractRequestFilePath(firstLine);
+                        final var filePath = extractRequestFilePath(firstLine);
 
-                        Optional<String> fileContent = readFileContent(fs, filePath);
+                        final var fileContent = readFileContent(fs, filePath);
                         if (fileContent.isPresent()) {
                             printSuccessResponse(request, fileContent.get());
                         } else {
@@ -69,7 +71,7 @@ public final class FileServer {
     }
 
     private static Optional<String> readFileContent(PCDPFilesystem fs, String filePath) {
-        String fileContent = fs.readFile(new PCDPPath(filePath));
+        final var fileContent = fs.readFile(new PCDPPath(filePath));
         return Optional.ofNullable(fileContent);
     }
 
@@ -78,43 +80,43 @@ public final class FileServer {
     }
 
     private static String extractRequestFirstLine(Socket request) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        String firstLine = br.readLine();
+        final var br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        final var firstLine = br.readLine();
         assert firstLine != null;
         return firstLine;
     }
 
     private static String extractRequestFilePath(String firstLine) {
-        String[] firstLineParts = firstLine.split(SPACE_SEPARATOR);
+        final var firstLineParts = firstLine.split(SPACE_SEPARATOR);
         assert firstLineParts.length > 1;
         return firstLineParts[1];
     }
 
     private static void printSuccessResponse(Socket request, String fileContent)
-            throws IOException {
+        throws IOException {
 
-        String response = "HTTP/1.0 200 OK\r\n" +
-                "Server: FileServer\r\n" +
-                "\r\n" +
-                fileContent +
-                "\r\n";
+        final var response = "HTTP/1.0 200 OK\r\n" +
+            "Server: FileServer\r\n" +
+            "\r\n" +
+            fileContent +
+            "\r\n";
 
         writeResponse(request, response);
     }
 
     private static void printNotFoundResponse(Socket request)
-            throws IOException {
+        throws IOException {
 
-        String response = "HTTP/1.0 404 Not Found\r\n" +
-                "Server: FileServer\r\n" +
-                "\r\n";
+        final var response = "HTTP/1.0 404 Not Found\r\n" +
+            "Server: FileServer\r\n" +
+            "\r\n";
 
         writeResponse(request, response);
     }
 
     private static void writeResponse(Socket socket, String response) throws IOException {
-        try (OutputStream out = socket.getOutputStream();
-             PrintStream ps = new PrintStream(out)) {
+        try (final var out = socket.getOutputStream();
+             final var ps = new PrintStream(out)) {
 
             ps.println(response);
         }

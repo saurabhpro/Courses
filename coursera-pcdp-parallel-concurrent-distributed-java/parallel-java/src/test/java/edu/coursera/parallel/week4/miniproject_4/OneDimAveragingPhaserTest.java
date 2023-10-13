@@ -7,13 +7,13 @@ import java.util.concurrent.Phaser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+class OneDimAveragingPhaserTest {
 
-public class OneDimAveragingPhaserTest {
     // Number of times to repeat each test, for consistent timing results.
     final static private int niterations = 40000;
 
     private static int getNCores() {
-        String ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
+        var ncoresStr = System.getenv("COURSERA_GRADER_NCORES");
         if (ncoresStr == null) {
             return Runtime.getRuntime().availableProcessors();
         } else {
@@ -21,36 +21,36 @@ public class OneDimAveragingPhaserTest {
         }
     }
 
-    private static void runParallelBarrier(final int iterations,
-                                           final double[] myNew,
-                                           final double[] myVal,
-                                           final int n,
-                                           final int tasks) {
-        Phaser ph = new Phaser(0);
+    private static void runParallelBarrier(int iterations,
+                                           double[] myNew,
+                                           double[] myVal,
+                                           int n,
+                                           int tasks) {
+        var ph = new Phaser(0);
         ph.bulkRegister(tasks);
 
-        Thread[] threads = new Thread[tasks];
+        var threads = new Thread[tasks];
 
-        for (int ii = 0; ii < tasks; ii++) {
-            final int i = ii;
+        for (var ii = 0; ii < tasks; ii++) {
+            var i = ii;
 
             threads[ii] = new Thread(() -> {
-                double[] threadPrivateMyVal = myVal;
-                double[] threadPrivateMyNew = myNew;
+                var threadPrivateMyVal = myVal;
+                var threadPrivateMyNew = myNew;
 
-                final int chunkSize = (n + tasks - 1) / tasks;
-                final int left = (i * chunkSize) + 1;
-                int right = (left + chunkSize) - 1;
+                var chunkSize = (n + tasks - 1) / tasks;
+                var left = (i * chunkSize) + 1;
+                var right = (left + chunkSize) - 1;
                 if (right > n) right = n;
 
-                for (int iter = 0; iter < iterations; iter++) {
+                for (var iter = 0; iter < iterations; iter++) {
 
-                    for (int j = left; j <= right; j++) {
+                    for (var j = left; j <= right; j++) {
                         threadPrivateMyNew[j] = (threadPrivateMyVal[j - 1] + threadPrivateMyVal[j + 1]) / 2.0;
                     }
                     ph.arriveAndAwaitAdvance();
 
-                    double[] temp = threadPrivateMyNew;
+                    var temp = threadPrivateMyNew;
                     threadPrivateMyNew = threadPrivateMyVal;
                     threadPrivateMyVal = temp;
                 }
@@ -58,7 +58,7 @@ public class OneDimAveragingPhaserTest {
             threads[ii].start();
         }
 
-        for (int ii = 0; ii < tasks; ii++) {
+        for (var ii = 0; ii < tasks; ii++) {
             try {
                 threads[ii].join();
             } catch (InterruptedException e) {
@@ -67,9 +67,9 @@ public class OneDimAveragingPhaserTest {
         }
     }
 
-    private double[] createArray(final int N, final int iterations) {
-        final double[] input = new double[N + 2];
-        int index = N + 1;
+    private double[] createArray(int N, int iterations) {
+        var input = new double[N + 2];
+        var index = N + 1;
         while (index > 0) {
             input[index] = 1.0;
             index -= (iterations / 4);
@@ -80,20 +80,20 @@ public class OneDimAveragingPhaserTest {
     /**
      * A reference implementation of runSequential, in case the one in the main source file is accidentally modified.
      */
-    public void runSequential(final int iterations, double[] myNew, double[] myVal, final int n) {
-        for (int iter = 0; iter < iterations; iter++) {
-            for (int j = 1; j <= n; j++) {
+    public void runSequential(int iterations, double[] myNew, double[] myVal, int n) {
+        for (var iter = 0; iter < iterations; iter++) {
+            for (var j = 1; j <= n; j++) {
                 myNew[j] = (myVal[j - 1] + myVal[j + 1]) / 2.0;
             }
-            double[] tmp = myNew;
+            var tmp = myNew;
             myNew = myVal;
             myVal = tmp;
         }
     }
 
-    private void checkResult(final double[] ref, final double[] output) {
-        for (int i = 0; i < ref.length; i++) {
-            String msg = "Mismatch on output at element " + i;
+    private void checkResult(double[] ref, double[] output) {
+        for (var i = 0; i < ref.length; i++) {
+            var msg = "Mismatch on output at element " + i;
             assertEquals(ref[i], output[i], msg);
         }
     }
@@ -102,27 +102,26 @@ public class OneDimAveragingPhaserTest {
      * A helper function for tests of the two-task parallel implementation.
      *
      * @param N The size of the array to test
-     *
      * @return The speedup achieved, not all tests use this information
      */
-    private double parTestHelper(final int N, final int ntasks) {
+    private double parTestHelper(int N, int ntasks) {
         // Create a random input
-        double[] myNew = createArray(N, niterations);
-        double[] myVal = createArray(N, niterations);
-        final double[] myNewRef = createArray(N, niterations);
-        final double[] myValRef = createArray(N, niterations);
+        var myNew = createArray(N, niterations);
+        var myVal = createArray(N, niterations);
+        var myNewRef = createArray(N, niterations);
+        var myValRef = createArray(N, niterations);
 
         long barrierTotalTime = 0;
         long fuzzyTotalTime = 0;
 
-        for (int r = 0; r < 3; r++) {
-            final long barrierStartTime = System.currentTimeMillis();
+        for (var r = 0; r < 3; r++) {
+            var barrierStartTime = System.currentTimeMillis();
             runParallelBarrier(niterations, myNew, myVal, N, ntasks);
-            final long barrierEndTime = System.currentTimeMillis();
+            var barrierEndTime = System.currentTimeMillis();
 
-            final long fuzzyStartTime = System.currentTimeMillis();
+            var fuzzyStartTime = System.currentTimeMillis();
             OneDimAveragingPhaser.runParallelFuzzyBarrier(niterations, myNewRef, myValRef, N, ntasks);
-            final long fuzzyEndTime = System.currentTimeMillis();
+            var fuzzyEndTime = System.currentTimeMillis();
 
             if (niterations % 2 == 0) {
                 checkResult(myNew, myNewRef);
@@ -141,14 +140,14 @@ public class OneDimAveragingPhaserTest {
      * Test on large input.
      */
     @Test
-    public void testFuzzyBarrier() {
-        final double expected = 1.05;
-        final double speedup = parTestHelper(2 * 1024 * 1024, getNCores() * 1);
-        final String errMsg = String.format("It was expected that the fuzzy barrier parallel implementation would " +
-                "run %fx faster than the barrier implementation, but it only achieved %fx speedup", expected, speedup);
+    void testFuzzyBarrier() {
+        final var expected = 1.05;
+        var speedup = parTestHelper(2 * 1024 * 1024, getNCores() * 1);
+        var errMsg = String.format("It was expected that the fuzzy barrier parallel implementation would " +
+            "run %fx faster than the barrier implementation, but it only achieved %fx speedup", expected, speedup);
         Utils.softAssertTrue(speedup >= expected, errMsg);
-        final String successMsg = String.format("Fuzzy barrier parallel implementation " +
-                "ran %fx faster than the barrier implementation", speedup);
+        var successMsg = String.format("Fuzzy barrier parallel implementation " +
+            "ran %fx faster than the barrier implementation", speedup);
         System.out.println(successMsg);
     }
 }

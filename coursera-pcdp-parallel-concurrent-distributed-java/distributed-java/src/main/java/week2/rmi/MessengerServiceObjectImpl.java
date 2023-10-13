@@ -2,15 +2,14 @@ package week2.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class MessengerServiceObjectImpl implements MessengerService<Message> {
 
 
     public void createStubAndBind() throws RemoteException {
-        MessengerService<String> stub = (MessengerService<String>) UnicastRemoteObject.exportObject(this, 0);
-        Registry registry = LocateRegistry.createRegistry(1099);
+        final var stub = (MessengerService<String>) UnicastRemoteObject.exportObject(this, 0);
+        final var registry = LocateRegistry.createRegistry(1099);
         registry.rebind("MessengerService", stub);
     }
 

@@ -53,7 +53,7 @@ public final class PageRank {
             final JavaPairRDD<Integer, Website> sites,
             final JavaPairRDD<Integer, Double> ranks) {
 
-        JavaPairRDD<Integer, Double> newRanks = sites
+        final var newRanks = sites
                 .join(ranks)
                 .flatMapToPair(PageRank::contributions);
 
@@ -63,14 +63,14 @@ public final class PageRank {
     }
 
     private static Iterator<Tuple2<Integer, Double>> contributions(Tuple2<Integer, Tuple2<Website, Double>> kv) {
-        final Website edges = kv._2()._1();
-        final Double currentRank = kv._2()._2();
+        final var edges = kv._2()._1();
+        final var currentRank = kv._2()._2();
 
-        var contribs = new LinkedList<Tuple2<Integer, Double>>();
+        final var contribs = new LinkedList<Tuple2<Integer, Double>>();
 
-        Iterator<Integer> iter = edges.edgeIterator();
+        final var iter = edges.edgeIterator();
         while (iter.hasNext()) {
-            final Integer target = iter.next();
+            final var target = iter.next();
             contribs.add(new Tuple2<>(target, currentRank / edges.getNEdges()));
         }
 

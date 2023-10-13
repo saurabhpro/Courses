@@ -22,8 +22,8 @@ import java.util.concurrent.Phaser;
  * In Java 7+ there are 3 predefined barrier classes: CountDownLatch, CyclicBarrier, Phaser.
  */
 public class BarrierPhaser {
-    public static void main(String[] args) throws InterruptedException {
-        Phaser phaser = new Phaser();
+    public static void main(String[] args) {
+        final var phaser = new Phaser();
         final var executorService = Executors.newCachedThreadPool();
 
         executorService.submit(() -> compute("A", phaser));

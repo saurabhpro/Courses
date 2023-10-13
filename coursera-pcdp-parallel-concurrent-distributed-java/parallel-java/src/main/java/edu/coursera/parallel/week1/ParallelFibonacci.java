@@ -13,8 +13,8 @@ import java.util.stream.IntStream;
 class SequentialComputer {
 
     static int doCompute(List<Integer> range, int start, int end) {
-        int result = 0;
-        for (int i = start; i < end; i++) {
+        var result = 0;
+        for (var i = start; i < end; i++) {
             // double temp = Intensive.doCompute(range.get(i));
             result += range.get(i);
         }
@@ -29,8 +29,8 @@ class SequentialComputer {
 
         static double doCompute(int n) {
             double acc = 0;
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < LIMIT; j++) {
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < LIMIT; j++) {
                     acc += Math.sqrt(j);
                 }
             }
@@ -66,9 +66,9 @@ class ParallelComputer extends RecursiveAction {
         if (end - start <= SEQUENTIAL_THRESHOLD) {
             value = SequentialComputer.doCompute(range, start, end);
         } else {
-            final int middle = start + (end - start) / 2;
-            var left = new ParallelComputer(range, start, middle);
-            var right = new ParallelComputer(range, middle, end);
+            final var middle = start + (end - start) / 2;
+            final var left = new ParallelComputer(range, start, middle);
+            final var right = new ParallelComputer(range, middle, end);
 
             left.fork();    // create a new task
             right.compute();    // recursively call on right on the same thread
@@ -91,25 +91,25 @@ public class ParallelFibonacci {
         final double programStart = System.currentTimeMillis();
         double start;
 
-        List<Integer> range = IntStream.range(1, 10000).boxed().collect(Collectors.toList());
+        final var range = IntStream.range(1, 10000).boxed().collect(Collectors.toList());
         LOG.info("The range: {}", range);
 
         start = System.currentTimeMillis();
         LOG.info("sequential: {}", SequentialComputer.doCompute(range, 0, range.size()));
-        double sequentialTime = (System.currentTimeMillis() - start) / 1000.;
+        final var sequentialTime = (System.currentTimeMillis() - start) / 1000.;
         LOG.info("sequential time: {}", sequentialTime);
 
         start = System.currentTimeMillis();
 
-        var parComputer = new ParallelComputer(range, 0, range.size());
+        final var parComputer = new ParallelComputer(range, 0, range.size());
         ForkJoinPool.commonPool().invoke(parComputer);
 
-        double parallelTime = (System.currentTimeMillis() - start) / 1000.;
+        final var parallelTime = (System.currentTimeMillis() - start) / 1000.;
         LOG.info("parallel time: {}", parallelTime);
         LOG.info("parallel: {}", parComputer.getValue());
         LOG.info("parallel/sequential ratio: {}", (sequentialTime / parallelTime));
 
-        double diff = (System.currentTimeMillis() - programStart) / 1000.;
+        final var diff = (System.currentTimeMillis() - programStart) / 1000.;
         LOG.info(String.format("DONE in %.2f ms", diff));
     }
 }

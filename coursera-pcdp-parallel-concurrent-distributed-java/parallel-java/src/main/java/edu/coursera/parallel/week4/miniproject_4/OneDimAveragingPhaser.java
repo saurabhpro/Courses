@@ -24,15 +24,15 @@ public final class OneDimAveragingPhaser {
      */
     public static void runSequential(final int iterations, final double[] myNew,
                                      final double[] myVal, final int n) {
-        double[] next = myNew;
-        double[] curr = myVal;
+        var next = myNew;
+        var curr = myVal;
 
-        for (int iter = 0; iter < iterations; iter++) {
-            for (int j = 1; j <= n; j++) {
+        for (var iter = 0; iter < iterations; iter++) {
+            for (var j = 1; j <= n; j++) {
                 next[j] = (curr[j - 1] + curr[j + 1]) / 2.0;
             }
 
-            double[] tmp = curr;
+            final var tmp = curr;
             curr = next;
             next = tmp;
         }
@@ -52,34 +52,34 @@ public final class OneDimAveragingPhaser {
     public static void runParallelBarrier(final int iterations,
                                           final double[] myNew, final double[] myVal, final int n,
                                           final int tasks) {
-        Phaser ph = new Phaser(0);
+        final var ph = new Phaser(0);
         ph.bulkRegister(tasks);
 
-        Thread[] threads = new Thread[tasks];
+        final var threads = new Thread[tasks];
 
-        for (int ii = 0; ii < tasks; ii++) {
-            final int i = ii;
+        for (var ii = 0; ii < tasks; ii++) {
+            final var i = ii;
 
             threads[ii] = new Thread(() -> {
-                double[] threadPrivateMyVal = myVal;
-                double[] threadPrivateMyNew = myNew;
+                var threadPrivateMyVal = myVal;
+                var threadPrivateMyNew = myNew;
 
-                for (int iter = 0; iter < iterations; iter++) {
+                for (var iter = 0; iter < iterations; iter++) {
                     // identify leftmost boundary element for group
-                    final int left = i * (n / tasks) + 1;
+                    final var left = i * (n / tasks) + 1;
 
                     // identify rightmost boundary element for group
-                    final int right = (i + 1) * (n / tasks);
+                    final var right = (i + 1) * (n / tasks);
 
                     // iterate through all elements in group
-                    for (int j = left; j <= right; j++) {
+                    for (var j = left; j <= right; j++) {
                         threadPrivateMyNew[j] = (threadPrivateMyVal[j - 1] + threadPrivateMyVal[j + 1]) / 2.0;
                     }
 
                     // barrier
                     ph.arriveAndAwaitAdvance();
 
-                    double[] temp = threadPrivateMyNew;
+                    final var temp = threadPrivateMyNew;
                     threadPrivateMyNew = threadPrivateMyVal;
                     threadPrivateMyVal = temp;
                 }
@@ -88,7 +88,7 @@ public final class OneDimAveragingPhaser {
             threads[ii].start();
         }
 
-        for (int ii = 0; ii < tasks; ii++) {
+        for (var ii = 0; ii < tasks; ii++) {
             try {
                 threads[ii].join();
             } catch (InterruptedException e) {
@@ -100,39 +100,39 @@ public final class OneDimAveragingPhaser {
     public static void runForAllFuzzyBarrier(final int iterations,
                                              final double[] myNew, final double[] myVal, final int n,
                                              final int tasks) {
-        Phaser ph = new Phaser(0);
+        final var ph = new Phaser(0);
         ph.bulkRegister(tasks);
 
-        Thread[] threads = new Thread[tasks];
+        final var threads = new Thread[tasks];
 
-        for (int ii = 0; ii < tasks; ii++) {
-            final int i = ii;
+        for (var ii = 0; ii < tasks; ii++) {
+            final var i = ii;
 
             threads[ii] = new Thread(() -> {
-                double[] threadPrivateMyVal = myVal;
-                double[] threadPrivateMyNew = myNew;
+                var threadPrivateMyVal = myVal;
+                var threadPrivateMyNew = myNew;
 
-                for (int iter = 0; iter < iterations; iter++) {
+                for (var iter = 0; iter < iterations; iter++) {
                     // compute leftmost boundary element for group
-                    final int left = i * (n / tasks) + 1;
+                    final var left = i * (n / tasks) + 1;
                     threadPrivateMyNew[left] = (threadPrivateMyVal[left - 1] + threadPrivateMyVal[left + 1]) / 2.0;
 
                     // compute rightmost boundary element for group
-                    final int right = (i + 1) * (n / tasks);
+                    final var right = (i + 1) * (n / tasks);
                     threadPrivateMyNew[right] = (threadPrivateMyVal[right - 1] + threadPrivateMyVal[right + 1]) / 2.0;
 
                     // signal arrival of phaser
-                    int currentPhase = ph.arrive();
+                    final var currentPhase = ph.arrive();
 
                     // iterate through all elements in group
-                    for (int j = left + 1; j <= right - 1; j++) {
+                    for (var j = left + 1; j <= right - 1; j++) {
                         threadPrivateMyNew[j] = (threadPrivateMyVal[j - 1] + threadPrivateMyVal[j + 1]) / 2.0;
                     }
 
                     // wait for previous phase to complete before advancing
                     ph.awaitAdvance(currentPhase);
 
-                    double[] temp = threadPrivateMyNew;
+                    final var temp = threadPrivateMyNew;
                     threadPrivateMyNew = threadPrivateMyVal;
                     threadPrivateMyVal = temp;
                 }
@@ -141,7 +141,7 @@ public final class OneDimAveragingPhaser {
             threads[ii].start();
         }
 
-        for (int ii = 0; ii < tasks; ii++) {
+        for (var ii = 0; ii < tasks; ii++) {
             try {
                 threads[ii].join();
             } catch (InterruptedException e) {
@@ -168,30 +168,30 @@ public final class OneDimAveragingPhaser {
     public static void runParallelFuzzyBarrier(final int iterations,
                                                final double[] myNew, final double[] myVal, final int n,
                                                final int tasks) {
-        Phaser[] phs = new Phaser[tasks];
-        for (int i = 0; i < phs.length; i++) {
+        final var phs = new Phaser[tasks];
+        for (var i = 0; i < phs.length; i++) {
             phs[i] = new Phaser(1);
         }
 
-        Thread[] threads = new Thread[tasks];
+        final var threads = new Thread[tasks];
 
-        for (int ii = 0; ii < tasks; ii++) {
-            final int i = ii;
+        for (var ii = 0; ii < tasks; ii++) {
+            final var i = ii;
 
             threads[ii] = new Thread(() -> {
-                double[] threadPrivateMyVal = myVal;
-                double[] threadPrivateMyNew = myNew;
+                var threadPrivateMyVal = myVal;
+                var threadPrivateMyNew = myNew;
 
-                for (int iter = 0; iter < iterations; iter++) {
-                    final int left = i * (n / tasks) + 1;
-                    final int right = (i + 1) * (n / tasks);
+                for (var iter = 0; iter < iterations; iter++) {
+                    final var left = i * (n / tasks) + 1;
+                    final var right = (i + 1) * (n / tasks);
 
-                    for (int j = left; j <= right; j++) {
+                    for (var j = left; j <= right; j++) {
                         threadPrivateMyNew[j] = (threadPrivateMyVal[j - 1] + threadPrivateMyVal[j + 1]) / 2.0;
                     }
 
                     // signal arrival of phaser
-                    int currentPhase = phs[i].arrive();
+                    final var currentPhase = phs[i].arrive();
 
                     if (i - 1 >= 0) {
                         phs[i - 1].awaitAdvance(currentPhase);
@@ -200,7 +200,7 @@ public final class OneDimAveragingPhaser {
                         phs[i + 1].awaitAdvance(currentPhase);
                     }
 
-                    double[] temp = threadPrivateMyNew;
+                    final var temp = threadPrivateMyNew;
                     threadPrivateMyNew = threadPrivateMyVal;
                     threadPrivateMyVal = temp;
                 }
@@ -208,7 +208,7 @@ public final class OneDimAveragingPhaser {
             threads[ii].start();
         }
 
-        for (int ii = 0; ii < tasks; ii++) {
+        for (var ii = 0; ii < tasks; ii++) {
             try {
                 threads[ii].join();
             } catch (InterruptedException e) {

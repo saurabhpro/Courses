@@ -30,8 +30,8 @@ public final class MatrixMultiply {
                 N - 1,
                 (i, j) -> {
                     C[i][j] = 0.0;
-                    int bound = N;
-                    for (int k = 0; k < bound; k++) {
+                    final var bound = N;
+                    for (var k = 0; k < bound; k++) {
                         C[i][j] += A[i][k] * B[k][j];
                     }
                 });
@@ -57,7 +57,7 @@ public final class MatrixMultiply {
                 PCDP.numThreads(),
                 (i, j) -> {
                     C[i][j] = 0.0;
-                    for (int k = 0; k < N; k++) {
+                    for (var k = 0; k < N; k++) {
                         C[i][j] += A[i][k] * B[k][j];
                     }
                 });

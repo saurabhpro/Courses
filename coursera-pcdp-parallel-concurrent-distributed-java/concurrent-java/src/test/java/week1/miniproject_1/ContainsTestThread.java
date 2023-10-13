@@ -8,10 +8,11 @@ import java.util.Arrays;
  * contains.
  */
 public class ContainsTestThread extends TestThread implements Runnable {
+
     private int nSuccessful = 0;
     private int nFailed = 0;
 
-    public ContainsTestThread(final SequenceGenerator seq, final int seqToUse, final ListSet setL) {
+    public ContainsTestThread(SequenceGenerator seq, int seqToUse, ListSet setL) {
         super(seq, seqToUse, setL);
     }
 

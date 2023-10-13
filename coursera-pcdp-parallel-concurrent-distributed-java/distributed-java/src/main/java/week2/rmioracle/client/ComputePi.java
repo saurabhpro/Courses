@@ -2,9 +2,7 @@ package week2.rmioracle.client;
 
 import week2.rmioracle.compute.Compute;
 
-import java.math.BigDecimal;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 public class ComputePi {
     public static void main(String[] args) {
@@ -12,11 +10,11 @@ public class ComputePi {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-            String name = "Compute";
-            Registry registry = LocateRegistry.getRegistry(args[0]);
-            Compute comp = (Compute) registry.lookup(name);
-            Pi task = new Pi(Integer.parseInt(args[1]));
-            BigDecimal pi = comp.executeTask(task);
+            final var name = "Compute";
+            final var registry = LocateRegistry.getRegistry(args[0]);
+            final var comp = (Compute) registry.lookup(name);
+            final var task = new Pi(Integer.parseInt(args[1]));
+            final var pi = comp.executeTask(task);
             System.out.println(pi);
         } catch (Exception e) {
             System.err.println("ComputePi exception:");

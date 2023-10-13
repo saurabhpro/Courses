@@ -35,6 +35,6 @@ public interface AbstractBoruvka<C extends Component> {
      *                    completion of your kernel, call setSolution on this
      *                    object to return your result to the testing code ***
      */
-    void computeBoruvka(final Queue<C> nodesLoaded,
-                        final SolutionToBoruvka<C> solution);
+    void computeBoruvka(Queue<C> nodesLoaded,
+                        SolutionToBoruvka<C> solution);
 }

@@ -37,9 +37,9 @@ public final class Account {
      * @param destID The destination account ID
      */
     private static void busyWork(final int srcID, final int destID) {
-        for (int i = 0; i < srcID * 100; i++) {
+        for (var i = 0; i < srcID * 100; i++) {
         }
-        for (int i = 0; i < destID * 100; i++) {
+        for (var i = 0; i < destID * 100; i++) {
         }
     }
 
@@ -93,7 +93,7 @@ public final class Account {
      * @return true if the transfer is successful, false otherwise.
      */
     public boolean performTransfer(final int amount, final Account target) {
-        final boolean withdrawSuccess = withdraw(amount);
+        final var withdrawSuccess = withdraw(amount);
         busyWork(this.id, target.id);
         if (withdrawSuccess) {
             target.deposit(amount);

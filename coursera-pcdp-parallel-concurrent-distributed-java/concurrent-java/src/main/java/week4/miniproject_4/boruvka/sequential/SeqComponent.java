@@ -42,7 +42,7 @@ public final class SeqComponent implements Component<SeqComponent> {
      *
      * @param setNodeId ID for this node.
      */
-    protected SeqComponent(final int setNodeId) {
+    SeqComponent(final int setNodeId) {
         super();
         this.nodeId = setNodeId;
     }
@@ -77,7 +77,7 @@ public final class SeqComponent implements Component<SeqComponent> {
      * Edge is inserted in weight order, from least to greatest.
      */
     public void addEdge(final Edge<SeqComponent> e) {
-        int i = 0;
+        var i = 0;
         while (i < edges.size()) {
             if (e.weight() < edges.get(i).weight()) {
                 break;
@@ -93,7 +93,7 @@ public final class SeqComponent implements Component<SeqComponent> {
      * @return Edge with the smallest weight attached to this component.
      */
     public Edge<SeqComponent> getMinEdge() {
-        if (edges.size() == 0) {
+        if (edges.isEmpty()) {
             return null;
         }
         return edges.get(0);
@@ -110,12 +110,12 @@ public final class SeqComponent implements Component<SeqComponent> {
         totalWeight += other.totalWeight + edgeWeight;
         totalEdges += other.totalEdges + 1;
         final List<Edge<SeqComponent>> newEdges = new ArrayList<>();
-        int i = 0;
-        int j = 0;
+        var i = 0;
+        var j = 0;
         while (i + j < edges.size() + other.edges.size()) {
             // get rid of inter-component edges
             while (i < edges.size()) {
-                final Edge<SeqComponent> e = edges.get(i);
+                final var e = edges.get(i);
                 if ((e.fromComponent() != this && e.fromComponent() != other)
                         || (e.toComponent() != this && e.toComponent() != other)
                 ) {
@@ -124,7 +124,7 @@ public final class SeqComponent implements Component<SeqComponent> {
                 i++;
             }
             while (j < other.edges.size()) {
-                final Edge<SeqComponent> e = other.edges.get(j);
+                final var e = other.edges.get(j);
                 if ((e.fromComponent() != this && e.fromComponent() != other)
                         || (e.toComponent() != this && e.toComponent() != other)
                 ) {
@@ -154,7 +154,7 @@ public final class SeqComponent implements Component<SeqComponent> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof final Component component)) {
+        if (!(o instanceof Component component)) {
             return false;
         }
 

@@ -30,8 +30,8 @@ public final class RWCoarseList implements ListSet {
     public boolean add(final int key) {
         try {
             readWriteLock.writeLock().lock();
-            Entry pred = this.head;
-            Entry curr = pred.next;
+            var pred = this.head;
+            var curr = pred.next;
 
             while (curr.key < key) {
                 pred = curr;
@@ -41,7 +41,7 @@ public final class RWCoarseList implements ListSet {
             if (key == curr.key) {
                 return false;
             } else {
-                final Entry entry = new Entry(key);
+                final var entry = new Entry(key);
                 entry.next = curr;
                 pred.next = entry;
                 return true;
@@ -55,8 +55,8 @@ public final class RWCoarseList implements ListSet {
     public boolean remove(final int key) {
         try {
             readWriteLock.writeLock().lock();
-            Entry pred = this.head;
-            Entry curr = pred.next;
+            var pred = this.head;
+            var curr = pred.next;
 
             while (curr.key < key) {
                 pred = curr;
@@ -78,8 +78,8 @@ public final class RWCoarseList implements ListSet {
     public boolean contains(final int key) {
         try {
             readWriteLock.readLock().lock();
-            Entry pred = this.head;
-            Entry curr = pred.next;
+            var pred = this.head;
+            var curr = pred.next;
             while (curr.key < key) {
                 pred = curr;
                 curr = curr.next;

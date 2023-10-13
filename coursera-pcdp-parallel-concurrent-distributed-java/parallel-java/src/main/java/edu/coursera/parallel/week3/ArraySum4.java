@@ -36,8 +36,8 @@ public class ArraySum4 {
         } else if (lo == hi) {
             return X[lo];
         } else {
-            int mid = (lo + hi) / 2;
-            final CompletableFuture<Integer> sum1 = CompletableFuture.supplyAsync(() -> {
+            final var mid = (lo + hi) / 2;
+            final var sum1 = CompletableFuture.supplyAsync(() -> {
                 try {
                     return computeSum(X, lo, mid);
                 } catch (ExecutionException | InterruptedException e) {
@@ -45,7 +45,7 @@ public class ArraySum4 {
                 }
                 return 0;
             });
-            final CompletableFuture<Integer> sum2 = CompletableFuture.supplyAsync(() -> {
+            final var sum2 = CompletableFuture.supplyAsync(() -> {
                 try {
                     computeSum(X, mid + 1, hi);
                 } catch (ExecutionException | InterruptedException e) {
@@ -54,7 +54,7 @@ public class ArraySum4 {
                 return 0;
             });
 
-            int local_sum = 0;
+            var local_sum = 0;
 
             while (!sum1.isDone() && !sum2.isDone()) {
                 local_sum = sum1.get() + sum2.get();
@@ -76,11 +76,11 @@ public class ArraySum4 {
      */
     public static void main(String[] argv) throws ExecutionException, InterruptedException {
         // Initialization
-        int n = 10;
-        int[] X = IntStream.range(0, n).toArray();
+        final var n = 10;
+        final var X = IntStream.range(0, n).toArray();
 
         // Recursive parallel computation
-        int sum = computeSum(X, 0, n - 1);
+        final var sum = computeSum(X, 0, n - 1);
 
         // Output
         System.out.println("Sum of " + n + " elements = " + sum);

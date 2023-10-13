@@ -50,8 +50,8 @@ public final class PCDPPath {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (String component : components) {
+        final var sb = new StringBuilder();
+        for (final var component : components) {
             sb.append("/");
             sb.append(component);
         }

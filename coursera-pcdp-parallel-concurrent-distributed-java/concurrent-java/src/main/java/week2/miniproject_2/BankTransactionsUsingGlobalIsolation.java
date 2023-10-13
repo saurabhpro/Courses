@@ -16,8 +16,6 @@ public final class BankTransactionsUsingGlobalIsolation
     @Override
     public void issueTransfer(final int amount, final Account src,
                               final Account dst) {
-        isolated(() -> {
-            src.performTransfer(amount, dst);
-        });
+        isolated(() -> src.performTransfer(amount, dst));
     }
 }

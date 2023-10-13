@@ -1,9 +1,5 @@
 package week4.miniproject_4;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-
 /**
  * A class to represent a virtual, in-memory filesystem. PCDPFilesystem exposes
  * two user-visible APIs: one for adding a file to a given virtual filesystem
@@ -33,16 +29,16 @@ public class PCDPFilesystem {
 
         assert path.getComponent(0).equals(root.getName());
 
-        int componentIndex = 1;
-        PCDPFolder curr = root;
+        var componentIndex = 1;
+        var curr = root;
         while (componentIndex < path.getNComponents()) {
-            String component = path.getComponent(componentIndex++);
-            PCDPFilesystemComponent next = curr.getChild(component);
+            final var component = path.getComponent(componentIndex++);
+            final var next = curr.getChild(component);
 
             if (componentIndex < path.getNComponents()) {
                 // Haven't reached bottom of path yet so must be folder
                 if (next == null) {
-                    PCDPFolder newFolder = new PCDPFolder(component);
+                    final var newFolder = new PCDPFolder(component);
                     curr.addChild(newFolder);
                     curr = newFolder;
                 } else {
@@ -52,7 +48,7 @@ public class PCDPFilesystem {
             } else {
                 // Reached base filename
                 assert next == null;
-                PCDPFile newFile = new PCDPFile(component, contents);
+                final var newFile = new PCDPFile(component, contents);
                 curr.addChild(newFile);
             }
         }
@@ -74,16 +70,16 @@ public class PCDPFilesystem {
             return null;
         }
 
-        int componentIndex = 1;
+        var componentIndex = 1;
         PCDPFilesystemComponent curr = root;
         while (componentIndex < path.getNComponents()) {
-            final String nextComponent = path.getComponent(componentIndex++);
+            final var nextComponent = path.getComponent(componentIndex++);
 
             if (curr == null || !(curr instanceof PCDPFolder)) {
                 return null;
             }
 
-            PCDPFilesystemComponent next = ((PCDPFolder)curr).getChild(
+            final var next = ((PCDPFolder)curr).getChild(
                     nextComponent);
 
             curr = next;

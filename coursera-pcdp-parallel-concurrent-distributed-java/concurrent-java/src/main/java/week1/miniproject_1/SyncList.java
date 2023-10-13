@@ -19,8 +19,8 @@ public final class SyncList extends ListSet {
      * {@inheritDoc}
      */
     public synchronized boolean contains(final Integer object) {
-        Entry pred = this.head;
-        Entry curr = pred.next;
+        var pred = this.head;
+        var curr = pred.next;
 
         while (curr.object.compareTo(object) < 0) {
             pred = curr;
@@ -33,8 +33,8 @@ public final class SyncList extends ListSet {
      * {@inheritDoc}
      */
     public synchronized boolean add(final Integer object) {
-        Entry pred = this.head;
-        Entry curr = pred.next;
+        var pred = this.head;
+        var curr = pred.next;
 
         while (curr.object.compareTo(object) < 0) {
             pred = curr;
@@ -44,7 +44,7 @@ public final class SyncList extends ListSet {
         if (object.equals(curr.object)) {
             return false;
         } else {
-            final Entry entry = new Entry(object);
+            final var entry = new Entry(object);
             entry.next = curr;
             pred.next = entry;
             return true;
@@ -55,8 +55,8 @@ public final class SyncList extends ListSet {
      * {@inheritDoc}
      */
     public synchronized boolean remove(final Integer object) {
-        Entry pred = this.head;
-        Entry curr = pred.next;
+        var pred = this.head;
+        var curr = pred.next;
 
         while (curr.object.compareTo(object) < 0) {
             pred = curr;
