@@ -1,6 +1,5 @@
 package week4.miniproject_4;
 
-import helper.Utils;
 import org.junit.jupiter.api.Test;
 import week4.miniproject_4.boruvka.BoruvkaFactory;
 import week4.miniproject_4.boruvka.Component;
@@ -13,9 +12,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static helper.Utils.softAssertTrue;
+import static java.lang.System.currentTimeMillis;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoruvkaPerformanceTest {
 
@@ -52,7 +51,7 @@ public class BoruvkaPerformanceTest {
 
             long start;
             if (boruvkaImpl instanceof SeqBoruvka) {
-                start = System.currentTimeMillis();
+                start = currentTimeMillis();
                 boruvkaImpl.computeBoruvka(nodesLoaded, solution);
             } else {
                 var threads = new Thread[getNCores()];
@@ -60,7 +59,7 @@ public class BoruvkaPerformanceTest {
                     threads[i] = new Thread(() -> boruvkaImpl.computeBoruvka(nodesLoaded, solution));
                 }
 
-                start = System.currentTimeMillis();
+                start = currentTimeMillis();
                 for (var thread : threads) {
                     thread.start();
                 }
@@ -68,7 +67,7 @@ public class BoruvkaPerformanceTest {
                     thread.join();
                 }
             }
-            var elapsed = System.currentTimeMillis() - start;
+            var elapsed = currentTimeMillis() - start;
             System.err.println("  " + fileName + " - " + boruvkaImpl.getClass().getName() + " - " + elapsed);
 
             if (r == 0 || elapsed < minElapsed) {
@@ -77,7 +76,7 @@ public class BoruvkaPerformanceTest {
             finalSolution = solution;
         }
 
-        assertNotNull(finalSolution.getSolution());
+        assertThat(finalSolution.getSolution()).isNotNull();
         return new ExperimentResults(minElapsed, finalSolution.getSolution().totalEdges(),
             finalSolution.getSolution().totalWeight());
     }
@@ -87,39 +86,37 @@ public class BoruvkaPerformanceTest {
         var percError = delta / expected;
         final var reasonablePercError = 0.2;
 
-        assertTrue(
-            percError <= reasonablePercError,
-            String.format(
-                "Expected a percent error less than %f percent but got %f percent",
-                reasonablePercError * 100.0,
-                percError * 100.0));
+        assertThat(percError)
+            .withFailMessage("Expected a percent error less than %f percent but got %f percent"
+                .formatted(reasonablePercError * 100.0, percError * 100.0))
+            .isGreaterThanOrEqualTo(reasonablePercError);
     }
 
     @Test
-    public void testInputUSAroadFLA() throws InterruptedException {
+    void testInputUSAroadFLA() throws InterruptedException {
         var seqResults = driver(inputs[0], new SeqBoruvkaFactory(), new SeqBoruvka());
         var parResults = driver(inputs[0], new ParBoruvkaFactory(),
             new ParBoruvka());
-        assertEquals(seqResults.totalEdges, parResults.totalEdges);
+        assertThat(seqResults.totalEdges).isEqualTo(parResults.totalEdges);
         assertReasonablePercentError(seqResults.totalWeight, parResults.totalWeight);
 
         var speedup = seqResults.elapsedTime / parResults.elapsedTime;
-        Utils.softAssertTrue(
+        softAssertTrue(
             speedup >= expectedSpeedup,
             String.format("Expected speedup of at least %fx, but was %fx", expectedSpeedup, speedup));
     }
 
     @Test
-
-    public void testInputUSAroadNE() throws InterruptedException {
+    void testInputUSAroadNE() throws InterruptedException {
         var seqResults = driver(inputs[1], new SeqBoruvkaFactory(), new SeqBoruvka());
         var parResults = driver(inputs[1], new ParBoruvkaFactory(),
             new ParBoruvka());
-        assertEquals(seqResults.totalEdges, parResults.totalEdges);
+        assertThat(seqResults.totalEdges).isEqualTo(parResults.totalEdges);
+
         assertReasonablePercentError(seqResults.totalWeight, parResults.totalWeight);
 
         var speedup = seqResults.elapsedTime / parResults.elapsedTime;
-        Utils.softAssertTrue(
+        softAssertTrue(
             speedup >= expectedSpeedup,
             String.format("Expected speedup of at least %fx, but was %fx", expectedSpeedup, speedup));
 

@@ -10,7 +10,8 @@ public class RandomSequenceGenerator implements SequenceGenerator {
     private Random rand;
 
     public RandomSequenceGenerator(int setSeed,
-                                   int setSequenceLen, int setMaxNum) {
+                                   int setSequenceLen,
+                                   int setMaxNum) {
         this.seed = setSeed;
         this.rand = new Random(this.seed);
         this.maxNum = setMaxNum;

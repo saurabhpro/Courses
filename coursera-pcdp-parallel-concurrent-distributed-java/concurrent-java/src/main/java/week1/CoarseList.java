@@ -2,6 +2,9 @@ package week1;
 
 import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
+
 /**
  * An implementation of the ListSet interface that uses Java locks to
  * protect against concurrent accesses.
@@ -12,6 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * guidance in understanding where to place lock-based synchronization.
  */
 public final class CoarseList implements ListSet {
+
     /**
      * Starting entry of this concurrent list.
      */
@@ -20,8 +24,8 @@ public final class CoarseList implements ListSet {
     private final ReentrantLock lock = new ReentrantLock();
 
     public CoarseList() {
-        this.head = new Entry(Integer.MIN_VALUE);
-        this.head.next = new Entry(Integer.MAX_VALUE);
+        this.head = new Entry(MIN_VALUE);
+        this.head.next = new Entry(MAX_VALUE);
     }
 
     /**

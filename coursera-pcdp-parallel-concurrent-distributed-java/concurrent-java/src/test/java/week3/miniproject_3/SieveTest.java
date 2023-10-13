@@ -2,10 +2,10 @@ package week3.miniproject_3;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static java.lang.System.currentTimeMillis;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class SieveTest {
+class SieveTest {
 
     static final double expectedScalability = 1.6;
 
@@ -26,16 +26,18 @@ public class SieveTest {
         new SieveActor().countPrimes(limit); // warmup
         System.gc();
 
-        var parStart = System.currentTimeMillis();
+        var parStart = currentTimeMillis();
         var parCount = new SieveActor().countPrimes(limit);
-        var parElapsed = System.currentTimeMillis() - parStart;
+        var parElapsed = currentTimeMillis() - parStart;
 
-        assertEquals(ref, parCount, "Mismatch in computed number of primes for limit " + limit);
+        assertThat(ref)
+            .withFailMessage("Mismatch in computed number of primes for limit " + limit)
+            .isEqualTo(parCount);
         return parElapsed;
     }
 
     @Test
-    public void testActorSieveOneHundredThousand() throws InterruptedException {
+    void testActorSieveOneHundredThousand() throws InterruptedException {
         final var limit = 100_000;
         var ref = new SieveSequential().countPrimes(limit);
 
@@ -47,10 +49,10 @@ public class SieveTest {
 
             if (prev > 0) {
                 var scalability = (double) prev / (double) elapsed;
-                assertTrue(
-                    scalability >= expectedScalability,
-                    String.format("Expected scalability of %fx going from %d cores to %d cores, but found %fx",
-                        expectedScalability, cores / 2, cores, scalability));
+                assertThat(scalability)
+                    .withFailMessage("Expected scalability of %fx going from %d cores to %d cores, but found %fx"
+                        .formatted(expectedScalability, cores / 2, cores, scalability))
+                    .isGreaterThanOrEqualTo(expectedScalability);
             }
 
             cores *= 2;
@@ -59,7 +61,7 @@ public class SieveTest {
     }
 
     @Test
-    public void testActorSieveTwoHundredThousand() throws InterruptedException {
+    void testActorSieveTwoHundredThousand() throws InterruptedException {
         final var limit = 200_000;
         var ref = new SieveSequential().countPrimes(limit);
 
@@ -71,10 +73,10 @@ public class SieveTest {
 
             if (prev > 0) {
                 var scalability = (double) prev / (double) elapsed;
-                assertTrue(
-                    scalability >= expectedScalability,
-                    String.format("Expected scalability of %fx going from %d cores to %d cores, but found %fx",
-                        expectedScalability, cores / 2, cores, scalability));
+                assertThat(scalability)
+                    .withFailMessage("Expected scalability of %fx going from %d cores to %d cores, but found %fx"
+                        .formatted(expectedScalability, cores / 2, cores, scalability))
+                    .isGreaterThanOrEqualTo(expectedScalability);
             }
 
             cores *= 2;

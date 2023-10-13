@@ -2,6 +2,9 @@ package week1;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
+
 public final class RWCoarseList implements ListSet {
     /**
      * Starting entry of this concurrent list.
@@ -12,8 +15,8 @@ public final class RWCoarseList implements ListSet {
     private final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
     public RWCoarseList() {
-        this.head = new Entry(Integer.MIN_VALUE);
-        this.head.next = new Entry(Integer.MAX_VALUE);
+        this.head = new Entry(MIN_VALUE);
+        this.head.next = new Entry(MAX_VALUE);
     }
 
     /**

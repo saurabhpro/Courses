@@ -1,13 +1,14 @@
 package week2.miniproject_2;
 
-import helper.Utils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
 import static edu.rice.pcdp.PCDP.async;
 import static edu.rice.pcdp.PCDP.finish;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static helper.Utils.softAssertTrue;
+import static java.lang.System.currentTimeMillis;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BankTransactionsTest {
 
@@ -44,7 +45,7 @@ public class BankTransactionsTest {
         }
 
         var preSumOfBalances = sumBalances(bankAccounts);
-        var startTime = System.currentTimeMillis();
+        var startTime = currentTimeMillis();
         finish(() -> {
             for (var i = 0; i < numTransactions; i++) {
                 var ii = i;
@@ -66,7 +67,7 @@ public class BankTransactionsTest {
                 });
             }
         });
-        var elapsed = System.currentTimeMillis() - startTime;
+        var elapsed = currentTimeMillis() - startTime;
 
         System.out.println(impl.getClass().getSimpleName() + ": Performed " +
             numTransactions + " transactions with " + numAccounts +
@@ -74,15 +75,17 @@ public class BankTransactionsTest {
             " ms");
 
         var postSumOfBalances = sumBalances(bankAccounts);
-        assertEquals(preSumOfBalances, postSumOfBalances, "Expected total balance before and after simulation to be " +
-            "equal, but was " + preSumOfBalances + " before and " +
-            postSumOfBalances + " after");
+        assertThat(preSumOfBalances)
+            .withFailMessage(
+                "Expected total balance before and after simulation to be equal, but was %d before and %d after"
+                    .formatted(preSumOfBalances, postSumOfBalances))
+            .isEqualTo(postSumOfBalances);
 
         return elapsed;
     }
 
     @Test
-    public void testObjectIsolation() {
+    void testObjectIsolation() {
         // warmup
         testDriver(new BankTransactionsUsingGlobalIsolation());
         var globalTime = testDriver(
@@ -106,6 +109,6 @@ public class BankTransactionsTest {
         var msg = String.format("Expected an improvement of at " +
                 "least %fx with object-based isolation, but saw %fx", expected,
             improvement);
-        Utils.softAssertTrue(improvement >= expected, msg);
+        softAssertTrue(improvement >= expected, msg);
     }
 }

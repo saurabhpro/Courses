@@ -4,6 +4,7 @@ package week1;
  * A single element in any of the list implementations.
  */
 public final class Entry {
+
     /**
      * The value stored in this list entry.
      */
@@ -19,7 +20,7 @@ public final class Entry {
      *
      * @param setObject Value to store in this item
      */
-    Entry(final int setObject) {
+    Entry(int setObject) {
         this.key = setObject;
     }
 }

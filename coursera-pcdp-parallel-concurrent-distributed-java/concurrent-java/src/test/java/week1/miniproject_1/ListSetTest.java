@@ -9,11 +9,13 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static helper.Utils.softAssertTrue;
+import static java.lang.Math.random;
 import static java.lang.String.format;
+import static java.lang.System.currentTimeMillis;
+import static java.lang.Thread.MAX_PRIORITY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ListSetTest {
+class ListSetTest {
 
     private final int randNumsLength = 10_000;
     private final int randNumRange = 80_000;
@@ -40,8 +42,11 @@ public class ListSetTest {
     }
 
     private static TestResultsPair runKernel(ListFactory factoryA,
-                                             String lblA, ListFactory factoryB, String lblB,
-                                             SequenceGenerator addSeq, SequenceGenerator containsSeq,
+                                             String lblA,
+                                             ListFactory factoryB,
+                                             String lblB,
+                                             SequenceGenerator addSeq,
+                                             SequenceGenerator containsSeq,
                                              SequenceGenerator removeSeq) throws InterruptedException {
         var numThreads = getNCores();
 
@@ -96,13 +101,13 @@ public class ListSetTest {
                     throw new RuntimeException(ie);
                 }
 
-                var startTime = System.currentTimeMillis();
+                var startTime = currentTimeMillis();
                 runners[tid].run();
-                var endTime = System.currentTimeMillis();
+                var endTime = currentTimeMillis();
 
                 elapsedTime.addAndGet(endTime - startTime);
             });
-            threads[t].setPriority(Thread.MAX_PRIORITY);
+            threads[t].setPriority(MAX_PRIORITY);
             threads[t].start();
         }
 
@@ -139,10 +144,10 @@ public class ListSetTest {
         var prev = list.getHead();
         var curr = prev.next;
         while (curr != null) {
-            assertTrue(curr.object > prev.object, "List was not sorted, index " +
-                (listLengthAfterAdds - 1) + " is " +
-                prev.object + " and index " +
-                listLengthAfterAdds + " is " + curr.object);
+            assertThat(curr.object)
+                .withFailMessage("List was not sorted, index %d is %d and index %d is %d".formatted(
+                    listLengthAfterAdds - 1, prev.object, listLengthAfterAdds, curr.object))
+                .isGreaterThan(prev.object);
 
             prev = curr;
             curr = curr.next;
@@ -183,8 +188,9 @@ public class ListSetTest {
         prev = list.getHead();
         curr = prev.next;
         while (curr != null) {
-            assertTrue(
-                curr.object > prev.object, "List was not sorted");
+            assertThat(curr.object)
+                .withFailMessage("List was not sorted")
+                .isGreaterThan(prev.object);
 
             prev = curr;
             curr = curr.next;
@@ -219,12 +225,12 @@ public class ListSetTest {
     private static void tryGarbageCollection() {
         System.gc();
         for (var t = 0; t < 10_000; t++) {
-            Math.random();  // some action
+            random();  // some action
         }
     }
 
     @Test
-    public void testCoarseGrainedLockingRandomLarge() throws InterruptedException {
+    void testCoarseGrainedLockingRandomLarge() throws InterruptedException {
         SequenceGenerator addSeq = new RandomSequenceGenerator(0,
             getNCores() * randNumsLength, randNumRange);
         SequenceGenerator containsSeq = new RandomSequenceGenerator(1,
@@ -241,7 +247,7 @@ public class ListSetTest {
     }
 
     @Test
-    public void testCoarseGrainedLockingRepeatingLarge() throws InterruptedException {
+    void testCoarseGrainedLockingRepeatingLarge() throws InterruptedException {
         SequenceGenerator addSeq = new RepeatingSequenceGenerator(
             getNCores() * 6 * randNumsLength, randNumsLength);
         SequenceGenerator containsSeq = new RepeatingSequenceGenerator(
@@ -260,7 +266,7 @@ public class ListSetTest {
     }
 
     @Test
-    public void testReadWriteLocksRandomLarge() throws InterruptedException {
+    void testReadWriteLocksRandomLarge() throws InterruptedException {
         SequenceGenerator addSeq = new RandomSequenceGenerator(0,
             getNCores() * randNumsLength, randNumRange);
         SequenceGenerator containsSeq = new RandomSequenceGenerator(1,
@@ -277,7 +283,7 @@ public class ListSetTest {
     }
 
     @Test
-    public void testReadWriteLocksRandomSmall() throws InterruptedException {
+    void testReadWriteLocksRandomSmall() throws InterruptedException {
         SequenceGenerator addSeq = new RandomSequenceGenerator(0,
             getNCores() * randNumsLength / 2, randNumRange);
         SequenceGenerator containsSeq = new RandomSequenceGenerator(1,
@@ -294,7 +300,7 @@ public class ListSetTest {
     }
 
     @Test
-    public void testReadWriteLocksRepeatingLarge() throws InterruptedException {
+    void testReadWriteLocksRepeatingLarge() throws InterruptedException {
         SequenceGenerator addSeq = new RepeatingSequenceGenerator(
             getNCores() * 6 * randNumsLength, randNumsLength);
         SequenceGenerator containsSeq = new RepeatingSequenceGenerator(
@@ -311,7 +317,7 @@ public class ListSetTest {
     }
 
     @Test
-    public void testReadWriteLocksRepeatingSmall() throws InterruptedException {
+    void testReadWriteLocksRepeatingSmall() throws InterruptedException {
         SequenceGenerator addSeq = new RepeatingSequenceGenerator(
             getNCores() * 3 * randNumsLength, randNumsLength);
         SequenceGenerator containsSeq = new RepeatingSequenceGenerator(
@@ -329,8 +335,10 @@ public class ListSetTest {
 
     private void testCoarseGrainedLockingHelper(SequenceGenerator addSeq,
                                                 SequenceGenerator containsSeq,
-                                                SequenceGenerator removeSeq, double expectedAdd,
-                                                double expectedContains, double expectedRemove,
+                                                SequenceGenerator removeSeq,
+                                                double expectedAdd,
+                                                double expectedContains,
+                                                double expectedRemove,
                                                 String datasetName) throws InterruptedException {
 
         var results = runKernel(
