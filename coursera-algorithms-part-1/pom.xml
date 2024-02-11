@@ -31,12 +31,12 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>princeton</groupId>
-            <artifactId>algs4</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>princeton</groupId>-->
+<!--            <artifactId>algs4</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -45,13 +45,13 @@
         </dependency>
     </dependencies>
 
-    <!-- additional (optional) -->
-    <repositories>
-        <repository>
-            <id>localrepository</id>
-            <url>file://${project.basedir}/libs</url>
-        </repository>
-    </repositories>
+<!--    &lt;!&ndash; additional (optional) &ndash;&gt;-->
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>localrepository</id>-->
+<!--            <url>file://${project.basedir}/libs</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
     <build>
         <plugins>

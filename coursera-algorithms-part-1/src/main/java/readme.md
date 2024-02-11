@@ -1,0 +1,1 @@
+Course relies on code snippets from https://algs4.cs.princeton.edu/code/
