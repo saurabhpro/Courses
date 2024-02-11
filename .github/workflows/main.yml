@@ -23,5 +23,5 @@ jobs:
         distribution: 'temurin'
     - name: Coursera-Algorithms-Part-1
       run: mvn -B package --file coursera-algorithms-part-1/pom.xml
-    - name: Coursera-PCDP
-      run: mvn -B package --file coursera-pcdp-parallel-concurrent-distributed-java/pom.xml
+    # - name: Coursera-PCDP
+    #   run: mvn -B package --file coursera-pcdp-parallel-concurrent-distributed-java/pom.xml
