@@ -1,3 +1,6 @@
 # Project exclude paths
 /*.idea
 /coursera-algorithms-part-1/target/
+build
+.gradle
+.idea
