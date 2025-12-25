@@ -42,7 +42,7 @@
 
     <properties>
         <protobuf.version>4.33.2</protobuf.version>
-        <spark.version>3.5.5</spark.version>
+        <spark.version>3.5.7</spark.version>
 
     </properties>
 
