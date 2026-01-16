@@ -41,7 +41,7 @@
     </dependencies>
 
     <properties>
-        <protobuf.version>4.33.2</protobuf.version>
+        <protobuf.version>4.33.4</protobuf.version>
         <spark.version>4.1.1</spark.version>
 
     </properties>
